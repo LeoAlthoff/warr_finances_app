@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'widgets/body_home.dart';
+import 'widgets/drawer_home.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,7 +14,7 @@ class HomePage extends StatelessWidget {
         title: const Text('Olá, Rodrigo'),
         centerTitle: true,
       ),
-      drawer: const Drawer(),
+      drawer: DrawerHome(),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(
@@ -34,3 +35,5 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+
+
