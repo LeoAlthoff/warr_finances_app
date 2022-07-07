@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/presenter/login_page/login_page.dart';
 
-
+import 'presenter/home_page/home_page.dart';
 
 void main() {
   runApp(
-    const MaterialApp(
+    MaterialApp(
       title: 'MeuAppTeste',
-      home: LoginPage(),
-      //theme: ThemeData(scaffoldBackgroundColor: Colors.grey.shade100),
+      home: const HomePage(),
+      theme: ThemeData(scaffoldBackgroundColor: Colors.grey.shade100),
       debugShowCheckedModeBanner: false,
     ),
   );
