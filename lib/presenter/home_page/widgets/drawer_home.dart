@@ -12,11 +12,11 @@ class DrawerHome extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           DrawerHeader(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Color.fromARGB(255, 210, 52, 105),
             ),
             child: Column(
-              children: [
+              children: const [
                 Text(
                   'Rodrigo',
                   textAlign: TextAlign.center,
@@ -44,27 +44,27 @@ class DrawerHome extends StatelessWidget {
               ],
             ),
           ),
-          ListTile(
+          const ListTile(
             title: Text('Pesquisa'),
             leading: Icon(Icons.search),
           ),
-          ListTile(
+          const ListTile(
             title: Text('Notificações'),
             leading: Icon(Icons.notifications),
           ),
-          ListTile(
+          const ListTile(
             title: Text('Contato'),
             leading: Icon(Icons.contact_support_rounded),
           ),
-          ListTile(
+          const ListTile(
             title: Text('Segurança'),
             leading: Icon(Icons.shield_outlined),
           ),
-          ListTile(
+          const ListTile(
             title: Text('Configurações'),
             leading: Icon(Icons.settings),
           ),
-          ListTile(
+          const ListTile(
             title: Text('Sair do aplicativo'),
             leading: Icon(Icons.arrow_back),
           ),
