@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'widgets/body_home.dart';
+import 'widgets/drawer_home.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -40,7 +41,7 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Olá, Rodrigo'),
         centerTitle: true,
       ),
-      drawer: const Drawer(),
+      drawer: const DrawerHome(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentPage,
         type: BottomNavigationBarType.fixed,
