@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 
+import 'widgets/combo_box.dart';
+import 'widgets/custom_button.dart';
+import 'widgets/custom_send_button.dart';
+import 'widgets/input_text_container.dart';
+
 void main() {
   runApp(const MaterialApp(
     title: 'MeuAppTeste',
     home: RegistrationPage(),
+    debugShowCheckedModeBanner: false,
   ));
 }
 
@@ -13,215 +19,48 @@ class RegistrationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Center(
+          child: Text('Cadastro'),
+        ),
+        backgroundColor: const Color.fromARGB(255, 242, 6, 155),
+      ),
       body: Container(
         decoration: BoxDecoration(
           color: Colors.blueGrey.shade50,
         ),
         child: Column(
           children: [
-            Container(
-              margin: const EdgeInsets.symmetric(
-                horizontal: 30,
-                vertical: 10,
-              ),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 5,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: const TextField(
-                decoration: InputDecoration(
-                  labelText: 'Nome',
-                  border: InputBorder.none,
-                ),
-              ),
+            const TextInputContainer(
+              textValue: 'Nome',
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(
-                horizontal: 30,
-                vertical: 10,
-              ),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 5,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: const TextField(
-                decoration: InputDecoration(
-                  labelText: 'Preço',
-                  border: InputBorder.none,
-                ),
-              ),
+            const TextInputContainer(
+              textValue: 'Preço',
             ),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey.shade500,
-                      width: 1,
-                      style: BorderStyle.solid,
-                    ),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  margin: const EdgeInsets.only(
-                    top: 10,
-                    bottom: 10,
-                    left: 30,
-                    right: 10,
-                  ),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 15,
-                    vertical: 10,
-                  ),
-                  child: TextButton(
-                    onPressed: () {},
-                    child: Row(
-                      children: const [
-                        Icon(
-                          Icons.arrow_circle_up,
-                          size: 30,
-                          color: Colors.green,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'Income',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+              children: const [
+                CustomButton(
+                  income: true,
+                  textValue: 'Income',
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey.shade500,
-                      width: 1,
-                      style: BorderStyle.solid,
-                    ),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  margin: const EdgeInsets.only(
-                    top: 10,
-                    bottom: 10,
-                    left: 10,
-                    right: 30,
-                  ),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 15,
-                    vertical: 10,
-                  ),
-                  child: TextButton(
-                    onPressed: () {},
-                    child: Row(
-                      children: const [
-                        Icon(
-                          Icons.arrow_circle_down,
-                          size: 30,
-                          color: Colors.red,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'Income',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                CustomButton(
+                  income: false,
+                  textValue: 'Outcome',
                 ),
               ],
             ),
-            Container(
-              width: double.maxFinite,
-              margin: const EdgeInsets.symmetric(
-                horizontal: 30,
-                vertical: 10,
-              ),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 5,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  items: [
-                    DropdownMenuItem(
-                      child: Text(
-                        'Selecione',
-                        style: TextStyle(
-                          color: Colors.grey.shade500,
-                        ),
-                      ),
-                    ),
-                  ],
-                  onChanged: (context) {},
-                  style: const TextStyle(),
-                ),
-              ),
-            ),
+            const ComboBox(),
 
             // Imagem
-            // Terminar button
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.grey.shade500,
-                  width: 1,
-                  style: BorderStyle.solid,
-                ),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              margin: const EdgeInsets.symmetric(
-                horizontal: 75,
-                vertical: 10,
-              ),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 15,
-                vertical: 10,
-              ),
-              child: TextButton(
-                onPressed: () {},
-                child: Row(
-                  children: const [
-                    Icon(
-                      Icons.arrow_circle_down,
-                      size: 30,
-                      color: Colors.red,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      'Income',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+            Image.asset(
+              'images/cadastro.png',
+              height: 200,
+              width: MediaQuery.of(context).size.width,
             ),
+            // Terminar button
+            const CustomSendButton(),
           ],
         ),
       ),
