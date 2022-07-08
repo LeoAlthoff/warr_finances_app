@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
-
 import 'info_chart_summary.dart';
 
 class ItensSummaryPage extends StatelessWidget {

@@ -13,6 +13,7 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 150,
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.grey.shade500,
@@ -22,7 +23,6 @@ class CustomButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(5),
       ),
       padding: const EdgeInsets.symmetric(
-        horizontal: 15,
         vertical: 10,
       ),
       child: TextButton(

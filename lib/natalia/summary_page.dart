@@ -17,7 +17,10 @@ class Summary extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
-      body: const SingleChildScrollView(child: ItensSummaryPage()),
+      body: const SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: ItensSummaryPage(),
+      ),
     );
   }
 }

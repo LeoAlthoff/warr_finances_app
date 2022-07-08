@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
 
-class ComboBox extends StatelessWidget {
-  const ComboBox({
-    Key? key,
-  }) : super(key: key);
+class ComboBox extends StatefulWidget {
+  const ComboBox({Key? key}) : super(key: key);
+
+  @override
+  State<ComboBox> createState() => _ComboBoxState();
+}
+
+class _ComboBoxState extends State<ComboBox> {
+  List<String> options = <String>[
+    'Selecione um',
+    'Alimentação',
+    'Compras',
+    'Aluguel',
+    'Telefone',
+    'Contas',
+  ];
+
+  String dropDownValue = 'Selecione um';
 
   @override
   Widget build(BuildContext context) {
@@ -21,20 +35,23 @@ class ComboBox extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(5),
       ),
+      // child: DropdownButtonHideUnderline(
       child: DropdownButtonHideUnderline(
-        child: DropdownButton<dynamic>(
-          items: [
-            DropdownMenuItem(
-              child: Text(
-                'Selecione',
-                style: TextStyle(
-                  color: Colors.grey.shade500,
+        child: DropdownButton<String>(
+          value: dropDownValue,
+          items: options
+              .map<DropdownMenuItem<String>>(
+                (String value) => DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
                 ),
-              ),
-            ),
-          ],
-          onChanged: (context) {},
-          style: const TextStyle(),
+              )
+              .toList(),
+          onChanged: (String? newValue) {
+            setState(() {
+              dropDownValue = newValue!;
+            });
+          },
         ),
       ),
     );
