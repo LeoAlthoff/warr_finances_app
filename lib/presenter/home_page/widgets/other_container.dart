@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_teste_app/shared/utils/format_money.dart';
 
 class OtherContainer extends StatelessWidget {
   final bool expense;
@@ -48,7 +49,10 @@ class OtherContainer extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Text(
-              expense ? "-R\$ $value" : 'R\$ $value}',
+              // getCurrency(value).toString(),
+              expense
+                  ? '- ${getCurrency(value).toString()}'
+                  : getCurrency(value),
               style: TextStyle(
                 fontSize: 27,
                 color: expense ? Colors.red : Colors.green,

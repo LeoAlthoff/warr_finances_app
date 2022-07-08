@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
+import '../home_page/home_page.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -8,7 +8,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 242, 6, 155),
+      backgroundColor: const Color.fromARGB(255, 210, 52, 105),
       body: SingleChildScrollView(
         child: Center(
           child: Padding(
@@ -25,16 +25,20 @@ class LoginPage extends StatelessWidget {
               const Text(
                 'Controle suas finanças de forma',
                 style: TextStyle(
-                    fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontStyle: FontStyle.italic),
               ),
               const SizedBox(
-                height: 20,),
+                height: 20,
+              ),
               const Text(
                 'muito simples',
                 style: TextStyle(
-                    fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontStyle: FontStyle.italic),
               ),
-              
               const SizedBox(
                 height: 55,
               ),
@@ -118,7 +122,6 @@ class LoginPage extends StatelessWidget {
                     width: 520,
                     height: 300,
                   ),
-                  
                 ],
               ),
             ]),
@@ -126,5 +129,10 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void nagigateToHomeScreen(BuildContext context) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => HomePage()));
   }
 }
