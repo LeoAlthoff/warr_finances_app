@@ -5,12 +5,13 @@ import '../../../shared/utils/format_money.dart';
 class MainContainerHome extends StatelessWidget {
   final int index;
   final double value;
-  late String entry;
-  late IconData icon;
-  late Color iconColor;
-  late Color textColor;
-  late Color background;
+  late final String entry;
+  late final IconData icon;
+  late final Color iconColor;
+  late final Color textColor;
+  late final Color background;
 
+  // ignore: prefer_const_constructors_in_immutables
   MainContainerHome({
     Key? key,
     required this.index,
@@ -38,7 +39,7 @@ class MainContainerHome extends StatelessWidget {
         icon = Icons.attach_money;
         iconColor = Colors.white;
         textColor = Colors.white;
-        background = Color.fromARGB(255, 233, 70, 124);
+        background = const Color.fromARGB(255, 233, 70, 124);
     }
   }
 

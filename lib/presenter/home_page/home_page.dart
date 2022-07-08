@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_teste_app/natalia/summary_page.dart';
+import 'package:flutter_teste_app/rodrigo/tela_cadastro.dart';
 
 import 'widgets/body_home.dart';
 import 'widgets/drawer_home.dart';
@@ -12,17 +14,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentPage = 0;
-  late PageController pc;
-  final screens = [
-    //TODO colocar as páginas a acessar
-    //pag home
-    //pag cadastrar
-    //pag resumo
-  ];
+  late PageController pageController;
+  // final screens = const [
+  //   BodyHome(),
+  //   RegistrationPage(),
+  //   Summary(),
+  // ];
   @override
   void initState() {
     super.initState();
-    pc = PageController(initialPage: currentPage);
+    pageController = PageController(initialPage: currentPage);
   }
 
   setCurrentPage(index) {
@@ -38,7 +39,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 210, 52, 105),
-        title: const Text('Olá, Rodrigo'),
+        title: Text(getTitleAppBar()),
         centerTitle: true,
       ),
       drawer: const DrawerHome(),
@@ -48,7 +49,7 @@ class _HomePageState extends State<HomePage> {
         unselectedItemColor: Colors.black,
         showUnselectedLabels: false,
         onTap: (index) {
-          pc.animateToPage(index,
+          pageController.animateToPage(index,
               duration: const Duration(milliseconds: 300), curve: Curves.ease);
         },
         items: const [
@@ -67,14 +68,25 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: PageView(
-        controller: pc,
+        controller: pageController,
         onPageChanged: setCurrentPage,
         children: const [
-          BodyHome(), //página 1
-          BodyHome(), //página 2
-          BodyHome(), //página 3
+          BodyHome(),
+          RegistrationPage(),
+          Summary(),
         ],
       ),
     );
+  }
+
+  String getTitleAppBar() {
+    switch (currentPage) {
+      case 1:
+        return 'Cadastro';
+      case 2:
+        return 'Resumo por categoria';
+      default:
+        return 'Olá, Rodrigo';
+    }
   }
 }

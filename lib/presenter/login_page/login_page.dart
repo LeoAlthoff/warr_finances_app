@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../home_page/home_page.dart';
+
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 242, 6, 155),
+      backgroundColor: const Color.fromARGB(255, 210, 52, 105),
       body: SingleChildScrollView(
         child: Center(
           child: Padding(
@@ -51,15 +53,18 @@ class LoginPage extends StatelessWidget {
                 style: TextButton.styleFrom(
                     backgroundColor: Colors.grey,
                     fixedSize: const Size(300, 40)),
+                // ignore: prefer_const_constructors
                 child: Text(
                   textAlign: TextAlign.right,
                   'Entrar com Google',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 15,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  nagigateToHomeScreen(context);
+                },
               ),
               const SizedBox(
                 height: 30,
@@ -79,5 +84,10 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void nagigateToHomeScreen(BuildContext context) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => HomePage()));
   }
 }

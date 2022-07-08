@@ -10,7 +10,7 @@ class CustomSendButton extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 242, 6, 155),
+        color: const Color.fromARGB(255, 210, 52, 105),
         borderRadius: BorderRadius.circular(5),
       ),
       margin: const EdgeInsets.symmetric(
