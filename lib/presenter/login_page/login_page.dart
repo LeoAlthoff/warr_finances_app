@@ -38,31 +38,78 @@ class LoginPage extends StatelessWidget {
               const SizedBox(
                 height: 55,
               ),
-              const Text(
+              Text(
+            
                 ' Faça seu login com uma conta Google abaixo',
                 style: TextStyle(fontSize: 15, color: Colors.white),
               ),
               const SizedBox(
                 height: 10,
               ),
-              TextButton(
-                    
-                    style: TextButton.styleFrom(
-                        backgroundColor: Colors.grey, fixedSize: const Size(300, 40)  ),
-                    
-                    child: const Text(
-                      textAlign: TextAlign.right,
-                      'Entrar com Google',
-                      style: TextStyle(color: Colors.black, fontSize: 15, )
-                      ,
+              Form(
+                child: Column(
+                  children: [
+                    TextFormField(
+                      autofocus: true,
+                      style: const TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        labelText: 'E-mail',
+                        labelStyle: TextStyle(color: Colors.white),
+                        prefixIcon: Icon(
+                          Icons.mail_outline,
+                          color: Colors.white,
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                      ),
                     ),
-                    onPressed: () {
-                      
-                    },
-                  ),
-                const  SizedBox(
-                height: 30,
+                    TextFormField(
+                      autofocus: true,
+                      style: const TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        labelText: 'Senha',
+                        labelStyle: TextStyle(color: Colors.white),
+                        prefixIcon: Icon(
+                          Icons.vpn_key_sharp,
+                          color: Colors.white,
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
+              Padding(
+                padding: EdgeInsets.only(bottom: 15),
+              ),
+              GestureDetector(
+                onTap: () {
+                  print('Funcionou');
+                },
+                child: Text(
+                  'Esqueceu a senha?',
+                  textAlign: TextAlign.right,
+                  style: TextStyle(color: Colors.white, fontSize: 12),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Container(
+                  width: 150,
+                  height: 30,
+                  child: RaisedButton(
+                    elevation: 15,
+                    onPressed: () {},
+                    child: Text('Login', style: TextStyle(color: Colors.white),),
+                    color: Color.fromARGB(255, 144, 141, 142), 
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30),
+                   ),
+                  ),
+                ),
+              ),  
               Stack(
                 alignment: Alignment.topCenter,
                 children: [
