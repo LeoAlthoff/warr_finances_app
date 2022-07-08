@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/natalia/summary_page.dart';
-import 'package:flutter_teste_app/rodrigo/tela_cadastro.dart';
 
+import '../../natalia/summary_page.dart';
+import '../../rodrigo/tela_cadastro.dart';
 import 'widgets/body_home.dart';
 import 'widgets/drawer_home.dart';
 
@@ -15,11 +15,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int currentPage = 0;
   late PageController pageController;
-  // final screens = const [
-  //   BodyHome(),
-  //   RegistrationPage(),
-  //   Summary(),
-  // ];
+  final screens = const [
+    BodyHome(),
+    RegistrationPage(),
+    Summary(),
+  ];
   @override
   void initState() {
     super.initState();
@@ -60,6 +60,7 @@ class _HomePageState extends State<HomePage> {
         unselectedItemColor: Colors.black,
         showUnselectedLabels: false,
         onTap: (index) {
+          setCurrentPage(index);
           pageController.animateToPage(index,
               duration: const Duration(milliseconds: 300), curve: Curves.ease);
         },
@@ -78,7 +79,11 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: const BodyHome(),
+      body: PageView(
+        onPageChanged: setCurrentPage,
+        controller: pageController,
+        children: screens,
+      ),
     );
   }
 }

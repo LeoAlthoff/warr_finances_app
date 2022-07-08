@@ -52,7 +52,7 @@ class MainContainerHome extends StatelessWidget {
         vertical: 10,
       ),
       height: 150,
-      width: 370,
+      width: MediaQuery.of(context).size.width - 30,
       decoration: BoxDecoration(
         color: background,
         borderRadius: BorderRadius.circular(10),

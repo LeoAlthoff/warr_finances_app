@@ -42,8 +42,7 @@ class LoginPage extends StatelessWidget {
               const SizedBox(
                 height: 55,
               ),
-              Text(
-            
+              const Text(
                 ' Faça seu login com uma conta Google abaixo',
                 style: TextStyle(fontSize: 15, color: Colors.white),
               ),
@@ -56,7 +55,7 @@ class LoginPage extends StatelessWidget {
                     TextFormField(
                       autofocus: true,
                       style: const TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'E-mail',
                         labelStyle: TextStyle(color: Colors.white),
                         prefixIcon: Icon(
@@ -71,7 +70,7 @@ class LoginPage extends StatelessWidget {
                     TextFormField(
                       autofocus: true,
                       style: const TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Senha',
                         labelStyle: TextStyle(color: Colors.white),
                         prefixIcon: Icon(
@@ -86,14 +85,12 @@ class LoginPage extends StatelessWidget {
                   ],
                 ),
               ),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.only(bottom: 15),
               ),
               GestureDetector(
-                onTap: () {
-                  print('Funcionou');
-                },
-                child: Text(
+                onTap: () {},
+                child: const Text(
                   'Esqueceu a senha?',
                   textAlign: TextAlign.right,
                   style: TextStyle(color: Colors.white, fontSize: 12),
@@ -101,19 +98,25 @@ class LoginPage extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Container(
+                child: SizedBox(
                   width: 150,
                   height: 30,
                   child: RaisedButton(
                     elevation: 15,
-                    onPressed: () {},
-                    child: Text('Login', style: TextStyle(color: Colors.white),),
-                    color: Color.fromARGB(255, 144, 141, 142), 
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30),
-                   ),
+                    onPressed: () {
+                      nagigateToHomeScreen(context);
+                    },
+                    color: const Color.fromARGB(255, 144, 141, 142),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: const Text(
+                      'Login',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
-              ),  
+              ),
               Stack(
                 alignment: Alignment.topCenter,
                 children: [
@@ -133,6 +136,6 @@ class LoginPage extends StatelessWidget {
 
   void nagigateToHomeScreen(BuildContext context) {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => HomePage()));
+        .push(MaterialPageRoute(builder: (context) => const HomePage()));
   }
 }
