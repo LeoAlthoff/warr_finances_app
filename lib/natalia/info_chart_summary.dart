@@ -32,11 +32,11 @@ class InfoChartSummary extends StatelessWidget {
               child: Row(
                 children: [
                 Icon(icon, size: 25, color: colorIcon,),
-                SizedBox(width: 20,),
-                Text(category, style: TextStyle(fontSize: 18),),
+                const SizedBox(width: 20,),
+                Text(category, style: const TextStyle(fontSize: 18),),
               ]),
             ),
-            Text(value, style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
+            Text(value, style: const TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
           ],
         ),
       ),
