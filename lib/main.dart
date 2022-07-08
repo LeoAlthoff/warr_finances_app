@@ -6,7 +6,7 @@ void main() {
   runApp(
     MaterialApp(
       title: 'MeuAppTeste',
-      home: const HomePage(),
+      home: const HomePage(), //TODO alterar para a página de login
       theme: ThemeData(scaffoldBackgroundColor: Colors.grey.shade100),
       debugShowCheckedModeBanner: false,
     ),

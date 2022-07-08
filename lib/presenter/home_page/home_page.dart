@@ -2,8 +2,35 @@ import 'package:flutter/material.dart';
 
 import 'widgets/body_home.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int currentPage = 0;
+  late PageController pc;
+  final screens = [
+    //TODO colocar as páginas a acessar
+    //pag home
+    //pag cadastrar
+    //pag resumo
+  ];
+  @override
+  void initState() {
+    super.initState();
+    pc = PageController(initialPage: currentPage);
+  }
+
+  setCurrentPage(index) {
+    setState(
+      () {
+        currentPage = index;
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +42,14 @@ class HomePage extends StatelessWidget {
       ),
       drawer: const Drawer(),
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: currentPage,
+        type: BottomNavigationBarType.fixed,
+        unselectedItemColor: Colors.black,
+        showUnselectedLabels: false,
+        onTap: (index) {
+          pc.animateToPage(index,
+              duration: const Duration(milliseconds: 300), curve: Curves.ease);
+        },
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.drag_handle_sharp),
@@ -30,7 +65,15 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: const BodyHome(),
+      body: PageView(
+        controller: pc,
+        onPageChanged: setCurrentPage,
+        children: const [
+          BodyHome(), //página 1
+          BodyHome(), //página 2
+          BodyHome(), //página 3
+        ],
+      ),
     );
   }
 }
