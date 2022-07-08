@@ -10,7 +10,6 @@ class DrawerHome extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: [
-<<<<<<< HEAD
           SizedBox(
             height: 130,
             child: DrawerHeader(
@@ -38,20 +37,6 @@ class DrawerHome extends StatelessWidget {
                         ),
                       ),
                     ],
-=======
-          DrawerHeader(
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 210, 52, 105),
-            ),
-            child: Column(
-              children: const [
-                Text(
-                  'Rodrigo',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.white,
->>>>>>> 09a012fb608dd7ab5d3a7cea9483b56b3d73da4a
                   ),
                   const SizedBox(height: 3),
                   const Align(
@@ -85,42 +70,27 @@ class DrawerHome extends StatelessWidget {
             title: Text('Pesquisa'),
             leading: Icon(Icons.search),
           ),
-<<<<<<< HEAD
           const SizedBox(height: 7),
-=======
->>>>>>> 09a012fb608dd7ab5d3a7cea9483b56b3d73da4a
           const ListTile(
             title: Text('Notificações'),
             leading: Icon(Icons.notifications),
           ),
-<<<<<<< HEAD
           const SizedBox(height: 7),
-=======
->>>>>>> 09a012fb608dd7ab5d3a7cea9483b56b3d73da4a
           const ListTile(
             title: Text('Contato'),
             leading: Icon(Icons.contact_support_rounded),
           ),
-<<<<<<< HEAD
           const SizedBox(height: 7),
-=======
->>>>>>> 09a012fb608dd7ab5d3a7cea9483b56b3d73da4a
           const ListTile(
             title: Text('Segurança'),
             leading: Icon(Icons.shield_outlined),
           ),
-<<<<<<< HEAD
           const SizedBox(height: 7),
-=======
->>>>>>> 09a012fb608dd7ab5d3a7cea9483b56b3d73da4a
           const ListTile(
             title: Text('Configurações'),
             leading: Icon(Icons.settings),
           ),
-<<<<<<< HEAD
           const SizedBox(height: 7),
-=======
->>>>>>> 09a012fb608dd7ab5d3a7cea9483b56b3d73da4a
           const ListTile(
             title: Text('Sair do aplicativo'),
             leading: Icon(Icons.arrow_back),
