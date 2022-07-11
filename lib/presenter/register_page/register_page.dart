@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'widgets/combo_box.dart';
 import 'widgets/custom_button.dart';
 import 'widgets/custom_send_button.dart';
-import 'widgets/input_text_container.dart';
+import '../../shared/widgets/input_text_container.dart';
 
 void main() {
   runApp(const MaterialApp(

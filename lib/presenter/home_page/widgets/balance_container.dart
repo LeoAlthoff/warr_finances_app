@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_teste_app/shared/utils/format_money.dart';
 
-class OtherContainer extends StatelessWidget {
+class BalanceContainer extends StatelessWidget {
   final bool expense;
   final String origin;
   final double value;
@@ -9,7 +9,7 @@ class OtherContainer extends StatelessWidget {
   final String source;
   final String time;
 
-  const OtherContainer({
+  const BalanceContainer({
     Key? key,
     required this.expense,
     required this.origin,
@@ -45,7 +45,7 @@ class OtherContainer extends StatelessWidget {
           children: [
             Text(
               origin,
-              style: const TextStyle(fontSize: 17,),
+              style: const TextStyle(fontSize: 17),
             ),
             const SizedBox(height: 10),
             Text(
