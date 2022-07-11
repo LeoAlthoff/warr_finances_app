@@ -39,13 +39,13 @@ class OtherContainer extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(12.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               origin,
-              style: const TextStyle(fontSize: 17),
+              style: const TextStyle(fontSize: 17,),
             ),
             const SizedBox(height: 10),
             Text(

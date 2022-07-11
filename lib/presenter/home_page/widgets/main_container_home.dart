@@ -4,6 +4,7 @@ import '../../../shared/utils/format_money.dart';
 
 class MainContainerHome extends StatelessWidget {
   final int index;
+  final String subText;
   final double value;
   late final String entry;
   late final IconData icon;
@@ -15,6 +16,7 @@ class MainContainerHome extends StatelessWidget {
   MainContainerHome({
     Key? key,
     required this.index,
+    required this.subText,
     required this.value,
   }) : super(key: key);
 
@@ -52,7 +54,7 @@ class MainContainerHome extends StatelessWidget {
         vertical: 10,
       ),
       height: 150,
-      width: MediaQuery.of(context).size.width - 30,
+      width: MediaQuery.of(context).size.width - 40,
       decoration: BoxDecoration(
         color: background,
         borderRadius: BorderRadius.circular(10),
@@ -65,7 +67,7 @@ class MainContainerHome extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(12.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -97,7 +99,7 @@ class MainContainerHome extends StatelessWidget {
             ),
             const SizedBox(height: 5),
             Text(
-              'Última entrada dia 1º de julho',
+              subText,
               style: TextStyle(
                 color: textColor,
               ),

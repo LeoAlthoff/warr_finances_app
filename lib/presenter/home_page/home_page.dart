@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 210, 52, 105),
+        backgroundColor: const Color.fromRGBO(238, 46, 93, 1),
         title: Text(getTitleAppBar()),
         centerTitle: true,
       ),

@@ -21,44 +21,39 @@ class RegistrationPage extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.grey.shade100,
-          ),
-          child: Column(
-            children: [
-              const TextInputContainer(
-                textValue: 'Nome',
-              ),
-              const TextInputContainer(
-                textValue: 'Preço',
-              ),
+        child: Column(
+          children: [
+            const TextInputContainer(
+              textValue: 'Nome',
+            ),
+            const TextInputContainer(
+              textValue: 'Preço',
+            ),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
-                  CustomButton(
-                    income: true,
-                    textValue: 'Income',
-                  ),
-                  CustomButton(
-                    income: false,
-                    textValue: 'Outcome',
-                  ),
-                ],
-              ),
-              const ComboBox(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: const [
+                CustomButton(
+                  income: true,
+                  textValue: 'Income',
+                ),
+                CustomButton(
+                  income: false,
+                  textValue: 'Outcome',
+                ),
+              ],
+            ),
+            const ComboBox(),
 
-              // Imagem
-              Image.asset(
-                'images/cadastro.png',
-                // height: 200,
-                width: MediaQuery.of(context).size.width,
-              ),
-              // Terminar button
-              const CustomSendButton(),
-            ],
-          ),
+            // Imagem
+            Image.asset(
+              'assets/images/cadastro.png',
+              // height: 200,
+              width: MediaQuery.of(context).size.width,
+            ),
+            // Terminar button
+            const CustomSendButton(),
+          ],
         ),
       ),
     );
