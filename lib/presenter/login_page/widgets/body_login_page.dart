@@ -11,6 +11,7 @@ class BodyLoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
       child: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 50),
@@ -115,7 +116,7 @@ class BodyLoginPage extends StatelessWidget {
   }
 }
 
-  void nagigateToHomeScreen(BuildContext context) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => const HomePage()));
-  }
+void nagigateToHomeScreen(BuildContext context) {
+  Navigator.of(context)
+      .push(MaterialPageRoute(builder: (context) => const HomePage()));
+}
