@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../home_page/home_page.dart';
+import '../../home/home_page.dart';
 import '../../../shared/widgets/input_text_container.dart';
 
 class BodyLoginPage extends StatelessWidget {
