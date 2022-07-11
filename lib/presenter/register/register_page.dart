@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'widgets/register_body.dart';
+import 'widgets/body_register.dart';
 
 class RegistrationPage extends StatelessWidget {
   const RegistrationPage({Key? key}) : super(key: key);
