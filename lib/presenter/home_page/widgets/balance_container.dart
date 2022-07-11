@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/shared/utils/format_money.dart';
+import '../../../shared/utils/format_money.dart';
 
 class BalanceContainer extends StatelessWidget {
   final bool expense;
