@@ -50,7 +50,6 @@ class BalanceContainer extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Text(
-              // getCurrency(value).toString(),
               expense ? '- ${getCurrency(value)}' : getCurrency(value),
               style: TextStyle(
                 fontSize: 27,

@@ -13,6 +13,7 @@ class BodyHome extends StatelessWidget {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
             height: 200,
@@ -38,19 +39,15 @@ class BodyHome extends StatelessWidget {
               ],
             ),
           ),
-          Row(
-            children: const [
-              Padding(
-                padding: EdgeInsets.only(left: 20),
-                child: Text(
-                  'Extrato',
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
+          const Padding(
+            padding: EdgeInsets.only(left: 20),
+            child: Text(
+              'Extrato',
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.w500,
               ),
-            ],
+            ),
           ),
           const BalanceContainer(
             expense: false,
