@@ -20,18 +20,23 @@ class DrawerHome extends StatelessWidget {
                 children: [
                   Row(
                     children: const [
-                      Icon(
-                        Icons.person,
-                        color: Colors.white,
-                        size: 26,
+                      CircleAvatar(
+                        child: Icon(
+                          Icons.person,
+                          color: Color.fromARGB(255, 210, 52, 105),
+                          size: 20,
+                        ),
+                        radius: 10,
+                        backgroundColor: Colors.white,
                       ),
+                      SizedBox(width: 10),
                       Align(
                         alignment: Alignment.topLeft,
                         child: Text(
                           'Rodrigo',
                           textAlign: TextAlign.left,
                           style: TextStyle(
-                            fontSize: 25,
+                            fontSize: 20,
                             color: Colors.white,
                           ),
                         ),
@@ -42,16 +47,16 @@ class DrawerHome extends StatelessWidget {
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      '        rodrigo@gmail.com',
+                      '          rodrigo@gmail.com',
                       style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 12,
                         color: Colors.white,
                       ),
                     ),
                   ),
                   const SizedBox(height: 20),
                   const Align(
-                    alignment: Alignment.bottomLeft,
+                    alignment: Alignment.center,
                     child: Text(
                       'O que deseja fazer ?',
                       textAlign: TextAlign.start,
