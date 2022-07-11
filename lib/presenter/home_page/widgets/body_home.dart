@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'main_container_home.dart';
-import 'other_container.dart';
+import 'balance_container.dart';
 
 class BodyHome extends StatelessWidget {
   const BodyHome({
@@ -21,19 +21,18 @@ class BodyHome extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    MainContainerHome(index: 1, value: 18000),
-                    MainContainerHome(index: 2, value: 870),
-                    MainContainerHome(index: 3, value: 17130),
+                    MainContainerHome(index: 1, subText: 'Última entrada dia 1º de julho', value: 18000),
+                    MainContainerHome(index: 2, subText: 'Última entrada dia 22 de junho', value: 870),
+                    MainContainerHome(index: 3, subText: '1º à 11 de julho', value: 17130),
                   ],
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 15),
           Row(
             children: const [
               Padding(
-                padding: EdgeInsets.only(left: 10),
+                padding: EdgeInsets.only(left: 20),
                 child: Text(
                   'Extrato',
                   style: TextStyle(
@@ -44,7 +43,7 @@ class BodyHome extends StatelessWidget {
               ),
             ],
           ),
-          const OtherContainer(
+          const BalanceContainer(
             expense: false,
             origin: 'Warren Tecnologia',
             value: 2500.00,
@@ -52,7 +51,7 @@ class BodyHome extends StatelessWidget {
             source: 'Salário',
             time: "01/07/2022",
           ),
-          const OtherContainer(
+          const BalanceContainer(
             expense: true,
             origin: 'Ifood',
             value: 250.00,
@@ -60,7 +59,7 @@ class BodyHome extends StatelessWidget {
             source: 'Alimentação',
             time: "22/06/2022",
           ),
-          const OtherContainer(
+          const BalanceContainer(
             expense: true,
             origin: 'Angeloni',
             value: 620.00,
@@ -68,7 +67,7 @@ class BodyHome extends StatelessWidget {
             source: 'Mercado',
             time: "18/06/2022",
           ),
-          const OtherContainer(
+          const BalanceContainer(
             expense: false,
             origin: 'Professor Ailton',
             value: 15500.00,

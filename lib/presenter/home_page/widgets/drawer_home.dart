@@ -14,7 +14,7 @@ class DrawerHome extends StatelessWidget {
             height: 130,
             child: DrawerHeader(
               decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 210, 52, 105),
+                color: Color.fromRGBO(238, 46, 93, 1),
               ),
               child: Column(
                 children: [
@@ -23,7 +23,7 @@ class DrawerHome extends StatelessWidget {
                       CircleAvatar(
                         child: Icon(
                           Icons.person,
-                          color: Color.fromARGB(255, 210, 52, 105),
+                          color: Color.fromRGBO(238, 46, 93, 1),
                           size: 20,
                         ),
                         radius: 10,

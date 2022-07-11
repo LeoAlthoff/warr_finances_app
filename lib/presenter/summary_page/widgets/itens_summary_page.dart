@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_teste_app/shared/utils/format_money.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'info_chart_summary.dart';
 
@@ -37,7 +38,7 @@ class ItensSummaryPage extends StatelessWidget {
                 size: 20,
               ),
               Text(
-                'Gastos em julho, 2022',
+                'Saídas: julho, 2022',
                 style: TextStyle(
                   fontSize: 18,
                 ),
@@ -58,7 +59,7 @@ class ItensSummaryPage extends StatelessWidget {
             showChartValuesInPercentage: true,
             showChartValueBackground: false,
             chartValueStyle: TextStyle(
-              fontSize: 14,
+              fontSize: 13,
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),
@@ -67,35 +68,38 @@ class ItensSummaryPage extends StatelessWidget {
             showLegends: false,
           ),
         ),
-        const InfoChartSummary(
+        const SizedBox(
+          height: 15,
+        ),
+        InfoChartSummary(
           icon: Icons.restaurant,
           category: 'Alimentação',
-          value: 'R\$ 250,00',
-          colorIcon: Colors.red,
+          value: getCurrency(dataMap['Alimentação']),
+          colorIcon: colorList[0],
         ),
-        const InfoChartSummary(
+        InfoChartSummary(
           icon: Icons.shopping_bag,
           category: 'Compras',
-          value: 'R\$ 1.350,00',
-          colorIcon: Colors.yellow,
+          value: getCurrency(dataMap['Compras']),
+          colorIcon: colorList[1],
         ),
-        const InfoChartSummary(
+        InfoChartSummary(
           icon: Icons.house,
           category: 'Aluguel',
-          value: 'R\$ 1.600,00',
-          colorIcon: Colors.blue,
+          value: getCurrency(dataMap['Aluguel']),
+          colorIcon: colorList[2],
         ),
-        const InfoChartSummary(
+        InfoChartSummary(
           icon: Icons.phone,
           category: 'Telefone',
-          value: 'R\$ 95,55',
-          colorIcon: Colors.green,
+          value: getCurrency(dataMap['Telefone']),
+          colorIcon: colorList[3],
         ),
-        const InfoChartSummary(
+        InfoChartSummary(
           icon: Icons.request_page_rounded,
           category: 'Contas',
-          value: 'R\$ 458,90',
-          colorIcon: Colors.purple,
+          value: getCurrency(dataMap['Contas']),
+          colorIcon: colorList[4],
         ),
       ],
     );

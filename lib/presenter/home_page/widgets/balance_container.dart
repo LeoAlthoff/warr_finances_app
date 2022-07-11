@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_teste_app/shared/utils/format_money.dart';
 
-class OtherContainer extends StatelessWidget {
+class BalanceContainer extends StatelessWidget {
   final bool expense;
   final String origin;
   final double value;
@@ -9,7 +9,7 @@ class OtherContainer extends StatelessWidget {
   final String source;
   final String time;
 
-  const OtherContainer({
+  const BalanceContainer({
     Key? key,
     required this.expense,
     required this.origin,
@@ -39,7 +39,7 @@ class OtherContainer extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(12.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
