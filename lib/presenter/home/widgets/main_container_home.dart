@@ -18,7 +18,9 @@ class MainContainerHome extends StatelessWidget {
     required this.index,
     required this.subText,
     required this.value,
-  }) : super(key: key);
+  }) : super(key: key) {
+    defineContainer(index);
+  }
 
   void defineContainer(entrada) {
     switch (index) {
@@ -47,13 +49,11 @@ class MainContainerHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    defineContainer(index);
     return Container(
       margin: const EdgeInsets.symmetric(
         horizontal: 10,
         vertical: 10,
       ),
-      height: 150,
       width: MediaQuery.of(context).size.width - 40,
       decoration: BoxDecoration(
         color: background,

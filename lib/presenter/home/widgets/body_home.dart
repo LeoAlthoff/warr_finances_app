@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'main_container_home.dart';
+
 import 'balance_container.dart';
+import 'main_container_home.dart';
 
 class BodyHome extends StatelessWidget {
   const BodyHome({
@@ -19,12 +20,20 @@ class BodyHome extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.only(left: 5),
               children: [
-                Row(
-                  children: [
-                    MainContainerHome(index: 1, subText: 'Última entrada dia 1º de julho', value: 18000),
-                    MainContainerHome(index: 2, subText: 'Última entrada dia 22 de junho', value: 870),
-                    MainContainerHome(index: 3, subText: '1º à 11 de julho', value: 17130),
-                  ],
+                MainContainerHome(
+                  index: 1,
+                  subText: 'Última entrada dia 1º de julho',
+                  value: 18000,
+                ),
+                MainContainerHome(
+                  index: 2,
+                  subText: 'Última entrada dia 22 de junho',
+                  value: 870,
+                ),
+                MainContainerHome(
+                  index: 3,
+                  subText: '1º à 11 de julho',
+                  value: 17130,
                 ),
               ],
             ),
