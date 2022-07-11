@@ -70,7 +70,7 @@ class DrawerHome extends StatelessWidget {
                 ],
               ),
             ),
-          ),
+          ),        
           const ListTile(
             title: Text('Pesquisa'),
             leading: Icon(Icons.search),
@@ -96,8 +96,11 @@ class DrawerHome extends StatelessWidget {
             leading: Icon(Icons.settings),
           ),
           const SizedBox(height: 7),
+          const Divider(
+            height: 1,
+          ),
           const ListTile(
-            title: Text('Sair do aplicativo'),
+            title: Text('Sair do aplicativo'),  
             leading: Icon(Icons.arrow_back),
           ),
         ],
