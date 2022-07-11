@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'itens_summary_page.dart';
+import 'widgets/itens_summary_page.dart';
 
 void main() {
   runApp(const MaterialApp(
