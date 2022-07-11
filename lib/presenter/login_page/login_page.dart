@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../home_page/home_page.dart';
+import '../../shared/widgets/input_text_container.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -8,24 +9,27 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 210, 52, 105),
+      backgroundColor: const Color.fromRGBO(238, 46, 93, 1),
       body: SingleChildScrollView(
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 50),
             child: Column(children: [
-              const Icon(Icons.attach_money, size: 70),
+              Image.asset('assets/images/dinheiro.png',
+              width: 90,
+              height: 90,),
+              SizedBox(height: 30,),
               const Text(
                 'Warr Finances',
-                style: TextStyle(fontSize: 45, color: Colors.white),
+                style: TextStyle(fontSize: 30, color: Colors.white),
               ),
               const SizedBox(
-                height: 60,
+                height: 50,
               ),
               const Text(
                 'Controle suas finanças de forma',
                 style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 17,
                     color: Colors.white,
                     fontStyle: FontStyle.italic),
               ),
@@ -35,58 +39,78 @@ class LoginPage extends StatelessWidget {
               const Text(
                 'muito simples',
                 style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 17,
                     color: Colors.white,
                     fontStyle: FontStyle.italic),
               ),
               const SizedBox(
-                height: 55,
+                height: 70,
               ),
-              const Text(
-                ' Faça seu login com uma conta Google abaixo',
-                style: TextStyle(fontSize: 15, color: Colors.white),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    ' Faça seu login com uma conta Google abaixo',
+                    style: TextStyle(fontSize: 13, color: Colors.white),
+                  ),
+                  SizedBox(width: 10,),
+                  Image.asset('assets/images/google.png',
+                  height: 30,
+                  width:30,)
+                ],
               ),
               const SizedBox(
                 height: 10,
               ),
-              Form(
-                child: Column(
-                  children: [
-                    TextFormField(
-                      autofocus: true,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: const InputDecoration(
-                        labelText: 'E-mail',
-                        labelStyle: TextStyle(color: Colors.white),
-                        prefixIcon: Icon(
-                          Icons.mail_outline,
-                          color: Colors.white,
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                    TextFormField(
-                      autofocus: true,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: const InputDecoration(
-                        labelText: 'Senha',
-                        labelStyle: TextStyle(color: Colors.white),
-                        prefixIcon: Icon(
-                          Icons.vpn_key_sharp,
-                          color: Colors.white,
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+              TextInputContainer(
+                textValue: 'E-mail',
               ),
+              TextInputContainer(
+                
+                textValue: 'Senha',
+              ),
+              // Form(
+              //   child: Column(
+              //     children: [
+              //       TextFormField(
+              //         keyboardType: TextInputType.emailAddress,
+              //         autofocus: true,
+              //         style: const TextStyle(color: Colors.white),
+              //         decoration: const InputDecoration(
+              //           labelText: 'E-mail',
+              //           labelStyle: TextStyle(color: Colors.white,
+              //           ),
+              //           prefixIcon: Icon(
+              //             Icons.mail_outline,
+              //             color: Colors.white,
+              //           ),
+              //           focusedBorder: UnderlineInputBorder(
+              //             borderSide: BorderSide(color: Colors.white),
+              //           ),
+              //         ),
+              //       ),
+              //       SizedBox(height: 10,),
+              //       TextFormField(
+              //         keyboardType: TextInputType.visiblePassword,
+              //         autofocus: true,
+              //         style: const TextStyle(color: Colors.white),
+              //         decoration: const InputDecoration(
+              //           labelText: 'Senha',
+              //           labelStyle: TextStyle(color: Colors.white),
+              //           prefixIcon: Icon(
+              //             Icons.vpn_key_sharp,
+              //             color: Colors.white,
+              //           ),
+              //           focusedBorder: UnderlineInputBorder(
+              //             borderSide: BorderSide(color: Colors.white),
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               const Padding(
-                padding: EdgeInsets.only(bottom: 15),
+                padding: EdgeInsets.only(bottom: 20),
               ),
               GestureDetector(
                 onTap: () {},
@@ -97,36 +121,36 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(20.0),
                 child: SizedBox(
                   width: 150,
                   height: 30,
                   child: RaisedButton(
-                    elevation: 15,
+                    elevation: 40,
                     onPressed: () {
                       nagigateToHomeScreen(context);
                     },
-                    color: const Color.fromARGB(255, 144, 141, 142),
+                    color: Color.fromARGB(255, 234, 198, 214),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: const Text(
                       'Login',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.black),
                     ),
                   ),
                 ),
               ),
-              Stack(
-                alignment: Alignment.topCenter,
-                children: [
-                  Image.asset(
-                    'assets/images/grafico.png',
-                    width: 520,
-                    height: 300,
-                  ),
-                ],
-              ),
+              // Stack(
+              //   alignment: Alignment.topCenter,
+              //   children: [
+              //     Image.asset(
+              //       'assets/images/grafico.png',
+              //       width: 420,
+              //       height: 250,
+              //     ),
+              //   ],
+              // ),
             ]),
           ),
         ),
