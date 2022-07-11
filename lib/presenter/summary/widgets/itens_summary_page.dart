@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../shared/utils/format_money.dart';
 import 'package:pie_chart/pie_chart.dart';
+
+import '../../../shared/utils/format_money.dart';
 import 'info_chart_summary.dart';
 
 class ItensSummaryPage extends StatelessWidget {

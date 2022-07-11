@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../shared/utils/format_money.dart';
 
 class BalanceContainer extends StatelessWidget {
