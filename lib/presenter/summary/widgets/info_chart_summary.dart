@@ -31,12 +31,28 @@ class InfoChartSummary extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               child: Row(
                 children: [
-                Icon(icon, size: 25, color: colorIcon,),
-                const SizedBox(width: 20,),
-                Text(category, style: const TextStyle(fontSize: 18),),
-              ]),
+                  Icon(
+                    icon,
+                    size: 25,
+                    color: colorIcon,
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    category,
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                ],
+              ),
             ),
-            Text(value, style: const TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
+            Text(
+              value,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ],
         ),
       ),

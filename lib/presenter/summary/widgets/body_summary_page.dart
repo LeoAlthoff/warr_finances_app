@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../shared/utils/format_money.dart';
 import 'package:pie_chart/pie_chart.dart';
+
+import '../../../shared/utils/format_money.dart';
 import 'info_chart_summary.dart';
 
 class ItensSummaryPage extends StatelessWidget {
@@ -29,7 +30,10 @@ class ItensSummaryPage extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 15),
+          padding: const EdgeInsets.symmetric(
+            vertical: 30,
+            horizontal: 15,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: const [
