@@ -35,11 +35,11 @@ class RegistrationPage extends StatelessWidget {
               children: const [
                 CustomButton(
                   income: true,
-                  textValue: 'Income',
+                  textValue: 'Entrada',
                 ),
                 CustomButton(
                   income: false,
-                  textValue: 'Outcome',
+                  textValue: 'Saída',
                 ),
               ],
             ),
