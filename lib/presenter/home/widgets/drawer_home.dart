@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_teste_app/presenter/login/login_page.dart';
 
 class DrawerHome extends StatelessWidget {
   const DrawerHome({
@@ -70,7 +71,7 @@ class DrawerHome extends StatelessWidget {
                 ],
               ),
             ),
-          ),        
+          ),
           const ListTile(
             title: Text('Pesquisa'),
             leading: Icon(Icons.search),
@@ -99,9 +100,13 @@ class DrawerHome extends StatelessWidget {
           const Divider(
             height: 1,
           ),
-          const ListTile(
-            title: Text('Sair do aplicativo'),  
-            leading: Icon(Icons.arrow_back),
+          ListTile(
+            title: const Text('Sair da conta'),
+            leading: const Icon(Icons.arrow_back),
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const LoginPage()));
+            },
           ),
         ],
       ),
