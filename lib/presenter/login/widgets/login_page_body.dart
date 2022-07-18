@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../home/home_page.dart';
+import '../../home/home_page.dart';
 import 'buttons_login_page.dart';
-import 'card_email_senha_login.dart';
 import 'card_header_login_page.dart';
+
 
 class BodyLoginPage extends StatelessWidget {
   const BodyLoginPage({
@@ -14,11 +14,10 @@ class BodyLoginPage extends StatelessWidget {
     return SingleChildScrollView(
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 50),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: Column(children: const [
             CardHeaderLogin(),
-            SizedBox(height: 70),
-            CardEmailSenhaLogin(),
+            SizedBox(height: 20),
             ButtonsLogin(),
           ]),
         ),
