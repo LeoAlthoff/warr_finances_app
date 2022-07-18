@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../shared/widgets/input_text_container.dart';
 
 class CardEmailSenhaLogin extends StatelessWidget {
@@ -11,34 +12,34 @@ class CardEmailSenhaLogin extends StatelessWidget {
     return Column(
       children: [
         Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text(
-          ' Faça seu login com uma conta Google abaixo',
-          style: TextStyle(fontSize: 13, color: Colors.white),
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              ' Faça seu login com uma conta Google abaixo',
+              style: TextStyle(fontSize: 13, color: Colors.white),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Image.asset(
+              'assets/images/google.png',
+              height: 30,
+              width: 30,
+            )
+          ],
         ),
         const SizedBox(
-          width: 10,
+          height: 10,
         ),
-        Image.asset(
-          'assets/images/google.png',
-          height: 30,
-          width: 30,
-        )
-      ],
-    ),
-    const SizedBox(
-      height: 10,
-    ),
-    const TextInputContainer(
-      textValue: 'E-mail',
-    ),
-    const TextInputContainer(
-      textValue: 'Senha',
-    ),
-    const Padding(
-      padding: EdgeInsets.only(bottom: 20),
-    ),
+        TextInputContainer(
+          textValue: 'E-mail',
+        ),
+        TextInputContainer(
+          textValue: 'Senha',
+        ),
+        const Padding(
+          padding: EdgeInsets.only(bottom: 20),
+        ),
       ],
     );
   }
