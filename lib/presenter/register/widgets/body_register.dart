@@ -2,7 +2,6 @@ import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../../../shared/widgets/input_text_container.dart';
-import 'combo_box.dart';
 import 'toggle_buttons_register.dart';
 
 class BodyRegister extends StatefulWidget {
@@ -25,6 +24,15 @@ class _BodyRegisterState extends State<BodyRegister> {
 
   TextEditingController data = TextEditingController();
 
+  List<String> options = <String>[
+    'Selecione um',
+    'Alimentação',
+    'Compras',
+    'Aluguel',
+    'Telefone',
+    'Contas',
+  ];
+
   void cleanEntries() {
     isSelected[0] = false;
     isSelected[1] = false;
@@ -44,12 +52,20 @@ class _BodyRegisterState extends State<BodyRegister> {
     return '';
   }
 
+  String formatDate(String date) {
+    List temp = date.split('-');
+    return temp.length == 3
+        ? ('${temp[2]}-${temp[1]}-${temp[0]}')
+        : 'Data inválida!';
+  }
+
   void save() {
     print('Nome: ${name.text}');
     print('Preço: ${price.text}');
     print('Operação: ${getOperation()}');
-    print('Categoria:  $category');
+    print('Categoria: $category');
     print('Data:  ${data.text}');
+    print('Data formatada:  ${formatDate(data.text)}');
   }
 
   @override
@@ -63,7 +79,8 @@ class _BodyRegisterState extends State<BodyRegister> {
         TextInputContainer(
           textValue: 'Preço',
           controller: price,
-          type: TextInputType.number,
+          type: const TextInputType.numberWithOptions(),
+          numericFormatter: true,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -71,7 +88,40 @@ class _BodyRegisterState extends State<BodyRegister> {
             ToggleButtonsRegister(isSelected: isSelected),
           ],
         ),
-        ComboBox(dropDownValue: category),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          margin: const EdgeInsets.symmetric(
+            horizontal: 30,
+            vertical: 10,
+          ),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10,
+            vertical: 5,
+          ),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+          ),
+          // child: DropdownButtonHideUnderline(
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              value: category,
+              items: options
+                  .map<DropdownMenuItem<String>>(
+                    (String value) => DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    ),
+                  )
+                  .toList(),
+              onChanged: (String? newValue) {
+                setState(() {
+                  category = newValue!;
+                });
+              },
+            ),
+          ),
+        ),
         Container(
           width: MediaQuery.of(context).size.width,
           margin: const EdgeInsets.symmetric(
