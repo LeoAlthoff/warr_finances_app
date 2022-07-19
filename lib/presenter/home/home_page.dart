@@ -15,10 +15,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int currentPage = 0;
   late PageController pageController;
-  final screens = const [
+  final screens = [
     BodyHome(),
-    RegistrationPage(),
-    Summary(),
+    const RegistrationPage(),
+    const Summary(),
   ];
   @override
   void initState() {
