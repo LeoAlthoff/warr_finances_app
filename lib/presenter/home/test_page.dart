@@ -6,6 +6,8 @@ import '../../shared/utils/database_helper.dart';
 class TestPage extends StatelessWidget {
   TestPage({Key? key}) : super(key: key);
 
+  DatabaseHelper database = DatabaseHelper();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

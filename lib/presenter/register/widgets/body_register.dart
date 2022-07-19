@@ -43,13 +43,13 @@ class _BodyRegisterState extends State<BodyRegister> {
     setState(() {});
   }
 
-  String getOperation() {
+  int getOperation() {
     if (isSelected[0]) {
-      return 'Entrada';
+      return 1;
     } else if (isSelected[1]) {
-      return 'Saida';
+      return 0;
     }
-    return '';
+    return -1;
   }
 
   String formatDate(String date) {
@@ -60,12 +60,42 @@ class _BodyRegisterState extends State<BodyRegister> {
   }
 
   void save() {
-    print('Nome: ${name.text}');
-    print('Preço: ${price.text}');
-    print('Operação: ${getOperation()}');
-    print('Categoria: $category');
-    print('Data:  ${data.text}');
-    print('Data formatada:  ${formatDate(data.text)}');
+    if (name.text == '' ||
+        price.text == '' ||
+        getOperation() == -1 ||
+        category == 'Selecione um' ||
+        data.text == '') {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Informações inválidas!'),
+            content: const Text('Você não pode deixar nenhum campo em branco.'),
+            actions: [
+              TextButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        const Color.fromRGBO(238, 46, 93, 1)),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text(
+                    'Ok',
+                    style: TextStyle(color: Colors.white),
+                  ))
+            ],
+          );
+        },
+      );
+    } else {
+      print('Nome: ${name.text}');
+      print('Preço: ${price.text}');
+      print('Operação: ${getOperation()}');
+      print('Categoria: $category');
+      print('Data:  ${data.text}');
+      print('Data formatada:  ${formatDate(data.text)}');
+    }
   }
 
   @override
