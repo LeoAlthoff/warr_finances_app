@@ -17,7 +17,7 @@ class _SplashScreenLoginPageState extends State<SplashScreenLoginPage> {
     Future.delayed(const Duration(seconds: 2)).then((value) {
       Navigator.of(context).push(
         MaterialPageRoute(builder: (context) {
-          return const LoginPage();
+          return  LoginPage();
         }),
       );
     });
@@ -25,7 +25,7 @@ class _SplashScreenLoginPageState extends State<SplashScreenLoginPage> {
   }
   Widget build(BuildContext context) {
       return Container(
-        color: Colors.white,
+        color: Color.fromARGB(255, 234, 198, 214),
           child: Lottie.asset('assets/lottie/cifrao_rosa.json',),
       );
   }

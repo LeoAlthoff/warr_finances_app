@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../../home/home_page.dart';
 import 'buttons_login_page.dart';
 import 'card_header_login_page.dart';
+import 'reset_passaword_page.dart';
+import 'sign_up_page.dart';
 
 
 class BodyLoginPage extends StatelessWidget {
@@ -29,4 +31,13 @@ class BodyLoginPage extends StatelessWidget {
 void nagigateToHomeScreen(BuildContext context) {
   Navigator.of(context)
       .push(MaterialPageRoute(builder: (context) => const HomePage()));
+}
+
+void navigateToResetPassword(BuildContext context) {
+  Navigator.of(context)
+      .push(MaterialPageRoute(builder: (context) => const ResetPassawordPage()));
+}
+void navigateToSignUpPage(BuildContext context) {
+  Navigator.of(context)
+      .push(MaterialPageRoute(builder: (context) => const SignUpPage()));
 }
