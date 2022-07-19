@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TextInputContainer extends StatelessWidget {
   final String textValue;
+  final TextEditingController? controller;
+  TextInputType type;
+  bool numericFormatter;
 
-  const TextInputContainer({
+  TextInputContainer({
     Key? key,
     required this.textValue,
+    this.type = TextInputType.text,
+    this.controller,
+    this.numericFormatter = false,
   }) : super(key: key);
 
   @override
@@ -18,13 +25,16 @@ class TextInputContainer extends StatelessWidget {
       ),
       padding: const EdgeInsets.symmetric(
         horizontal: 10,
-        vertical: 5,
+        vertical: 0,
       ),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(5),
       ),
       child: TextField(
+        controller: controller,
+        inputFormatters:
+            numericFormatter ? [FilteringTextInputFormatter.digitsOnly] : [],
         decoration: InputDecoration(
           labelText: textValue,
           border: InputBorder.none,

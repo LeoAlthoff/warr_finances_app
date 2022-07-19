@@ -1,103 +1,192 @@
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../../../shared/widgets/input_text_container.dart';
-import 'combo_box.dart';
-import 'custom_send_button.dart';
-import 'package:date_time_picker/date_time_picker.dart';
+import 'toggle_buttons_register.dart';
 
-class BodyRegister extends StatelessWidget {
-  final List<bool> isSelected = [false, false];
-  final TextEditingController control1 = TextEditingController();
-  final TextEditingController control2 = TextEditingController();
-
-  BodyRegister({
+class BodyRegister extends StatefulWidget {
+  const BodyRegister({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<BodyRegister> createState() => _BodyRegisterState();
+}
+
+class _BodyRegisterState extends State<BodyRegister> {
+  final List<bool> isSelected = [false, false];
+
+  final TextEditingController name = TextEditingController();
+
+  final TextEditingController price = TextEditingController();
+
+  String category = 'Selecione um';
+
+  TextEditingController data = TextEditingController();
+
+  List<String> options = <String>[
+    'Selecione um',
+    'Alimentação',
+    'Compras',
+    'Aluguel',
+    'Telefone',
+    'Contas',
+  ];
+
+  void cleanEntries() {
+    isSelected[0] = false;
+    isSelected[1] = false;
+    category = 'Selecione um';
+    name.clear();
+    price.clear();
+    data.clear();
+    setState(() {});
+  }
+
+  String getOperation() {
+    if (isSelected[0]) {
+      return 'Entrada';
+    } else if (isSelected[1]) {
+      return 'Saida';
+    }
+    return '';
+  }
+
+  String formatDate(String date) {
+    List temp = date.split('-');
+    return temp.length == 3
+        ? ('${temp[2]}-${temp[1]}-${temp[0]}')
+        : 'Data inválida!';
+  }
+
+  void save() {
+    print('Nome: ${name.text}');
+    print('Preço: ${price.text}');
+    print('Operação: ${getOperation()}');
+    print('Categoria: $category');
+    print('Data:  ${data.text}');
+    print('Data formatada:  ${formatDate(data.text)}');
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const TextInputContainer(
+        TextInputContainer(
           textValue: 'Nome',
+          controller: name,
         ),
-        const TextInputContainer(
+        TextInputContainer(
           textValue: 'Preço',
+          controller: price,
+          type: const TextInputType.numberWithOptions(),
+          numericFormatter: true,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             ToggleButtonsRegister(isSelected: isSelected),
-
-            // const CustomButton(
-            //   income: true,
-            //   textValue: 'Entrada',
-            // ),
-            // const CustomButton(
-            //   income: false,
-            //   textValue: 'Saída',
-            // ),
           ],
         ),
-        const ComboBox(),
-        DateTimePicker(
-          initialValue: '',
-          firstDate: DateTime(2000),
-          lastDate: DateTime(2100),
-          dateLabelText: 'Date',
-          onChanged: (val) => print(val),
-          validator: (val) {
-            print(val);
-            return null;
-          },
-          onSaved: (val) => print(val),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          margin: const EdgeInsets.symmetric(
+            horizontal: 30,
+            vertical: 10,
+          ),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10,
+            vertical: 5,
+          ),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+          ),
+          // child: DropdownButtonHideUnderline(
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              value: category,
+              items: options
+                  .map<DropdownMenuItem<String>>(
+                    (String value) => DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    ),
+                  )
+                  .toList(),
+              onChanged: (String? newValue) {
+                setState(() {
+                  category = newValue!;
+                });
+              },
+            ),
+          ),
         ),
-        const CustomSendButton(),
-      ],
-    );
-  }
-}
-
-class ToggleButtonsRegister extends StatefulWidget {
-  const ToggleButtonsRegister({
-    Key? key,
-    required this.isSelected,
-  }) : super(key: key);
-
-  final List<bool> isSelected;
-  @override
-  State<ToggleButtonsRegister> createState() => _ToggleButtonsRegisterState();
-}
-
-class _ToggleButtonsRegisterState extends State<ToggleButtonsRegister> {
-  @override
-  Widget build(BuildContext context) {
-    return ToggleButtons(
-      constraints: const BoxConstraints(minWidth: 175, minHeight: 50),
-      isSelected: widget.isSelected,
-      borderColor: Colors.lightBlueAccent,
-      selectedBorderColor: Colors.red,
-      borderRadius: const BorderRadius.all(Radius.circular(10)),
-      onPressed: (int index) {
-        setState(() {
-          widget.isSelected[index] = !widget.isSelected[index];
-          if (widget.isSelected[0] && widget.isSelected[1]) {
-            index == 0
-                ? widget.isSelected[1] = false
-                : widget.isSelected[0] = false;
-          }
-        });
-      },
-      children: const <Widget>[
-        Icon(
-          Icons.arrow_circle_up,
-          size: 30,
-          color: Colors.green,
+        Container(
+          width: MediaQuery.of(context).size.width,
+          margin: const EdgeInsets.symmetric(
+            horizontal: 30,
+            vertical: 10,
+          ),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10,
+          ),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: DateTimePicker(
+            controller: data,
+            firstDate: DateTime(2000),
+            lastDate: DateTime(2100),
+            dateLabelText: 'Data',
+            locale: const Locale('pt', 'BR'),
+          ),
         ),
-        Icon(
-          Icons.arrow_circle_down,
-          size: 30,
-          color: Colors.red,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            TextButton(
+              onPressed: () {
+                cleanEntries();
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.white60,
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(color: Colors.grey.shade400)),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                child: const Text(
+                  'Limpar',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                save();
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: const Color.fromRGBO(238, 46, 93, 1),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                child: const Text(
+                  'Enviar',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     );

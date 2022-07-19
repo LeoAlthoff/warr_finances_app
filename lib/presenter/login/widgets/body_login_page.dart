@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../home/home_page.dart';
 import '../../../shared/widgets/input_text_container.dart';
+import '../../home/home_page.dart';
 
 class BodyLoginPage extends StatelessWidget {
   const BodyLoginPage({
@@ -71,10 +71,10 @@ class BodyLoginPage extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            const TextInputContainer(
+            TextInputContainer(
               textValue: 'E-mail',
             ),
-            const TextInputContainer(
+            TextInputContainer(
               textValue: 'Senha',
             ),
             const Padding(
