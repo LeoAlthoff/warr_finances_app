@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:io';
 
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart';
+// ignore: depend_on_referenced_packages
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
@@ -10,8 +8,7 @@ class DatabaseHelper {
   static const _operationTable = 'operation';
   static const _categoryTable = 'category';
   static Database? _database;
-
-  DatabaseHelper database = DatabaseHelper();
+  static final DatabaseHelper instance = DatabaseHelper();
 
   DatabaseHelper() {
     _initiateDatabase();

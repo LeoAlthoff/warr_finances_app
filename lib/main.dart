@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'presenter/login/login_page.dart';
+import 'shared/utils/database_helper.dart';
 
 void main() {
   runApp(
@@ -16,4 +18,5 @@ void main() {
       debugShowCheckedModeBanner: false,
     ),
   );
+  DatabaseHelper();
 }
