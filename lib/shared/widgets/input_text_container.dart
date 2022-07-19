@@ -33,8 +33,9 @@ class TextInputContainer extends StatelessWidget {
       ),
       child: TextField(
         controller: controller,
-        inputFormatters:
-            numericFormatter ? [FilteringTextInputFormatter.digitsOnly] : [],
+        inputFormatters: numericFormatter
+            ? [FilteringTextInputFormatter.allow(RegExp(r'[0-9]+\.?[0-9]*$'))]
+            : [],
         decoration: InputDecoration(
           labelText: textValue,
           border: InputBorder.none,
