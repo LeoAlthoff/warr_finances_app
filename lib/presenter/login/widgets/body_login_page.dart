@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../shared/widgets/input_text_container.dart';
-import '../../category/widgets/new_category_body.dart';
 import '../../home/home_page.dart';
 
 class BodyLoginPage extends StatelessWidget {
@@ -118,6 +117,8 @@ class BodyLoginPage extends StatelessWidget {
 }
 
 void nagigateToHomeScreen(BuildContext context) {
+  // Navigator.of(context)
+  //     .push(MaterialPageRoute(builder: (context) => const NewCategoryBody()));
   Navigator.of(context)
-      .push(MaterialPageRoute(builder: (context) => const NewCategoryBody()));
+      .push(MaterialPageRoute(builder: (context) => const HomePage()));
 }
