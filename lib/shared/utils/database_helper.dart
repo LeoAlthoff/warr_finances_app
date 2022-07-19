@@ -11,8 +11,6 @@ class DatabaseHelper {
   static const _categoryTable = 'category';
   static Database? _database;
 
-  DatabaseHelper database = DatabaseHelper();
-
   DatabaseHelper() {
     _initiateDatabase();
   }
