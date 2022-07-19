@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'presenter/login/splash_screen_login/splash_screen_login_page.dart';
-import 'presenter/login/widgets/login_page_body.dart';
-import 'presenter/login/widgets/reset_passaword_page.dart';
+
 
 void main() {
   runApp(
     MaterialApp(
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
+      supportedLocales: const [Locale('pt', 'BR')],
       title: 'MeuAppTeste',
       home: 
       const SplashScreenLoginPage(),

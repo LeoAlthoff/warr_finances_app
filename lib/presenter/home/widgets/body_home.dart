@@ -4,7 +4,7 @@ import 'balance_container.dart';
 import 'main_container_home.dart';
 
 class BodyHome extends StatelessWidget {
-  const BodyHome({
+  BodyHome({
     Key? key,
   }) : super(key: key);
 
