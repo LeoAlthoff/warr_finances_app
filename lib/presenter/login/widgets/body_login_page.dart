@@ -120,5 +120,5 @@ void nagigateToHomeScreen(BuildContext context) {
   // Navigator.of(context)
   //     .push(MaterialPageRoute(builder: (context) => const NewCategoryBody()));
   Navigator.of(context)
-      .push(MaterialPageRoute(builder: (context) => const HomePage()));
+      .push(MaterialPageRoute(builder: (context) => HomePage()));
 }

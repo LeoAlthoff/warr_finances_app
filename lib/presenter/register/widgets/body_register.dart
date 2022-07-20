@@ -1,5 +1,6 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_teste_app/presenter/category/new_category_page.dart';
 
 import '../../../shared/widgets/input_text_container.dart';
 import 'toggle_buttons_register.dart';
@@ -154,6 +155,16 @@ class _BodyRegisterState extends State<BodyRegister> {
               },
             ),
           ),
+        ),
+        InkWell(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: ((context) => const NewCategoryPage()),
+              ),
+            );
+          },
+          child: const Text('Criar uma nova categoria'),
         ),
         Container(
           width: MediaQuery.of(context).size.width,
