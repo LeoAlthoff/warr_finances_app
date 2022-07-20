@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/presenter/category/widgets/wrap_icons_one.dart';
-import 'package:flutter_teste_app/presenter/category/widgets/wrap_icons_two.dart';
-import 'package:flutter_teste_app/shared/widgets/input_text_container.dart';
+import 'wrap_icons_one.dart';
+import 'wrap_icons_two.dart';
+import '../../../shared/widgets/input_text_container.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'wrap_icons.dart';

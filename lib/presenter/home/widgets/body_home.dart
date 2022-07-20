@@ -33,7 +33,7 @@ class BodyHome extends StatelessWidget {
                 ),
                 MainContainerHome(
                   index: 3,
-                  subText: '1º à 11 de julho',
+                  subText: '1º à 31 de julho',
                   value: 17130,
                 ),
               ],

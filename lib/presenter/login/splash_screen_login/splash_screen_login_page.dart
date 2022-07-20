@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/presenter/login/widgets/login_page.dart';
 import 'package:lottie/lottie.dart';
+
+import '../widgets/login_page.dart';
 
 class SplashScreenLoginPage extends StatefulWidget {
   const SplashScreenLoginPage({Key? key}) : super(key: key);

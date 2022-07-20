@@ -1,8 +1,7 @@
 import 'dart:async';
-import 'dart:io';
+import 'dart:ffi';
 
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart';
+// ignore: depend_on_referenced_packages
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
@@ -10,6 +9,7 @@ class DatabaseHelper {
   static const _operationTable = 'operation';
   static const _categoryTable = 'category';
   static Database? _database;
+  static final DatabaseHelper instance = DatabaseHelper();
 
   DatabaseHelper() {
     _initiateDatabase();
@@ -26,7 +26,8 @@ class DatabaseHelper {
         await db.execute('''CREATE TABLE $_categoryTable
         (id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
-        color TEXT NOT NULL)''');
+        color TEXT NOT NULL,
+        icon TEXT NOT NULL)''');
         await db.execute('''CREATE TABLE $_operationTable
           (id INTEGER PRIMARY KEY AUTOINCREMENT,
           value NUM NOT NULL,
@@ -36,6 +37,23 @@ class DatabaseHelper {
          categoryId INTERGER,
          FOREIGN KEY(categoryId) REFERENCES Category(id)
          )''');
+        await db.rawInsert(
+          '''INSERT INTO Category(name, color, icon) 
+         VALUES('Salário', 'Colors.black', 'Icons.attach_money'),
+          ('Alimentação', 'Colors.red', 'Icons.restaurant'),
+          ('Compras', 'Colors.yellow', 'Icons.shopping_bag'),
+          ('Aluguel', 'Colors.blue', 'Icons.house'),
+          ('Telefone', 'Colors.green', 'Icons.phone'),
+          ('Contas', 'Colors.purple', 'Icons.request_page_rounded')
+        ''',
+        );
+        await db.rawInsert('''
+        INSERT INTO Operation (value, name, entry, date, categoryId)
+        VALUES(2500, 'Warren Tecnologia', 1, '01/07/2022', 1),
+        (2500, 'Ifood', 0, '22/06/2022', 2),
+        (620, 'Angeloni', 0, '18/06/2022', 3),
+        (15500, 'Professor Ailton', 1, '01/07/2022', 1)   
+        ''');
       },
     );
   }
@@ -44,10 +62,10 @@ class DatabaseHelper {
     await db.execute('PRAGMA foreign_keys = ON');
   }
 
-  void insertCategory(String name, String color) async {
+  void insertCategory(String name, String color, String icon) async {
     await _database!.rawInsert(
-      'INSERT INTO Category(name, color) VALUES(?, ?)',
-      [name, color],
+      'INSERT INTO Category(name, color, icon) VALUES(?, ?, ?)',
+      [name, color, icon],
     );
   }
 
@@ -59,9 +77,22 @@ class DatabaseHelper {
     );
   }
 
-  void selectCategory() async {
+  // void queyCategory() async {
+  //   List<Map> list = await _database!.rawQuery('SELECT * FROM Category');
+  //   print(list);
+  // }
+
+  void queryCategory() async {
     List<Map> list = await _database!.rawQuery('SELECT * FROM Category');
     print(list);
+  }
+
+  Future<int> selectCategory(String categoryName) async {
+    List<Map> list = await _database!.rawQuery(
+      'SELECT id FROM Category WHERE Name= ?',
+      [categoryName],
+    );
+    return list[0]['id'];
   }
 
   void selectOperation() async {
