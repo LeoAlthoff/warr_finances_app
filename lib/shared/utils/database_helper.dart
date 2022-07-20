@@ -76,19 +76,8 @@ class DatabaseHelper {
     );
   }
 
-<<<<<<< HEAD
   Future<List<Map<String, dynamic>>> queyCategory() async {
     return await _database!.rawQuery('SELECT * FROM Category');
-=======
-  // void queyCategory() async {
-  //   List<Map> list = await _database!.rawQuery('SELECT * FROM Category');
-  //   print(list);
-  // }
-
-  void queryCategory() async {
-    List<Map> list = await _database!.rawQuery('SELECT * FROM Category');
-    print(list);
->>>>>>> 8284decb378809dba1417f72ac02efaafbb05692
   }
 
   Future<int> selectCategory(String categoryName) async {
@@ -111,7 +100,7 @@ class DatabaseHelper {
     List<Map<String, dynamic>> list =
         await _database!.rawQuery('SELECT * FROM operation');
     print(list);
-    
+
     return list;
   }
 

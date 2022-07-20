@@ -128,7 +128,6 @@ class _BodyRegisterState extends State<BodyRegister> {
             borderRadius: BorderRadius.circular(5),
           ),
           // child: DropdownButtonHideUnderline(
-<<<<<<< HEAD
           child: FutureBuilder<List<Map<String, dynamic>>>(
             future: DatabaseHelper.instance.queyCategory(),
             builder: (
@@ -164,25 +163,6 @@ class _BodyRegisterState extends State<BodyRegister> {
                 },
               ));
             },
-=======
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton<String>(
-              value: category,
-              items: options
-                  .map<DropdownMenuItem<String>>(
-                    (String value) => DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    ),
-                  )
-                  .toList(),
-              onChanged: (String? newValue) {
-                setState(() {
-                  category = newValue!;
-                });
-              },
-            ),
->>>>>>> 8284decb378809dba1417f72ac02efaafbb05692
           ),
         ),
         Container(

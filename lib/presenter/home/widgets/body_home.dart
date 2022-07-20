@@ -61,7 +61,7 @@ class BodyHome extends StatelessWidget {
               return ListView.builder(
                 padding: const EdgeInsets.all(8),
                 itemCount: snapshot.data!.length,
-                itemBuilder: (BuildContext context, int index) {
+                itemBuilder: (BuildContext context, int index)  {
                   return BalanceContainer(
                     expense:
                         snapshot.data![index]['entry'] == '1' ? true : false,
