@@ -117,6 +117,8 @@ class BodyLoginPage extends StatelessWidget {
 }
 
 void nagigateToHomeScreen(BuildContext context) {
+  // Navigator.of(context)
+  //     .push(MaterialPageRoute(builder: (context) => const NewCategoryBody()));
   Navigator.of(context)
       .push(MaterialPageRoute(builder: (context) => const HomePage()));
 }

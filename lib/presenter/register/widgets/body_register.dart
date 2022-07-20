@@ -142,7 +142,10 @@ class _BodyRegisterState extends State<BodyRegister> {
                   .map<DropdownMenuItem<String>>(
                     (String value) => DropdownMenuItem<String>(
                       value: value,
-                      child: Text(value),
+                      child: Text(
+                        value,
+                        style: const TextStyle(color: Colors.black54),
+                      ),
                     ),
                   )
                   .toList(),
@@ -186,14 +189,18 @@ class _BodyRegisterState extends State<BodyRegister> {
                 decoration: BoxDecoration(
                     color: Colors.white60,
                     borderRadius: BorderRadius.circular(5),
-                    border: Border.all(color: Colors.grey.shade400)),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                    border: Border.all(
+                      color: Colors.grey.shade400,
+                    )),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 50,
+                  vertical: 20,
+                ),
                 child: const Text(
                   'Limpar',
                   style: TextStyle(
                     fontSize: 18,
-                    color: Colors.black,
+                    color: Colors.black54,
                   ),
                 ),
               ),
@@ -207,8 +214,10 @@ class _BodyRegisterState extends State<BodyRegister> {
                   color: const Color.fromRGBO(238, 46, 93, 1),
                   borderRadius: BorderRadius.circular(5),
                 ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 50,
+                  vertical: 20,
+                ),
                 child: const Text(
                   'Enviar',
                   style: TextStyle(
