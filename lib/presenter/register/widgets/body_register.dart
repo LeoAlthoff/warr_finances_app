@@ -1,5 +1,6 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_teste_app/shared/utils/database_helper.dart';
 
 import '../../../shared/widgets/input_text_container.dart';
 import 'toggle_buttons_register.dart';
@@ -16,7 +17,7 @@ class BodyRegister extends StatefulWidget {
 class _BodyRegisterState extends State<BodyRegister> {
   final List<bool> isSelected = [false, false];
 
-  final TextEditingController name = TextEditingController();
+  final TextEditingController operationName = TextEditingController();
 
   final TextEditingController price = TextEditingController();
 
@@ -37,7 +38,7 @@ class _BodyRegisterState extends State<BodyRegister> {
     isSelected[0] = false;
     isSelected[1] = false;
     category = 'Selecione um';
-    name.clear();
+    operationName.clear();
     price.clear();
     data.clear();
     setState(() {});
@@ -59,8 +60,8 @@ class _BodyRegisterState extends State<BodyRegister> {
         : 'Data inválida!';
   }
 
-  void save() {
-    if (name.text == '' ||
+  void save() async {
+    if (operationName.text == '' ||
         price.text == '' ||
         getOperation() == -1 ||
         category == 'Selecione um' ||
@@ -89,12 +90,13 @@ class _BodyRegisterState extends State<BodyRegister> {
         },
       );
     } else {
-      print('Nome: ${name.text}');
-      print('Preço: ${price.text}');
-      print('Operação: ${getOperation()}');
-      print('Categoria: $category');
-      print('Data:  ${data.text}');
-      print('Data formatada:  ${formatDate(data.text)}');
+      String name = operationName.text;
+      double value = double.parse(price.text);
+      int operation = getOperation();
+      String date = formatDate(data.text);
+      int categoryId = await DatabaseHelper.instance.selectCategory(category);
+      DatabaseHelper.instance
+          .insertOperation(value, name, operation, date, categoryId);
     }
   }
 
@@ -104,7 +106,7 @@ class _BodyRegisterState extends State<BodyRegister> {
       children: [
         TextInputContainer(
           textValue: 'Nome',
-          controller: name,
+          controller: operationName,
         ),
         TextInputContainer(
           textValue: 'Preço',

@@ -4,9 +4,7 @@ import '../../shared/utils/database_helper.dart';
 
 // ignore: must_be_immutable
 class TestPage extends StatelessWidget {
-  TestPage({Key? key}) : super(key: key);
-
-  DatabaseHelper database = DatabaseHelper();
+  const TestPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,13 +39,14 @@ class TestPage extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              DatabaseHelper.instance.insertCategory("Nome", "Colors.Blue");
+              DatabaseHelper.instance
+                  .insertCategory("Nome", "Colors.Blue", "Icons.person");
             },
             child: const Text("Insert Category"),
           ),
           TextButton(
             onPressed: () {
-              DatabaseHelper.instance.selectCategory();
+              DatabaseHelper.instance.queyCategory();
             },
             child: const Text("query Category"),
           ),
@@ -59,7 +58,7 @@ class TestPage extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              DatabaseHelper.instance.deleteCategory(2);
+              DatabaseHelper.instance.initialCategory();
             },
             child: const Text("delete Category"),
           ),
