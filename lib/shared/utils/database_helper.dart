@@ -76,7 +76,7 @@ class DatabaseHelper {
     );
   }
 
-  Future<List<Map<String, dynamic>>> queyCategory() async {
+  Future<List<Map<String, dynamic>>> queryCategory() async {
     return await _database!.rawQuery('SELECT * FROM Category');
   }
 

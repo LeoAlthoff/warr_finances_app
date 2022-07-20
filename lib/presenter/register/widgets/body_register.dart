@@ -129,7 +129,7 @@ class _BodyRegisterState extends State<BodyRegister> {
           ),
           // child: DropdownButtonHideUnderline(
           child: FutureBuilder<List<Map<String, dynamic>>>(
-            future: DatabaseHelper.instance.queyCategory(),
+            future: DatabaseHelper.instance.queryCategory(),
             builder: (
               context,
               AsyncSnapshot<List<Map<String, dynamic>>> snapshot,
@@ -139,8 +139,9 @@ class _BodyRegisterState extends State<BodyRegister> {
               }
               return DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
-
-                hint: categorySelected ? null : const Text('Selecione uma categoria!'),
+                hint: categorySelected
+                    ? null
+                    : const Text('Selecione uma categoria!'),
                 // disabledHint: Text(category),
                 value: categorySelected ? category : null,
 
