@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-
-import '../../login/login_page.dart';
-import '../test_page.dart';
-=======
 import '../../login/widgets/login_page.dart';
 import '../test_page.dart';
-
->>>>>>> 6a0ebe7ebb1d6cfc1ae448f71d8acc2c5f1e5df1
 
 class DrawerHome extends StatelessWidget {
   const DrawerHome({

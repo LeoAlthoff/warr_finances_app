@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ffi';
 
 // ignore: depend_on_referenced_packages
 import 'package:sqflite/sqflite.dart';
@@ -74,9 +73,8 @@ class DatabaseHelper {
     );
   }
 
-  void queyCategory() async {
-    List<Map> list = await _database!.rawQuery('SELECT * FROM Category');
-    print(list);
+  Future<List<Map<String, dynamic>>> queyCategory() async {
+    return await _database!.rawQuery('SELECT * FROM Category');
   }
 
   Future<int> selectCategory(String categoryName) async {
@@ -87,9 +85,20 @@ class DatabaseHelper {
     return list[0]['id'];
   }
 
-  void selectOperation() async {
-    List<Map> list = await _database!.rawQuery('SELECT * FROM operation');
+  Future<String> getCategory(int id) async {
+    List<Map<String, dynamic>> list = await _database!.rawQuery(
+      'SELECT Name FROM Category WHERE id= ?',
+      [id],
+    );
+    return list[0]['Name'];
+  }
+
+  Future<List<Map<String, dynamic>>> selectOperation() async {
+    List<Map<String, dynamic>> list =
+        await _database!.rawQuery('SELECT * FROM operation');
     print(list);
+    
+    return list;
   }
 
   void deleteCategory(int id) async {
