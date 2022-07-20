@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/presenter/register/widgets/custom_button.dart';
+import '../../register/widgets/custom_button.dart';
 import 'package:lottie/lottie.dart';
 
 class CardHeaderLogin extends StatefulWidget {
@@ -57,7 +57,6 @@ class CardHeaderLoginState extends State<CardHeaderLogin> {
                 //padding: EdgeInsets.only(left = 0.0,  top = 0.0, right = 0.0,  bottom = 0.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15.0),
-                  
                 ),
                 height: 40,
                 width: MediaQuery.of(context).size.width,
@@ -70,7 +69,6 @@ class CardHeaderLoginState extends State<CardHeaderLogin> {
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                    
                     icon: Icon(Icons.email),
                     labelText: 'E-mail',
                     labelStyle: TextStyle(

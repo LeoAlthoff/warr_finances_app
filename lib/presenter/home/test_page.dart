@@ -46,7 +46,7 @@ class TestPage extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              DatabaseHelper.instance.queyCategory();
+              DatabaseHelper.instance.queryCategory();
             },
             child: const Text("query Category"),
           ),
@@ -57,9 +57,7 @@ class TestPage extends StatelessWidget {
             child: const Text("update Category"),
           ),
           TextButton(
-            onPressed: () {
-              DatabaseHelper.instance.initialCategory();
-            },
+            onPressed: () {},
             child: const Text("delete Category"),
           ),
         ],

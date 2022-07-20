@@ -13,7 +13,6 @@ class DatabaseHelper {
 
   DatabaseHelper() {
     _initiateDatabase();
-    initialCategory();
   }
 
   void _initiateDatabase() async {
@@ -38,17 +37,8 @@ class DatabaseHelper {
          categoryId INTERGER,
          FOREIGN KEY(categoryId) REFERENCES Category(id)
          )''');
-      },
-    );
-  }
-
-  static Future _onConfigure(Database db) async {
-    await db.execute('PRAGMA foreign_keys = ON');
-  }
-
-  void initialCategory() async {
-    await _database!.rawInsert(
-      '''INSERT INTO Category(name, color, icon) 
+        await db.rawInsert(
+          '''INSERT INTO Category(name, color, icon) 
          VALUES('Salário', 'Colors.black', 'Icons.attach_money'),
           ('Alimentação', 'Colors.red', 'Icons.restaurant'),
           ('Compras', 'Colors.yellow', 'Icons.shopping_bag'),
@@ -56,7 +46,20 @@ class DatabaseHelper {
           ('Telefone', 'Colors.green', 'Icons.phone'),
           ('Contas', 'Colors.purple', 'Icons.request_page_rounded')
         ''',
+        );
+        await db.rawInsert('''
+        INSERT INTO Operation (value, name, entry, date, categoryId)
+        VALUES(2500, 'Warren Tecnologia', 1, '01/07/2022', 1),
+        (2500, 'Ifood', 0, '22/06/2022', 2),
+        (620, 'Angeloni', 0, '18/06/2022', 3),
+        (15500, 'Professor Ailton', 1, '01/07/2022', 1)   
+        ''');
+      },
     );
+  }
+
+  static Future _onConfigure(Database db) async {
+    await db.execute('PRAGMA foreign_keys = ON');
   }
 
   void insertCategory(String name, String color, String icon) async {
@@ -74,7 +77,12 @@ class DatabaseHelper {
     );
   }
 
-  void queyCategory() async {
+  // void queyCategory() async {
+  //   List<Map> list = await _database!.rawQuery('SELECT * FROM Category');
+  //   print(list);
+  // }
+
+  void queryCategory() async {
     List<Map> list = await _database!.rawQuery('SELECT * FROM Category');
     print(list);
   }

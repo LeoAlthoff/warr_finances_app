@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
 import 'login_page_body.dart';
-import 'reset_passaword_page.dart';
-import 'sign_up_page.dart';
 
 class ButtonsLogin extends StatelessWidget {
   const ButtonsLogin({
@@ -14,7 +13,6 @@ class ButtonsLogin extends StatelessWidget {
     return Column(
       children: [
         Container(
-          
           height: 30,
           child: TextButton(
             onPressed: () {
@@ -45,7 +43,6 @@ class ButtonsLogin extends StatelessWidget {
                 backgroundColor: MaterialStateProperty.all<Color>(
                   const Color.fromARGB(255, 234, 198, 214),
                 ),
-                
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -154,4 +151,3 @@ class ButtonsLogin extends StatelessWidget {
     );
   }
 }
-
