@@ -1,6 +1,6 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/shared/utils/database_helper.dart';
+import '../../../shared/utils/database_helper.dart';
 
 import '../../../shared/widgets/input_text_container.dart';
 import 'toggle_buttons_register.dart';
@@ -128,6 +128,7 @@ class _BodyRegisterState extends State<BodyRegister> {
             borderRadius: BorderRadius.circular(5),
           ),
           // child: DropdownButtonHideUnderline(
+<<<<<<< HEAD
           child: FutureBuilder<List<Map<String, dynamic>>>(
             future: DatabaseHelper.instance.queyCategory(),
             builder: (
@@ -163,6 +164,25 @@ class _BodyRegisterState extends State<BodyRegister> {
                 },
               ));
             },
+=======
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              value: category,
+              items: options
+                  .map<DropdownMenuItem<String>>(
+                    (String value) => DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    ),
+                  )
+                  .toList(),
+              onChanged: (String? newValue) {
+                setState(() {
+                  category = newValue!;
+                });
+              },
+            ),
+>>>>>>> 8284decb378809dba1417f72ac02efaafbb05692
           ),
         ),
         Container(
@@ -198,18 +218,14 @@ class _BodyRegisterState extends State<BodyRegister> {
                 decoration: BoxDecoration(
                     color: Colors.white60,
                     borderRadius: BorderRadius.circular(5),
-                    border: Border.all(
-                      color: Colors.grey.shade400,
-                    )),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 50,
-                  vertical: 20,
-                ),
+                    border: Border.all(color: Colors.grey.shade400)),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                 child: const Text(
                   'Limpar',
                   style: TextStyle(
                     fontSize: 18,
-                    color: Colors.black54,
+                    color: Colors.black,
                   ),
                 ),
               ),
@@ -223,10 +239,8 @@ class _BodyRegisterState extends State<BodyRegister> {
                   color: const Color.fromRGBO(238, 46, 93, 1),
                   borderRadius: BorderRadius.circular(5),
                 ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 50,
-                  vertical: 20,
-                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                 child: const Text(
                   'Enviar',
                   style: TextStyle(
