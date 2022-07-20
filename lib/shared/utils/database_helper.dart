@@ -29,22 +29,22 @@ class DatabaseHelper {
         color TEXT NOT NULL,
         icon TEXT NOT NULL)''');
         await db.execute('''CREATE TABLE $_operationTable
-          (id INTEGER PRIMARY KEY AUTOINCREMENT,
-          value NUM NOT NULL,
-           name TEXT NOT NULL,
-         entry INTERGER NOT NULL,
-          date TEXT NO NULL,
-         categoryId INTERGER,
-         FOREIGN KEY(categoryId) REFERENCES Category(id)
+        (id INTEGER PRIMARY KEY AUTOINCREMENT,
+        value NUM NOT NULL,
+        name TEXT NOT NULL,
+        entry INTERGER NOT NULL,
+        date TEXT NO NULL,
+        categoryId INTERGER,
+        FOREIGN KEY(categoryId) REFERENCES Category(id)
          )''');
         await db.rawInsert(
           '''INSERT INTO Category(name, color, icon) 
-         VALUES('Salário', 'Colors.black', 'Icons.attach_money'),
-          ('Alimentação', 'Colors.red', 'Icons.restaurant'),
-          ('Compras', 'Colors.yellow', 'Icons.shopping_bag'),
-          ('Aluguel', 'Colors.blue', 'Icons.house'),
-          ('Telefone', 'Colors.green', 'Icons.phone'),
-          ('Contas', 'Colors.purple', 'Icons.request_page_rounded')
+        VALUES('Salário', 'Colors.black', 'Icons.attach_money'),
+        ('Alimentação', 'Colors.red', 'Icons.restaurant'),
+        ('Compras', 'Colors.yellow', 'Icons.shopping_bag'),
+        ('Aluguel', 'Colors.blue', 'Icons.house'),
+        ('Telefone', 'Colors.green', 'Icons.phone'),
+        ('Contas', 'Colors.purple', 'Icons.request_page_rounded')
         ''',
         );
         await db.rawInsert('''
@@ -84,6 +84,25 @@ class DatabaseHelper {
 
   void queryCategory() async {
     List<Map> list = await _database!.rawQuery('SELECT * FROM Category');
+    print(list);
+  }
+
+  // Future<List<Map<String, dynamic>>> queryOperation() async {
+  //   List<Map<String, dynamic>> list = await _database!.query(
+  //     '"Category',
+  //     where: 'entry=?',
+  //     whereArgs: [0],
+  //     orderBy: "categoryId",
+  //   );
+  //   return list;
+  // }
+  void queryOperation() async {
+    List<Map<String, dynamic>> list = await _database!.query(
+      'Category',
+      where: 'entry = ?',
+      whereArgs: [0],
+      orderBy: "categoryId",
+    );
     print(list);
   }
 
