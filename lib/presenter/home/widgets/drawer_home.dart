@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/config.dart';
-import 'package:flutter_teste_app/presenter/login/login_page.dart';
+import '../../../config.dart';
+import '../../category/new_category_page.dart';
+import '../../login/widgets/login_page.dart';
+import '../test_page.dart';
 
 class DrawerHome extends StatelessWidget {
   const DrawerHome({
@@ -88,11 +90,29 @@ class DrawerHome extends StatelessWidget {
             leading: Icon(Icons.contact_support_rounded),
           ),
           const SizedBox(height: 7),
-          const ListTile(
+          ListTile(
             title: Text('Segurança'),
             leading: Icon(Icons.shield_outlined),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => NewCategoryPage(),
+                ),
+              );
+            },
           ),
           const SizedBox(height: 7),
+          ListTile(
+            title: const Text('Teste Dev'),
+            leading: const Icon(Icons.settings),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => TestPage(),
+                ),
+              );
+            },
+          ),
           const ListTile(
             title: Text('Configurações'),
             leading: Icon(Icons.settings),
@@ -116,7 +136,10 @@ class DrawerHome extends StatelessWidget {
             leading: const Icon(Icons.arrow_back),
             onTap: () {
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const LoginPage()));
+                MaterialPageRoute(
+                  builder: (context) => const LoginPage(),
+                ),
+              );
             },
           ),
         ],

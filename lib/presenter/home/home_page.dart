@@ -5,36 +5,36 @@ import 'widgets/body_home.dart';
 import 'widgets/drawer_home.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  int currentPage;
+  HomePage({Key? key, this.currentPage = 0}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  int currentPage = 0;
   late PageController pageController;
-  final screens = const [
+  final screens = [
     BodyHome(),
-    RegistrationPage(),
-    Summary(),
+    const RegistrationPage(),
+    const Summary(),
   ];
   @override
   void initState() {
     super.initState();
-    pageController = PageController(initialPage: currentPage);
+    pageController = PageController(initialPage: widget.currentPage);
   }
 
   setCurrentPage(index) {
     setState(
       () {
-        currentPage = index;
+        widget.currentPage = index;
       },
     );
   }
 
   String getTitleAppBar() {
-    switch (currentPage) {
+    switch (widget.currentPage) {
       case 1:
         return 'Cadastro';
       case 2:
@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
       ),
       drawer: const DrawerHome(),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentPage,
+        currentIndex: widget.currentPage,
         type: BottomNavigationBarType.fixed,
         unselectedItemColor: Colors.black,
         showUnselectedLabels: false,

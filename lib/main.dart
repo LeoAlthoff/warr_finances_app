@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/config.dart';
-import 'package:flutter_teste_app/presenter/home/home_page.dart';
-import 'presenter/login/login_page.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'config.dart';
+import 'presenter/home/home_page.dart';
+
+import 'presenter/login/splash_screen_login/splash_screen_login_page.dart';
 
 void main() {
   runApp(
@@ -19,7 +21,6 @@ class _AppState extends State<App> {
   void initState() {
     super.initState();
     currentTheme.addListener(() {
-      print('aa');
       setState(() {});
     });
   }
@@ -27,12 +28,18 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'aTheme',
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
+      supportedLocales: const [Locale('pt', 'BR')],
+      title: 'MeuAppTeste',
+      home: const SplashScreenLoginPage(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       themeMode: currentTheme.currentTheme(),
-      home: LoginPage(),
     );
   }
 }

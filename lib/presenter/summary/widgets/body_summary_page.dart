@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import '../../../shared/utils/database_helper.dart';
 import 'package:pie_chart/pie_chart.dart';
 
 import '../../../shared/utils/format_money.dart';
 import 'info_chart_summary.dart';
 
-class ItensSummaryPage extends StatelessWidget {
-  static Map<String, double> dataMap = {
-    'Alimentação': 250,
-    'Compras': 1350,
-    'Aluguel': 1600,
-    'Telefone': 95.55,
-    'Contas': 458.9,
-  };
-
+class ItensSummaryPage extends StatefulWidget {
   static List<Color> colorList = const [
     Colors.red,
     Colors.yellow,
@@ -25,6 +19,18 @@ class ItensSummaryPage extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<ItensSummaryPage> createState() => _ItensSummaryPageState();
+}
+
+class _ItensSummaryPageState extends State<ItensSummaryPage> {
+  Map<String, double> dataMap = {
+    'Alimentação': 250,
+    'Compras': 1350,
+    'Aluguel': 1600,
+    'Telefone': 95.55,
+    'Contas': 458.9,
+  };
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -54,56 +60,61 @@ class ItensSummaryPage extends StatelessWidget {
             ],
           ),
         ),
-        PieChart(
-          dataMap: dataMap,
-          colorList: colorList,
-          chartRadius: MediaQuery.of(context).size.width / 2,
-          chartValuesOptions: const ChartValuesOptions(
-            showChartValuesOutside: true,
-            showChartValuesInPercentage: true,
-            showChartValueBackground: false,
-            chartValueStyle: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-          ),
-          legendOptions: const LegendOptions(
-            showLegends: false,
-          ),
+        FutureBuilder(
+          future: DatabaseHelper.instance.queryOperation('06/2022'),
+          builder: ((context, AsyncSnapshot snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return PieChart(
+              dataMap: snapshot.data,
+              colorList: ItensSummaryPage.colorList,
+              chartRadius: MediaQuery.of(context).size.width / 2,
+              chartValuesOptions: const ChartValuesOptions(
+                showChartValuesOutside: true,
+                showChartValuesInPercentage: true,
+                showChartValueBackground: false,
+                chartValueStyle: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              legendOptions: const LegendOptions(
+                showLegends: false,
+              ),
+            );
+          }),
         ),
         const SizedBox(
           height: 15,
         ),
-        InfoChartSummary(
-          icon: Icons.restaurant,
-          category: 'Alimentação',
-          value: getCurrency(dataMap['Alimentação']),
-          colorIcon: colorList[0],
-        ),
-        InfoChartSummary(
-          icon: Icons.shopping_bag,
-          category: 'Compras',
-          value: getCurrency(dataMap['Compras']),
-          colorIcon: colorList[1],
-        ),
-        InfoChartSummary(
-          icon: Icons.house,
-          category: 'Aluguel',
-          value: getCurrency(dataMap['Aluguel']),
-          colorIcon: colorList[2],
-        ),
-        InfoChartSummary(
-          icon: Icons.phone,
-          category: 'Telefone',
-          value: getCurrency(dataMap['Telefone']),
-          colorIcon: colorList[3],
-        ),
-        InfoChartSummary(
-          icon: Icons.request_page_rounded,
-          category: 'Contas',
-          value: getCurrency(dataMap['Contas']),
-          colorIcon: colorList[4],
+        FutureBuilder(
+          future: DatabaseHelper.instance.queryCategoryForSummary('06/2022'),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              shrinkWrap: true,
+              padding: const EdgeInsets.all(8),
+              itemCount: snapshot.data.length,
+              itemBuilder: (BuildContext context, int index) {
+                if (snapshot.data! == null) {
+                  return const Center(
+                    child: Text('Nenhuma operação cadastrada neste mês'),
+                  );
+                }
+                return InfoChartSummary(
+                  icon: IconData(snapshot.data[index]['icon']),
+                  category: snapshot.data[index]['name'],
+                  value: getCurrency(snapshot.data[index]['sum']),
+                  colorIcon: Color(int.parse(snapshot.data[index]['color'])),
+                );
+              },
+            );
+          },
         ),
       ],
     );

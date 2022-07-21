@@ -6,7 +6,7 @@ import '../../../shared/utils/get_color_bytheme.dart';
 class BalanceContainer extends StatelessWidget {
   final bool expense;
   final String origin;
-  final double value;
+  final num value;
   final IconData icon;
   final String source;
   final String time;
@@ -53,6 +53,7 @@ class BalanceContainer extends StatelessWidget {
             Text(
               expense ? '- ${getCurrency(value)}' : getCurrency(value),
               style: TextStyle(
+                color: expense ? Colors.red : Colors.green,
                 fontSize: 27,
               ),
             ),

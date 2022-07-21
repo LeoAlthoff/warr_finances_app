@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../shared/utils/database_helper.dart';
 
 import '../../../config.dart';
 import 'balance_container.dart';
@@ -34,7 +35,7 @@ class BodyHome extends StatelessWidget {
                 ),
                 MainContainerHome(
                   index: 3,
-                  subText: '1º à 11 de julho',
+                  subText: '1º à 31 de julho',
                   value: 17130,
                 ),
               ],
@@ -50,37 +51,44 @@ class BodyHome extends StatelessWidget {
               ),
             ),
           ),
-          const BalanceContainer(
-            expense: false,
-            origin: 'Warren Tecnologia',
-            value: 2500.00,
-            icon: Icons.attach_money,
-            source: 'Salário',
-            time: "01/07/2022",
-          ),
-          const BalanceContainer(
-            expense: true,
-            origin: 'Ifood',
-            value: 250.00,
-            icon: Icons.restaurant,
-            source: 'Alimentação',
-            time: "22/06/2022",
-          ),
-          const BalanceContainer(
-            expense: true,
-            origin: 'Angeloni',
-            value: 620.00,
-            icon: Icons.shopping_bag_outlined,
-            source: 'Mercado',
-            time: "18/06/2022",
-          ),
-          const BalanceContainer(
-            expense: false,
-            origin: 'Professor Ailton',
-            value: 15500.00,
-            icon: Icons.attach_money,
-            source: 'PIX',
-            time: "01/07/2022",
+          FutureBuilder<Map<String, List<Map<String, dynamic>>>>(
+            future: DatabaseHelper.instance.selectContainer(),
+            builder: ((context,
+                AsyncSnapshot<Map<String, List<Map<String, dynamic>>>>
+                    snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              return ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                shrinkWrap: true,
+                padding: const EdgeInsets.all(8),
+                itemCount: snapshot.data!['operation']!.length,
+                itemBuilder: (BuildContext context, int index) {
+                  if (snapshot.data!['operation'] == null) {
+                    return const Center(
+                      child: Text('Nenhuma operação cadastrada'),
+                    );
+                  }
+                  return BalanceContainer(
+                    expense: snapshot.data!['operation']![index]['entry'] == 1
+                        ? false
+                        : true,
+                    origin: snapshot.data!['operation']![index]['name'],
+                    value: snapshot.data!['operation']![index]['value'],
+                    icon: IconData(
+                        snapshot.data!['category']![
+                            snapshot.data!['operation']![index]['categoryId'] -
+                                1]['icon'],
+                        fontFamily: 'MaterialIcons'),
+                    source: snapshot.data!['category']![
+                        snapshot.data!['operation']![index]['categoryId'] -
+                            1]['name'],
+                    time: snapshot.data!['operation']![index]['date'],
+                  );
+                },
+              );
+            }),
           ),
         ],
       ),
