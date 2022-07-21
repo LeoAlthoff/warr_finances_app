@@ -18,7 +18,7 @@ class ButtonFbLoginPage extends StatelessWidget {
         ),
         child: ElevatedButton(
           onPressed: () {
-            nagigateToHomeScreen(context);
+           
           },
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(
@@ -26,21 +26,23 @@ class ButtonFbLoginPage extends StatelessWidget {
             ),
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
                 'Login com Facebook',
                 style: TextStyle(color: Colors.white, fontSize: 12),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 20,
               ),
               Container(
-                color: Colors.blue.shade700,
-                child: SizedBox(
-                  height: 30,
-                  width: 50,
-                  child: Image.asset('assets/images/fb.png'),
+                width: 35,
+                height: 35,
+                decoration: const  BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/fb.png'),
+                  ),
+                  shape: BoxShape.circle,
                 ),
               ),
             ],

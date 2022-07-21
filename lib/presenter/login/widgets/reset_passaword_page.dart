@@ -16,12 +16,23 @@ class ResetPassawordPage extends StatelessWidget {
           child: Center(
             child: Column(
               children: [
-                SizedBox(
-                  width: 150,
-                  height: 150,
-                  child: Image.asset(
-                    'assets/images/password.png',
+                Padding(
+                  padding: const EdgeInsets.all(25.0),
+                  child: Container(
+                    width: 120,
+                    height: 120,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/password2.png'),
+                      ),
+                      shape: BoxShape.circle,
+                      
+                    ),
+                    
                   ),
+                ),
+                const SizedBox(
+                  height: 25,
                 ),
                 const Text(
                   'Recupere sua senha',
@@ -33,15 +44,22 @@ class ResetPassawordPage extends StatelessWidget {
                 const SizedBox(
                   height: 25,
                 ),
-                const Text(
-                  
-                  'Informe seu endereço de email associado a sua conta, para enviarmos as instruções de redefinir a senha',
-                  style: TextStyle(fontSize: 15, color: Colors.white),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: const Text(
+                    'Informe seu endereço de email associado a sua conta, para enviarmos as instruções de redefinir a senha',
+                    style: TextStyle(fontSize: 15, color: Colors.white),
+                  ),
                 ),
                 const SizedBox(
                   height: 50,
                 ),
-                InputWidget(controller: emailController, icon: Icons.email, isPassword: false, labelTextInput: 'Email',),
+                InputWidget(
+                  controller: emailController,
+                  icon: Icons.email,
+                  isPassword: false,
+                  labelTextInput: 'Email',
+                ),
                 const SizedBox(
                   height: 30,
                 ),
