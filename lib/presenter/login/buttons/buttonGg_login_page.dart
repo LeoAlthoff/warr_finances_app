@@ -18,7 +18,7 @@ class ButtonGgBodyLogin extends StatelessWidget {
         ),
         child: ElevatedButton(
           onPressed: () {
-            nagigateToHomeScreen(context);
+            
           },
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(
@@ -26,7 +26,7 @@ class ButtonGgBodyLogin extends StatelessWidget {
             ),
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
                 'Login com Google',
@@ -35,11 +35,16 @@ class ButtonGgBodyLogin extends StatelessWidget {
               const SizedBox(
                 width: 20,
               ),
-              SizedBox(
-                height: 25,
-                width: 40,
-                child: Image.asset('assets/images/google.png'),
-              ),
+              Container(
+                width: 30,
+                height: 30,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/google2.png'),
+                  ),
+                  shape: BoxShape.circle,
+                ),
+              )
             ],
           ),
         ),
@@ -47,4 +52,3 @@ class ButtonGgBodyLogin extends StatelessWidget {
     );
   }
 }
-

@@ -18,10 +18,15 @@ class SignUpPage extends StatelessWidget {
             padding: const EdgeInsets.all(50.0),
             child: Column(
               children: [
-                Image.asset(
-                  'assets/images/avatar_preto.png',
-                  width: 100,
-                  height: 100,
+                Container(
+                  width: 135,
+                  height: 135,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/avatar_verde.png'),
+                    ),
+                    shape: BoxShape.circle,
+                  ),
                 ),
                 const SizedBox(
                   height: 30,
@@ -63,6 +68,7 @@ class SignUpPage extends StatelessWidget {
                   height: 15,
                 ),
                 Container(
+                  
                   width: MediaQuery.of(context).size.width,
                   height: 30,
                   margin: const EdgeInsets.symmetric(
@@ -95,6 +101,7 @@ class SignUpPage extends StatelessWidget {
           ),
         ),
       ),
+      
     );
   }
 }

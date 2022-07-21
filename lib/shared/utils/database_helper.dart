@@ -34,7 +34,7 @@ class DatabaseHelper {
         (id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         color TEXT NOT NULL,
-        icon INT NOT NULL)''');
+        icon INTERGER NOT NULL)''');
         await db.execute('''CREATE TABLE $_operationTable
         (id INTEGER PRIMARY KEY AUTOINCREMENT,
         value NUM NOT NULL,

@@ -197,7 +197,13 @@ class _BodyRegisterState extends State<BodyRegister> {
               ),
             );
           },
-          child: const Text('Criar uma nova categoria'),
+          child: const Text(
+            'Criar uma nova categoria',
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              decoration: TextDecoration.underline,
+            ),
+          ),
         ),
         Container(
           width: MediaQuery.of(context).size.width,
