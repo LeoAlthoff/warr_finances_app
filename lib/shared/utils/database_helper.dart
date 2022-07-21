@@ -38,12 +38,12 @@ class DatabaseHelper {
          )''');
         await db.rawInsert(
           '''INSERT INTO Category(name, color, icon) 
-        VALUES('Salário', 'Colors.black', 'Icons.attach_money'),
-        ('Alimentação', 'Colors.red', 'Icons.restaurant'),
-        ('Compras', 'Colors.yellow', 'Icons.shopping_bag'),
-        ('Aluguel', 'Colors.blue', 'Icons.house'),
-        ('Telefone', 'Colors.green', 'Icons.phone'),
-        ('Contas', 'Colors.purple', 'Icons.request_page_rounded')
+        VALUES('Salário', 'Color(0xff000000)', 'Icons.attach_money'),
+        ('Alimentação', 'Color(0xfff50707)', 'Icons.restaurant'),
+        ('Compras', 'Color(0xfff0f507)', 'Icons.shopping_bag'),
+        ('Aluguel', 'Color(0xff072cf5)', 'Icons.house'),
+        ('Telefone', 'Color(0xff09ab10)', 'Icons.phone'),
+        ('Contas', 'Color(0xff920a79)', 'Icons.request_page_rounded')
         ''',
         );
         await db.rawInsert('''
@@ -80,14 +80,34 @@ class DatabaseHelper {
     return await _database!.rawQuery('SELECT * FROM Category');
   }
 
-  void queryOperation(String monthYear) async {
+  Future<Map<int, double>> queryOperation(String monthYear) async {
     List<Map<String, dynamic>> list = await _database!.query(
       'Operation',
       where: 'entry = ? AND date LIKE ? ',
       whereArgs: [0, '%$monthYear%'],
       orderBy: "categoryId",
     );
-    print(list);
+    Set differentIds = {};
+
+    for (Map<String, dynamic> item in list) {
+      differentIds.add(item['categoryId']);
+    }
+
+    Map<int, double> sumId = {};
+
+    for (int id in differentIds) {
+      sumId.addAll({id: 0});
+      for (Map<String, dynamic> operation in list) {
+        double newSum = sumId[id]!;
+        if (operation['categoryId'] == id) {
+          num adding = operation['value'] as num;
+          newSum += adding;
+          sumId[id] = newSum;
+        }
+      }
+    }
+    return sumId;
+    print(sumId);
   }
 
   Future<int> selectCategory(String categoryName) async {

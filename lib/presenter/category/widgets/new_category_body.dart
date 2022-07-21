@@ -18,7 +18,6 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
 
   List<bool> _selections = List.generate(3, (_) => false);
 
-
   void changeColor(Color color) {
     setState(() => pickerColor = color);
   }
@@ -28,7 +27,10 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text('Escolha a cor da Categoria'),
+            title: const Text(
+              'Escolha a cor da Categoria',
+              textAlign: TextAlign.center,
+            ),
             content: SingleChildScrollView(
               child: ColorPicker(
                 pickerColor: pickerColor,
@@ -41,6 +43,7 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
                 onPressed: () {
                   setState(() => currentColor = pickerColor);
                   Navigator.of(context).pop();
+                  print(currentColor);
                 },
               ),
             ],
