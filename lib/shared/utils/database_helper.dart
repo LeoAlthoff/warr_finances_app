@@ -27,24 +27,25 @@ class DatabaseHelper {
         color TEXT NOT NULL,
         icon INT NOT NULL)''');
         await db.execute('''CREATE TABLE $_operationTable
-          (id INTEGER PRIMARY KEY AUTOINCREMENT,
-          value NUM NOT NULL,
-           name TEXT NOT NULL,
-         entry INTERGER NOT NULL,
-          date TEXT NO NULL,
-         categoryId INTERGER,
-         FOREIGN KEY(categoryId) REFERENCES Category(id)
+        (id INTEGER PRIMARY KEY AUTOINCREMENT,
+        value NUM NOT NULL,
+        name TEXT NOT NULL,
+        entry INTERGER NOT NULL,
+        date TEXT NO NULL,
+        categoryId INTERGER,
+        FOREIGN KEY(categoryId) REFERENCES Category(id)
          )''');
         await db.rawInsert(
           '''INSERT INTO Category(name, color, icon) 
-         VALUES('Salário', 'Colors.black', 57522),
-          ('Alimentação', 'Colors.red', 58674),
-          ('Compras', 'Colors.yellow', 58778),
-          ('Aluguel', 'Colors.blue', 58152),
-          ('Telefone', 'Colors.green', 58530),
-          ('Contas', 'Colors.purple', 983299)
+         VALUES('Salário', 'Color(0xff000000)', 57522),
+          ('Alimentação', 'Color(0xfff50707)', 58674),
+          ('Compras', 'Color(0xfff0f507)', 58778),
+          ('Aluguel', 'Color(0xff072cf5)', 58152),
+          ('Telefone', 'Color(0xff09ab10)', 58530),
+          ('Contas', 'Color(0xff920a79)', 983299)
         ''',
         );
+
         await db.rawInsert('''
         INSERT INTO Operation (value, name, entry, date, categoryId)
         VALUES(2500, 'Warren Tecnologia', 1, '01/07/2022', 1),
@@ -75,9 +76,37 @@ class DatabaseHelper {
     );
   }
 
-  Future<List<Map<String, dynamic>>> queyCategory() async {
-    print(await _database!.rawQuery('SELECT * FROM Category'));
+  Future<List<Map<String, dynamic>>> queryCategory() async {
     return await _database!.rawQuery('SELECT * FROM Category');
+  }
+
+  Future<Map<int, double>> queryOperation(String monthYear) async {
+    List<Map<String, dynamic>> list = await _database!.query(
+      'Operation',
+      where: 'entry = ? AND date LIKE ? ',
+      whereArgs: [0, '%$monthYear%'],
+      orderBy: "categoryId",
+    );
+    Set differentIds = {};
+
+    for (Map<String, dynamic> item in list) {
+      differentIds.add(item['categoryId']);
+    }
+
+    Map<int, double> sumId = {};
+
+    for (int id in differentIds) {
+      sumId.addAll({id: 0});
+      for (Map<String, dynamic> operation in list) {
+        double newSum = sumId[id]!;
+        if (operation['categoryId'] == id) {
+          num adding = operation['value'] as num;
+          newSum += adding;
+          sumId[id] = newSum;
+        }
+      }
+    }
+    return sumId;
   }
 
   Future<int> selectCategory(String categoryName) async {

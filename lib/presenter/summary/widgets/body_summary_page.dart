@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_teste_app/shared/utils/database_helper.dart';
 import 'package:pie_chart/pie_chart.dart';
 
 import '../../../shared/utils/format_money.dart';
 import 'info_chart_summary.dart';
 
-class ItensSummaryPage extends StatelessWidget {
-  static Map<String, double> dataMap = {
-    'Alimentação': 250,
-    'Compras': 1350,
-    'Aluguel': 1600,
-    'Telefone': 95.55,
-    'Contas': 458.9,
-  };
-
+class ItensSummaryPage extends StatefulWidget {
   static List<Color> colorList = const [
     Colors.red,
     Colors.yellow,
@@ -25,6 +18,18 @@ class ItensSummaryPage extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<ItensSummaryPage> createState() => _ItensSummaryPageState();
+}
+
+class _ItensSummaryPageState extends State<ItensSummaryPage> {
+  Map<String, double> dataMap = {
+    'Alimentação': 250,
+    'Compras': 1350,
+    'Aluguel': 1600,
+    'Telefone': 95.55,
+    'Contas': 458.9,
+  };
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -56,7 +61,7 @@ class ItensSummaryPage extends StatelessWidget {
         ),
         PieChart(
           dataMap: dataMap,
-          colorList: colorList,
+          colorList: ItensSummaryPage.colorList,
           chartRadius: MediaQuery.of(context).size.width / 2,
           chartValuesOptions: const ChartValuesOptions(
             showChartValuesOutside: true,
@@ -79,31 +84,31 @@ class ItensSummaryPage extends StatelessWidget {
           icon: Icons.restaurant,
           category: 'Alimentação',
           value: getCurrency(dataMap['Alimentação']),
-          colorIcon: colorList[0],
+          colorIcon: ItensSummaryPage.colorList[0],
         ),
         InfoChartSummary(
           icon: Icons.shopping_bag,
           category: 'Compras',
           value: getCurrency(dataMap['Compras']),
-          colorIcon: colorList[1],
+          colorIcon: ItensSummaryPage.colorList[1],
         ),
         InfoChartSummary(
           icon: Icons.house,
           category: 'Aluguel',
           value: getCurrency(dataMap['Aluguel']),
-          colorIcon: colorList[2],
+          colorIcon: ItensSummaryPage.colorList[2],
         ),
         InfoChartSummary(
           icon: Icons.phone,
           category: 'Telefone',
           value: getCurrency(dataMap['Telefone']),
-          colorIcon: colorList[3],
+          colorIcon: ItensSummaryPage.colorList[3],
         ),
         InfoChartSummary(
           icon: Icons.request_page_rounded,
           category: 'Contas',
           value: getCurrency(dataMap['Contas']),
-          colorIcon: colorList[4],
+          colorIcon: ItensSummaryPage.colorList[4],
         ),
       ],
     );

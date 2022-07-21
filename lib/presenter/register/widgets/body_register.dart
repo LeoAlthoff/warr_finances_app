@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../shared/utils/database_helper.dart';
 
 import '../../../shared/widgets/input_text_container.dart';
+import '../../category/new_category_page.dart';
 import 'toggle_buttons_register.dart';
 
 class BodyRegister extends StatefulWidget {
@@ -128,7 +129,7 @@ class _BodyRegisterState extends State<BodyRegister> {
           ),
           // child: DropdownButtonHideUnderline(
           child: FutureBuilder<List<Map<String, dynamic>>>(
-            future: DatabaseHelper.instance.queyCategory(),
+            future: DatabaseHelper.instance.queryCategory(),
             builder: (
               context,
               AsyncSnapshot<List<Map<String, dynamic>>> snapshot,
@@ -164,6 +165,16 @@ class _BodyRegisterState extends State<BodyRegister> {
               ));
             },
           ),
+        ),
+        InkWell(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: ((context) => const NewCategoryPage()),
+              ),
+            );
+          },
+          child: const Text('Criar uma nova categoria'),
         ),
         Container(
           width: MediaQuery.of(context).size.width,

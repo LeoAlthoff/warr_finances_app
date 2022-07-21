@@ -49,13 +49,13 @@ class BalanceContainer extends StatelessWidget {
               style: const TextStyle(fontSize: 17),
             ),
             const SizedBox(height: 10),
-            Text(
-              expense ? '- ${getCurrency(value)}' : getCurrency(value),
-              style: TextStyle(
-                fontSize: 27,
-                color: expense ? Colors.red : Colors.green,
-              ),
-            ),
+            // Text(
+            //   expense ? '- ${getCurrency(value)}' : getCurrency(value),
+            //   style: TextStyle(
+            //     fontSize: 27,
+            //     color: expense ? Colors.red : Colors.green,
+            //   ),
+            // ),
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
