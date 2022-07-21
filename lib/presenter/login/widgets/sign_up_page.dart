@@ -68,7 +68,6 @@ class SignUpPage extends StatelessWidget {
                   height: 15,
                 ),
                 Container(
-                  
                   width: MediaQuery.of(context).size.width,
                   height: 30,
                   margin: const EdgeInsets.symmetric(
@@ -101,7 +100,6 @@ class SignUpPage extends StatelessWidget {
           ),
         ),
       ),
-      
     );
   }
 }

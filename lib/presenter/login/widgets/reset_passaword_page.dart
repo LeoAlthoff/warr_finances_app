@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'input_widget_login_page.dart';
 
 class ResetPassawordPage extends StatelessWidget {
@@ -26,9 +27,7 @@ class ResetPassawordPage extends StatelessWidget {
                         image: AssetImage('assets/images/password2.png'),
                       ),
                       shape: BoxShape.circle,
-                      
                     ),
-                    
                   ),
                 ),
                 const SizedBox(
@@ -45,9 +44,9 @@ class ResetPassawordPage extends StatelessWidget {
                   height: 25,
                 ),
                 const Padding(
-                  padding:  EdgeInsets.all(10.0),
-                  child:  Text(
-                    textAlign : TextAlign.center,
+                  padding: EdgeInsets.all(10.0),
+                  child: Text(
+                    textAlign: TextAlign.center,
                     'Informe seu endereço de email associado a sua conta, para enviarmos as instruções de redefinir a senha',
                     style: TextStyle(fontSize: 15, color: Colors.white),
                   ),

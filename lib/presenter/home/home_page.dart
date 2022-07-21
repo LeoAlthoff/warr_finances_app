@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../register/register_page.dart';
 import '../summary/summary_page.dart';
 import 'widgets/body_home.dart';

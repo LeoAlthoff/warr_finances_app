@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/shared/utils/database_helper.dart';
+import '../../../shared/utils/database_helper.dart';
 
+import '../../../config.dart';
 import 'balance_container.dart';
 import 'main_container_home.dart';
 

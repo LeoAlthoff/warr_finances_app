@@ -25,7 +25,7 @@ class CardHeaderLoginState extends State<CardHeaderLogin> {
               width: 120,
               height: 150,
               child: Lottie.asset(
-                'assets/lottie/pig2.json',
+                '/lottie/pig2.json',
               ),
             ),
             Column(children: const [

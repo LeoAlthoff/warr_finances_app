@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../widgets/login_page_body.dart';
 
 class ButtonEntrarLoginPage extends StatelessWidget {
@@ -24,7 +25,6 @@ class ButtonEntrarLoginPage extends StatelessWidget {
             backgroundColor: MaterialStateProperty.all<Color>(
               const Color.fromARGB(255, 247, 170, 189),
             ),
-            
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -40,4 +40,3 @@ class ButtonEntrarLoginPage extends StatelessWidget {
     );
   }
 }
-
