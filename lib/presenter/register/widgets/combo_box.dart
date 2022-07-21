@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../shared/utils/get_color_bytheme.dart';
+
 class ComboBox extends StatefulWidget {
   const ComboBox({Key? key}) : super(key: key);
 
@@ -32,10 +34,9 @@ class _ComboBoxState extends State<ComboBox> {
         vertical: 5,
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: getColorByTheme(context),
         borderRadius: BorderRadius.circular(5),
       ),
-      // child: DropdownButtonHideUnderline(
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           value: dropDownValue,

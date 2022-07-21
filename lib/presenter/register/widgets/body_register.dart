@@ -19,9 +19,7 @@ class BodyRegister extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const TextInputContainer(
-          textValue: 'Nome',
-        ),
+        const TextInputContainer(textValue: 'Nome'),
         const TextInputContainer(
           textValue: 'Preço',
         ),
@@ -29,15 +27,6 @@ class BodyRegister extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             ToggleButtonsRegister(isSelected: isSelected),
-
-            // const CustomButton(
-            //   income: true,
-            //   textValue: 'Entrada',
-            // ),
-            // const CustomButton(
-            //   income: false,
-            //   textValue: 'Saída',
-            // ),
           ],
         ),
         const ComboBox(),

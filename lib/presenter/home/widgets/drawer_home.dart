@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_teste_app/config.dart';
 import 'package:flutter_teste_app/presenter/login/login_page.dart';
 
 class DrawerHome extends StatelessWidget {
@@ -97,6 +98,16 @@ class DrawerHome extends StatelessWidget {
             leading: Icon(Icons.settings),
           ),
           const SizedBox(height: 7),
+          const Divider(
+            height: 1,
+          ),
+          ListTile(
+            title: const Text('Dark Theme'),
+            leading: const Icon(Icons.dark_mode),
+            onTap: () {
+              currentTheme.switchTheme();
+            },
+          ),
           const Divider(
             height: 1,
           ),
