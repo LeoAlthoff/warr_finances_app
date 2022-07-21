@@ -4,9 +4,7 @@ import '../../shared/utils/database_helper.dart';
 
 // ignore: must_be_immutable
 class TestPage extends StatelessWidget {
-  TestPage({Key? key}) : super(key: key);
-
-  DatabaseHelper database = DatabaseHelper();
+  const TestPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +16,14 @@ class TestPage extends StatelessWidget {
         children: [
           TextButton(
             onPressed: () {
-              database.insertOperation(2500, 'NomeTeste', 1, '15/07/2022', 1);
+              DatabaseHelper.instance
+                  .insertOperation(2500, 'NomeTeste', 1, '15/07/2022', 1);
             },
             child: const Text("insert Operation"),
           ),
           TextButton(
             onPressed: () {
-              database.selectOperation();
+              DatabaseHelper.instance.selectOperation();
             },
             child: const Text("Query Operation"),
           ),
@@ -34,31 +33,32 @@ class TestPage extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              database.deleteCategory(2);
+              DatabaseHelper.instance.deleteCategory(2);
             },
             child: const Text("Delete Operation"),
           ),
           TextButton(
             onPressed: () {
-              database.insertCategory("Nome", "Colors.Blue");
+              DatabaseHelper.instance
+                  .insertCategory("Nome", "Colors.Blue", "Icons.person");
             },
             child: const Text("Insert Category"),
           ),
           TextButton(
             onPressed: () {
-              database.selectCategory();
+              DatabaseHelper.instance.queyCategory();
             },
             child: const Text("query Category"),
           ),
           TextButton(
             onPressed: () {
-              database.deleteAllData();
+              DatabaseHelper.instance.deleteAllData();
             },
             child: const Text("update Category"),
           ),
           TextButton(
             onPressed: () {
-              database.deleteCategory(2);
+              DatabaseHelper.instance.initialCategory();
             },
             child: const Text("delete Category"),
           ),

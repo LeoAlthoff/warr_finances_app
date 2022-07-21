@@ -15,9 +15,12 @@ class NewCategoryBody extends StatefulWidget {
 }
 
 class _NewCategoryBodyState extends State<NewCategoryBody> {
-  Color pickerColor = Color.fromARGB(255, 102, 23, 141);
+  Color pickerColor = const Color.fromARGB(255, 102, 23, 141);
 
   Color currentColor = Colors.blueGrey.shade100;
+
+  List<bool> _selections = List.generate(3, (_) => false);
+
 
   void changeColor(Color color) {
     setState(() => pickerColor = color);
@@ -73,15 +76,15 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
                 ),
               ),
             ),
-            CarouselSlider(
-              options: CarouselOptions(
-                height: 200,
-                enableInfiniteScroll: false,
-                reverse: false,
-                autoPlayCurve: Curves.fastOutSlowIn,
-              ),
-              items: const [WrapIcons(), WrapIconsOne(), WrapIconsTwo()],
-            ),
+            // CarouselSlider(
+            //   options: CarouselOptions(
+            //     height: 200,
+            //     enableInfiniteScroll: false,
+            //     reverse: false,
+            //     autoPlayCurve: Curves.fastOutSlowIn,
+            //   ),
+            //   items: const [WrapIcons(), WrapIconsOne(), WrapIconsTwo()],
+            // ),
             const Padding(
               padding: EdgeInsets.all(30.0),
               child: Text(

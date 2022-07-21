@@ -1,8 +1,7 @@
 import 'dart:async';
-import 'dart:io';
+import 'dart:ffi';
 
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart';
+// ignore: depend_on_referenced_packages
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
@@ -10,9 +9,11 @@ class DatabaseHelper {
   static const _operationTable = 'operation';
   static const _categoryTable = 'category';
   static Database? _database;
+  static final DatabaseHelper instance = DatabaseHelper();
 
   DatabaseHelper() {
     _initiateDatabase();
+    initialCategory();
   }
 
   void _initiateDatabase() async {
@@ -26,7 +27,8 @@ class DatabaseHelper {
         await db.execute('''CREATE TABLE $_categoryTable
         (id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
-        color TEXT NOT NULL)''');
+        color TEXT NOT NULL,
+        icon TEXT NOT NULL)''');
         await db.execute('''CREATE TABLE $_operationTable
           (id INTEGER PRIMARY KEY AUTOINCREMENT,
           value NUM NOT NULL,
@@ -44,10 +46,23 @@ class DatabaseHelper {
     await db.execute('PRAGMA foreign_keys = ON');
   }
 
-  void insertCategory(String name, String color) async {
+  void initialCategory() async {
     await _database!.rawInsert(
-      'INSERT INTO Category(name, color) VALUES(?, ?)',
-      [name, color],
+      '''INSERT INTO Category(name, color, icon) 
+         VALUES('Salário', 'Colors.black', 'Icons.attach_money'),
+          ('Alimentação', 'Colors.red', 'Icons.restaurant'),
+          ('Compras', 'Colors.yellow', 'Icons.shopping_bag'),
+          ('Aluguel', 'Colors.blue', 'Icons.house'),
+          ('Telefone', 'Colors.green', 'Icons.phone'),
+          ('Contas', 'Colors.purple', 'Icons.request_page_rounded')
+        ''',
+    );
+  }
+
+  void insertCategory(String name, String color, String icon) async {
+    await _database!.rawInsert(
+      'INSERT INTO Category(name, color, icon) VALUES(?, ?, ?)',
+      [name, color, icon],
     );
   }
 
@@ -59,9 +74,17 @@ class DatabaseHelper {
     );
   }
 
-  void selectCategory() async {
+  void queyCategory() async {
     List<Map> list = await _database!.rawQuery('SELECT * FROM Category');
     print(list);
+  }
+
+  Future<int> selectCategory(String categoryName) async {
+    List<Map> list = await _database!.rawQuery(
+      'SELECT id FROM Category WHERE Name= ?',
+      [categoryName],
+    );
+    return list[0]['id'];
   }
 
   void selectOperation() async {

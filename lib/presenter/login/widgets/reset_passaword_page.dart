@@ -12,7 +12,7 @@ class ResetPassawordPage extends StatelessWidget {
         child: Center(
           child: Column(
             children:  [
-              Container(
+              SizedBox(
                 width: 150,
                 height: 150,
                 child: Image.asset('assets/images/password.png',  ),
@@ -27,7 +27,7 @@ class ResetPassawordPage extends StatelessWidget {
               const SizedBox(
                 height: 25,
               ),
-              Text(
+               Text(
                 textAlign: TextAlign.center,
                 'Informe seu endereço de email associado a sua conta, para enviarmos as instruções de redefinir a senha',
                 style: TextStyle(fontSize: 15, color: Colors.white),

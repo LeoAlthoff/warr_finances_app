@@ -12,13 +12,10 @@ class IconCircle extends StatelessWidget {
     return CircleAvatar(
       backgroundColor: Colors.blueGrey.shade100,
       radius: 25,
-      child: TextButton(
-        onPressed: () {},
-        child: Icon(
-          icon,
-          size: 25,
-          color: Colors.black,
-        ),
+      child: Icon(
+        icon,
+        size: 25,
+        color: Colors.black,
       ),
     );
   }
