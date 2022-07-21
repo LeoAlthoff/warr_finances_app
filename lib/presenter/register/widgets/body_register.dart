@@ -49,7 +49,7 @@ class _BodyRegisterState extends State<BodyRegister> {
   String formatDate(String date) {
     List temp = date.split('-');
     return temp.length == 3
-        ? ('${temp[2]}-${temp[1]}-${temp[0]}')
+        ? ('${temp[2]}/${temp[1]}/${temp[0]}')
         : 'Data inválida!';
   }
 
@@ -57,7 +57,6 @@ class _BodyRegisterState extends State<BodyRegister> {
     if (operationName.text == '' ||
         price.text == '' ||
         getOperation() == -1 ||
-        categorySelected ||
         data.text == '') {
       showDialog(
         context: context,
@@ -139,8 +138,9 @@ class _BodyRegisterState extends State<BodyRegister> {
               }
               return DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
-
-                hint: categorySelected ? null : const Text('Selecione uma categoria!'),
+                hint: categorySelected
+                    ? null
+                    : const Text('Selecione uma categoria!'),
                 // disabledHint: Text(category),
                 value: categorySelected ? category : null,
 

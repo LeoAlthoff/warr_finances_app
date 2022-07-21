@@ -1,6 +1,5 @@
 import 'dart:async';
 
-// ignore: depend_on_referenced_packages
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
@@ -26,7 +25,7 @@ class DatabaseHelper {
         (id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         color TEXT NOT NULL,
-        icon TEXT NOT NULL)''');
+        icon INT NOT NULL)''');
         await db.execute('''CREATE TABLE $_operationTable
           (id INTEGER PRIMARY KEY AUTOINCREMENT,
           value NUM NOT NULL,
@@ -38,12 +37,12 @@ class DatabaseHelper {
          )''');
         await db.rawInsert(
           '''INSERT INTO Category(name, color, icon) 
-         VALUES('Salário', 'Colors.black', 'Icons.attach_money'),
-          ('Alimentação', 'Colors.red', 'Icons.restaurant'),
-          ('Compras', 'Colors.yellow', 'Icons.shopping_bag'),
-          ('Aluguel', 'Colors.blue', 'Icons.house'),
-          ('Telefone', 'Colors.green', 'Icons.phone'),
-          ('Contas', 'Colors.purple', 'Icons.request_page_rounded')
+         VALUES('Salário', 'Colors.black', 57522),
+          ('Alimentação', 'Colors.red', 58674),
+          ('Compras', 'Colors.yellow', 58778),
+          ('Aluguel', 'Colors.blue', 58152),
+          ('Telefone', 'Colors.green', 58530),
+          ('Contas', 'Colors.purple', 983299)
         ''',
         );
         await db.rawInsert('''
@@ -61,7 +60,7 @@ class DatabaseHelper {
     await db.execute('PRAGMA foreign_keys = ON');
   }
 
-  void insertCategory(String name, String color, String icon) async {
+  void insertCategory(String name, String color, int icon) async {
     await _database!.rawInsert(
       'INSERT INTO Category(name, color, icon) VALUES(?, ?, ?)',
       [name, color, icon],
@@ -71,12 +70,13 @@ class DatabaseHelper {
   void insertOperation(
       double value, String name, int entry, String date, int categoryId) async {
     await _database!.rawInsert(
-      'INSERT INTO operation(value, name, entry, date, categoryId) VALUES(?, ?, ?, ?, ?)',
+      'INSERT INTO Operation(value, name, entry, date, categoryId) VALUES(?, ?, ?, ?, ?)',
       [value, name, entry, date, categoryId],
     );
   }
 
   Future<List<Map<String, dynamic>>> queyCategory() async {
+    print(await _database!.rawQuery('SELECT * FROM Category'));
     return await _database!.rawQuery('SELECT * FROM Category');
   }
 
@@ -96,12 +96,19 @@ class DatabaseHelper {
     return list[0]['Name'];
   }
 
-  Future<List<Map<String, dynamic>>> selectOperation() async {
-    List<Map<String, dynamic>> list =
-        await _database!.rawQuery('SELECT * FROM operation');
-    print(list);
+  Future<Map<String, List<Map<String, dynamic>>>> selectContainer() async {
+    Map<String, List<Map<String, dynamic>>> map = {};
+    map['operation'] = await _database!.rawQuery('SELECT * FROM operation');
+    map['category'] = await _database!.rawQuery('SELECT * FROM Category');
+    print(map);
+    return map;
+  }
 
-    return list;
+  Future<Map<String, List<Map<String, dynamic>>>> selectOperation() async {
+    Map<String, List<Map<String, dynamic>>> map = {};
+    map['operation'] = await _database!.rawQuery('SELECT * FROM operation');
+    print(map);
+    return map;
   }
 
   void deleteCategory(int id) async {

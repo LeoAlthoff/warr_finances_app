@@ -39,14 +39,14 @@ class TestPage extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              DatabaseHelper.instance
-                  .insertCategory("Nome", "Colors.Blue", "Icons.person");
+              DatabaseHelper.instance.insertCategory(
+                  "Nome", "Colors.Blue", Icons.person.codePoint);
             },
             child: const Text("Insert Category"),
           ),
           TextButton(
             onPressed: () {
-              DatabaseHelper.instance.queryCategory();
+              DatabaseHelper.instance.queyCategory();
             },
             child: const Text("query Category"),
           ),
