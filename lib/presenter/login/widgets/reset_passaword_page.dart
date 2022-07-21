@@ -45,8 +45,9 @@ class ResetPassawordPage extends StatelessWidget {
                   height: 25,
                 ),
                 const Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Text(
+                  padding:  EdgeInsets.all(10.0),
+                  child:  Text(
+                    textAlign : TextAlign.center,
                     'Informe seu endereço de email associado a sua conta, para enviarmos as instruções de redefinir a senha',
                     style: TextStyle(fontSize: 15, color: Colors.white),
                   ),
