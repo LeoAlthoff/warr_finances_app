@@ -80,20 +80,11 @@ class DatabaseHelper {
     return await _database!.rawQuery('SELECT * FROM Category');
   }
 
-  // Future<List<Map<String, dynamic>>> queryOperation() async {
-  //   List<Map<String, dynamic>> list = await _database!.query(
-  //     '"Category',
-  //     where: 'entry=?',
-  //     whereArgs: [0],
-  //     orderBy: "categoryId",
-  //   );
-  //   return list;
-  // }
-  void queryOperation() async {
+  void queryOperation(String monthYear) async {
     List<Map<String, dynamic>> list = await _database!.query(
-      'Category',
-      where: 'entry = ?',
-      whereArgs: [0],
+      'Operation',
+      where: 'entry = ? AND date LIKE ? ',
+      whereArgs: [0, '%$monthYear%'],
       orderBy: "categoryId",
     );
     print(list);

@@ -58,7 +58,7 @@ class TestPage extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              DatabaseHelper.instance.queryOperation();
+              DatabaseHelper.instance.queryOperation("06/2022");
             },
             child: const Text("Query Operation"),
           ),

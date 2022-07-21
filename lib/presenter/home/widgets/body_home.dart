@@ -51,32 +51,32 @@ class BodyHome extends StatelessWidget {
               ),
             ),
           ),
-          FutureBuilder<List<Map<String, dynamic>>>(
-            future: DatabaseHelper.instance.selectOperation(),
-            builder:
-                ((context, AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
-              if (!snapshot.hasData) {
-                return const CircularProgressIndicator();
-              }
-              return ListView.builder(
-                padding: const EdgeInsets.all(8),
-                itemCount: snapshot.data!.length,
-                itemBuilder: (BuildContext context, int index)  {
-                  return BalanceContainer(
-                    expense:
-                        snapshot.data![index]['entry'] == '1' ? true : false,
-                    origin: snapshot.data![index]['name'],
-                    value: getCurrency(snapshot.data![index]['value']),
-                    icon: Icons.attach_money,
-                    // Criar map no lugar de uma lista 
-                    source: DatabaseHelper.instance
-                        .getCategory(snapshot.data![index]['categoryId']),
-                    time: "01/07/2022",
-                  );
-                },
-              );
-            }),
-          ),
+          // FutureBuilder<List<Map<String, dynamic>>>(
+          //   future: DatabaseHelper.instance.selectOperation(),
+          //   builder:
+          //       ((context, AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+          //     if (!snapshot.hasData) {
+          //       return const CircularProgressIndicator();
+          //     }
+          //     return ListView.builder(
+          //       padding: const EdgeInsets.all(8),
+          //       itemCount: snapshot.data!.length,
+          //       itemBuilder: (BuildContext context, int index)  {
+          //         // return BalanceContainer(
+          //         //   expense:
+          //         //       snapshot.data![index]['entry'] == '1' ? true : false,
+          //         //   origin: snapshot.data![index]['name'],
+          //         //   value: getCurrency(snapshot.data![index]['value']),
+          //         //   icon: Icons.attach_money,
+          //         //   // Criar map no lugar de uma lista
+          //         //   // source: DatabaseHelper.instance
+          //         //   //     .getCategory(snapshot.data![index]['categoryId']),
+          //         //   time: "01/07/2022",
+          //         );
+          //       },
+          //     );
+          //   }),
+          // ),
           const BalanceContainer(
             expense: false,
             origin: 'Warren Tecnologia',
