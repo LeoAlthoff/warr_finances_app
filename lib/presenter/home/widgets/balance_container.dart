@@ -5,7 +5,7 @@ import '../../../shared/utils/format_money.dart';
 class BalanceContainer extends StatelessWidget {
   final bool expense;
   final String origin;
-  final double value;
+  final num value;
   final IconData icon;
   final String source;
   final String time;
@@ -49,13 +49,13 @@ class BalanceContainer extends StatelessWidget {
               style: const TextStyle(fontSize: 17),
             ),
             const SizedBox(height: 10),
-            Text(
-              expense ? '- ${getCurrency(value)}' : getCurrency(value),
-              style: TextStyle(
-                fontSize: 27,
-                color: expense ? Colors.red : Colors.green,
-              ),
-            ),
+            // Text(
+            //   expense ? '- ${getCurrency(value)}' : getCurrency(value),
+            //   style: TextStyle(
+            //     fontSize: 27,
+            //     color: expense ? Colors.red : Colors.green,
+            //   ),
+            // ),
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

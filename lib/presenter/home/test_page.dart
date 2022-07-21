@@ -39,8 +39,8 @@ class TestPage extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              DatabaseHelper.instance
-                  .insertCategory("Nome", "Colors.Blue", "Icons.person");
+              DatabaseHelper.instance.insertCategory(
+                  "Nome", "Colors.Blue", Icons.person.codePoint);
             },
             child: const Text("Insert Category"),
           ),
@@ -57,8 +57,10 @@ class TestPage extends StatelessWidget {
             child: const Text("update Category"),
           ),
           TextButton(
-            onPressed: () {},
-            child: const Text("delete Category"),
+            onPressed: () {
+              DatabaseHelper.instance.queryOperation("06/2022");
+            },
+            child: const Text("Query Operation"),
           ),
         ],
       ),

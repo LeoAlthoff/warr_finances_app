@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../shared/utils/database_helper.dart';
 
 import '../../../shared/widgets/input_text_container.dart';
+import '../../category/new_category_page.dart';
 import 'toggle_buttons_register.dart';
 
 class BodyRegister extends StatefulWidget {
@@ -21,23 +22,16 @@ class _BodyRegisterState extends State<BodyRegister> {
 
   final TextEditingController price = TextEditingController();
 
-  String category = 'Selecione um';
+  String category = '';
+  bool categorySelected = false;
 
   TextEditingController data = TextEditingController();
-
-  List<String> options = <String>[
-    'Selecione um',
-    'Alimentação',
-    'Compras',
-    'Aluguel',
-    'Telefone',
-    'Contas',
-  ];
 
   void cleanEntries() {
     isSelected[0] = false;
     isSelected[1] = false;
-    category = 'Selecione um';
+    category = '';
+    categorySelected = false;
     operationName.clear();
     price.clear();
     data.clear();
@@ -56,7 +50,7 @@ class _BodyRegisterState extends State<BodyRegister> {
   String formatDate(String date) {
     List temp = date.split('-');
     return temp.length == 3
-        ? ('${temp[2]}-${temp[1]}-${temp[0]}')
+        ? ('${temp[2]}/${temp[1]}/${temp[0]}')
         : 'Data inválida!';
   }
 
@@ -64,7 +58,6 @@ class _BodyRegisterState extends State<BodyRegister> {
     if (operationName.text == '' ||
         price.text == '' ||
         getOperation() == -1 ||
-        category == 'Selecione um' ||
         data.text == '') {
       showDialog(
         context: context,
@@ -135,24 +128,53 @@ class _BodyRegisterState extends State<BodyRegister> {
             borderRadius: BorderRadius.circular(5),
           ),
           // child: DropdownButtonHideUnderline(
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton<String>(
-              value: category,
-              items: options
-                  .map<DropdownMenuItem<String>>(
-                    (String value) => DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    ),
-                  )
-                  .toList(),
-              onChanged: (String? newValue) {
-                setState(() {
-                  category = newValue!;
-                });
-              },
-            ),
+          child: FutureBuilder<List<Map<String, dynamic>>>(
+            future: DatabaseHelper.instance.queryCategory(),
+            builder: (
+              context,
+              AsyncSnapshot<List<Map<String, dynamic>>> snapshot,
+            ) {
+              if (!snapshot.hasData) {
+                return const CircularProgressIndicator();
+              }
+              return DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                hint: categorySelected
+                    ? null
+                    : const Text('Selecione uma categoria!'),
+                // disabledHint: Text(category),
+                value: categorySelected ? category : null,
+
+                items: snapshot.data!
+                    .map<DropdownMenuItem<String>>(
+                      (Map<String, dynamic> value) => DropdownMenuItem<String>(
+                        value: value['name'],
+                        child: Text(
+                          value['name'],
+                          style: const TextStyle(color: Colors.black54),
+                        ),
+                      ),
+                    )
+                    .toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    categorySelected = true;
+                    category = newValue!;
+                  });
+                },
+              ));
+            },
           ),
+        ),
+        InkWell(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: ((context) => const NewCategoryPage()),
+              ),
+            );
+          },
+          child: const Text('Criar uma nova categoria'),
         ),
         Container(
           width: MediaQuery.of(context).size.width,
@@ -181,6 +203,7 @@ class _BodyRegisterState extends State<BodyRegister> {
             TextButton(
               onPressed: () {
                 cleanEntries();
+                setState(() {});
               },
               child: Container(
                 decoration: BoxDecoration(

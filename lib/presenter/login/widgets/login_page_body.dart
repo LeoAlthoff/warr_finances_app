@@ -28,7 +28,7 @@ class BodyLoginPage extends StatelessWidget {
 
 void nagigateToHomeScreen(BuildContext context) {
   Navigator.of(context)
-      .push(MaterialPageRoute(builder: (context) => const HomePage()));
+      .push(MaterialPageRoute(builder: (context) => HomePage()));
 }
 
 void navigateToResetPassword(BuildContext context) {
