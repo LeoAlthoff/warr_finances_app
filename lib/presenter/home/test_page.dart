@@ -46,7 +46,7 @@ class TestPage extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              DatabaseHelper.instance.queyCategory();
+              DatabaseHelper.instance.queryCategory();
             },
             child: const Text("query Category"),
           ),
@@ -58,9 +58,9 @@ class TestPage extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              DatabaseHelper.instance.initialCategory();
+              DatabaseHelper.instance.queryOperation("06/2022");
             },
-            child: const Text("delete Category"),
+            child: const Text("Query Operation"),
           ),
         ],
       ),

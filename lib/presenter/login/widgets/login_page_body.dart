@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../home/home_page.dart';
-import 'buttons_login_page.dart';
+import '../buttons/buttons_body_login.dart';
 import 'card_header_login_page.dart';
 import 'reset_passaword_page.dart';
 import 'sign_up_page.dart';
@@ -13,16 +13,13 @@ class BodyLoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          child: Column(children: const [
-            CardHeaderLogin(),
-            SizedBox(height: 20),
-            ButtonsLogin(),
-          ]),
-        ),
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        child: Column(children: const [
+          CardHeaderLogin(),
+          ButtonsBodyLogin(),
+        ]),
       ),
     );
   }
@@ -35,9 +32,9 @@ void nagigateToHomeScreen(BuildContext context) {
 
 void navigateToResetPassword(BuildContext context) {
   Navigator.of(context)
-      .push(MaterialPageRoute(builder: (context) => const ResetPassawordPage()));
+      .push(MaterialPageRoute(builder: (context) =>  ResetPassawordPage()));
 }
 void navigateToSignUpPage(BuildContext context) {
   Navigator.of(context)
-      .push(MaterialPageRoute(builder: (context) => const SignUpPage()));
+      .push(MaterialPageRoute(builder: (context) =>SignUpPage()));
 }

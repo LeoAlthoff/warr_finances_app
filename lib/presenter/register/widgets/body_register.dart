@@ -1,6 +1,6 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/shared/utils/database_helper.dart';
+import '../../../shared/utils/database_helper.dart';
 
 import '../../../shared/widgets/input_text_container.dart';
 import '../../category/new_category_page.dart';
@@ -22,23 +22,16 @@ class _BodyRegisterState extends State<BodyRegister> {
 
   final TextEditingController price = TextEditingController();
 
-  String category = 'Selecione um';
+  String category = '';
+  bool categorySelected = false;
 
   TextEditingController data = TextEditingController();
-
-  List<String> options = <String>[
-    'Selecione um',
-    'Alimentação',
-    'Compras',
-    'Aluguel',
-    'Telefone',
-    'Contas',
-  ];
 
   void cleanEntries() {
     isSelected[0] = false;
     isSelected[1] = false;
-    category = 'Selecione um';
+    category = '';
+    categorySelected = false;
     operationName.clear();
     price.clear();
     data.clear();
@@ -65,7 +58,7 @@ class _BodyRegisterState extends State<BodyRegister> {
     if (operationName.text == '' ||
         price.text == '' ||
         getOperation() == -1 ||
-        category == 'Selecione um' ||
+        categorySelected ||
         data.text == '') {
       showDialog(
         context: context,
@@ -136,26 +129,42 @@ class _BodyRegisterState extends State<BodyRegister> {
             borderRadius: BorderRadius.circular(5),
           ),
           // child: DropdownButtonHideUnderline(
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton<String>(
-              value: category,
-              items: options
-                  .map<DropdownMenuItem<String>>(
-                    (String value) => DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(
-                        value,
-                        style: const TextStyle(color: Colors.black54),
+          child: FutureBuilder<List<Map<String, dynamic>>>(
+            future: DatabaseHelper.instance.queryCategory(),
+            builder: (
+              context,
+              AsyncSnapshot<List<Map<String, dynamic>>> snapshot,
+            ) {
+              if (!snapshot.hasData) {
+                return const CircularProgressIndicator();
+              }
+              return DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                hint: categorySelected
+                    ? null
+                    : const Text('Selecione uma categoria!'),
+                // disabledHint: Text(category),
+                value: categorySelected ? category : null,
+
+                items: snapshot.data!
+                    .map<DropdownMenuItem<String>>(
+                      (Map<String, dynamic> value) => DropdownMenuItem<String>(
+                        value: value['name'],
+                        child: Text(
+                          value['name'],
+                          style: const TextStyle(color: Colors.black54),
+                        ),
                       ),
-                    ),
-                  )
-                  .toList(),
-              onChanged: (String? newValue) {
-                setState(() {
-                  category = newValue!;
-                });
-              },
-            ),
+                    )
+                    .toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    categorySelected = true;
+                    category = newValue!;
+                  });
+                },
+              ));
+            },
           ),
         ),
         InkWell(
@@ -195,23 +204,20 @@ class _BodyRegisterState extends State<BodyRegister> {
             TextButton(
               onPressed: () {
                 cleanEntries();
+                setState(() {});
               },
               child: Container(
                 decoration: BoxDecoration(
                     color: Colors.white60,
                     borderRadius: BorderRadius.circular(5),
-                    border: Border.all(
-                      color: Colors.grey.shade400,
-                    )),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 50,
-                  vertical: 20,
-                ),
+                    border: Border.all(color: Colors.grey.shade400)),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                 child: const Text(
                   'Limpar',
                   style: TextStyle(
                     fontSize: 18,
-                    color: Colors.black54,
+                    color: Colors.black,
                   ),
                 ),
               ),
@@ -225,10 +231,8 @@ class _BodyRegisterState extends State<BodyRegister> {
                   color: const Color.fromRGBO(238, 46, 93, 1),
                   borderRadius: BorderRadius.circular(5),
                 ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 50,
-                  vertical: 20,
-                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                 child: const Text(
                   'Enviar',
                   style: TextStyle(
