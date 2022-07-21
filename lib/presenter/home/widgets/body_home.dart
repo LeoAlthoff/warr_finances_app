@@ -16,29 +16,37 @@ class BodyHome extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: 200,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.only(left: 5),
-              children: [
-                MainContainerHome(
-                  index: 1,
-                  subText: 'Última entrada dia 1º de julho',
-                  value: 18000,
+          FutureBuilder(
+            future: DatabaseHelper.instance.selectSum(),
+            builder: ((context, AsyncSnapshot snapshot) {
+              if (!snapshot.hasData) {
+                return const CircularProgressIndicator();
+              }
+              return SizedBox(
+                height: 200,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.only(left: 5),
+                  children: [
+                    MainContainerHome(
+                      index: 1,
+                      subText: 'Última entrada dia 1º de julho',
+                      value: snapshot.data['entries'][0]['SUM(value)'],
+                    ),
+                    MainContainerHome(
+                      index: 2,
+                      subText: 'Última entrada dia 22 de junho',
+                      value: snapshot.data['output'][0]['SUM(value)'],
+                    ),
+                    MainContainerHome(
+                      index: 3,
+                      subText: '1º à 31 de julho',
+                      value: snapshot.data['total'],
+                    ),
+                  ],
                 ),
-                MainContainerHome(
-                  index: 2,
-                  subText: 'Última entrada dia 22 de junho',
-                  value: 870,
-                ),
-                MainContainerHome(
-                  index: 3,
-                  subText: '1º à 31 de julho',
-                  value: 17130,
-                ),
-              ],
-            ),
+              );
+            }),
           ),
           const Padding(
             padding: EdgeInsets.only(left: 20),

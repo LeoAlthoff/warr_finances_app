@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_teste_app/shared/utils/database_helper.dart';
+import 'package:intl/intl.dart';
 import 'package:pie_chart/pie_chart.dart';
 
 import '../../../shared/utils/format_money.dart';
@@ -24,13 +24,8 @@ class ItensSummaryPage extends StatefulWidget {
 }
 
 class _ItensSummaryPageState extends State<ItensSummaryPage> {
-  Map<String, double> dataMap = {
-    'Alimentação': 250,
-    'Compras': 1350,
-    'Aluguel': 1600,
-    'Telefone': 95.55,
-    'Contas': 458.9,
-  };
+  String date = DateFormat('MM/yyyy').format(DateTime.now());
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -90,7 +85,8 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
           height: 15,
         ),
         FutureBuilder(
-          future: DatabaseHelper.instance.queryCategoryForSummary('06/2022'),
+          future: DatabaseHelper.instance.teste("06/2022"),
+          //future: DatabaseHelper.instance.queryCategoryForSummary('06/2022'),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (!snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
@@ -107,9 +103,10 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
                   );
                 }
                 return InfoChartSummary(
-                  icon: IconData(snapshot.data[index]['icon']),
+                  icon: IconData(snapshot.data[index]['icon'],
+                      fontFamily: 'MaterialIcons'),
                   category: snapshot.data[index]['name'],
-                  value: getCurrency(snapshot.data[index]['sum']),
+                  value: getCurrency(snapshot.data[index]['SUM(o.value)']),
                   colorIcon: Color(int.parse(snapshot.data[index]['color'])),
                 );
               },

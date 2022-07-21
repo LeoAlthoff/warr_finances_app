@@ -5,7 +5,7 @@ import '../../../shared/utils/format_money.dart';
 class MainContainerHome extends StatelessWidget {
   final int index;
   final String subText;
-  final double value;
+  final num value;
   late final String entry;
   late final IconData icon;
   late final Color iconColor;

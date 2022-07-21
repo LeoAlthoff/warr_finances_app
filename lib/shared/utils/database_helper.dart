@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'package:sqflite/sqflite.dart';
@@ -58,13 +57,37 @@ class DatabaseHelper {
     );
   }
 
-  Future<List<Map<String, dynamic>>> teste(String monthYear) async {
+  Future<List<Map<String, dynamic>>> teste(String mounthYear) async {
     List<Map<String, dynamic>> list = await _database!.rawQuery(
-      "SELECT c.icon, c.name, c.color, SUM(o.value) FROM Category AS c LEFT JOIN Operation AS o ON c.id = o.categoryId ORDER BY c.name WHERE date LIKE ?",
-      [monthYear],
-    );
+        "SELECT c.icon, c.name, c.color, SUM(o.value) FROM Category AS c INNER JOIN Operation AS o ON c.id = o.categoryId WHERE o.date LIKE ? GROUP BY c.name",
+        ['%$mounthYear%']);
     print(list);
     return list;
+  }
+
+  Future<Map<String, dynamic>> selectSum() async {
+    List<Map<String, dynamic>> listPositive = await _database!.rawQuery(
+      "SELECT SUM(value) FROM Operation WHERE entry = 1",
+    );
+    List<Map<String, dynamic>> listNegative = await _database!.rawQuery(
+      "SELECT SUM(value) FROM Operation WHERE entry = 0",
+    );
+    // List<Map<String, dynamic>> listLastEntry = await _database!.rawQuery(
+    //   "SELECT date FROM Operation WHERE entry = 0",
+    // );
+    // List<Map<String, dynamic>> listLastOut = await _database!.rawQuery(
+    //   "SELECT SUM(value) FROM Operation WHERE entry = 0",
+    // );
+    // List<Map<String, dynamic>> listNegative = await _database!.rawQuery(
+    //   "SELECT SUM(value) FROM Operation WHERE entry = 0",
+    // );
+    Map<String, dynamic> map = {
+      'entries': listPositive,
+      'output': listNegative,
+      'total': listPositive[0]['SUM(value)'] - listNegative[0]['SUM(value)']
+    };
+    print(map);
+    return map;
   }
 
   static Future _onConfigure(Database db) async {
@@ -87,6 +110,7 @@ class DatabaseHelper {
   }
 
   Future<List<Map<String, dynamic>>> queryCategory() async {
+    print(await _database!.rawQuery('SELECT * FROM Category'));
     return await _database!.rawQuery('SELECT * FROM Category');
   }
 

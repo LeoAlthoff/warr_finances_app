@@ -21,6 +21,7 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
   Color pickerColor = const Color.fromARGB(255, 102, 23, 141);
 
   Color currentColor = const Color.fromRGBO(238, 46, 93, 1);
+  int currentCodeColor = 0;
 
   void changeColor(Color color) {
     setState(() => pickerColor = color);
@@ -82,7 +83,7 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
       );
     } else {
       DatabaseHelper.instance.insertCategory(categoryController.text.toString(),
-          currentColor.toString(), iconList[indexIcon].codePoint);
+          currentColor.value.toString(), iconList[indexIcon].codePoint);
 
       isSelected[indexIcon] = false;
       // setState(() {});
