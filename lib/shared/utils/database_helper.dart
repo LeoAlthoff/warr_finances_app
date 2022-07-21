@@ -1,12 +1,4 @@
-/*
-  Future<List<Map<String, dynamic>>> teste(String monthYear) async {
-    List<Map<String, dynamic>> list = await _database!.rawQuery(
-      "SELECT c.icon, c.name, c.color FROM Category AS c LEFT JOIN Operation AS o ON c.id = o.categoryId WHERE date LIKE ?",
-      [monthYear],
-    );
-    return list;
-  }
-*/
+
 import 'dart:async';
 
 import 'package:sqflite/sqflite.dart';
