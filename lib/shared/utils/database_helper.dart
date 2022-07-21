@@ -26,7 +26,7 @@ class DatabaseHelper {
         (id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         color TEXT NOT NULL,
-        icon TEXT NOT NULL)''');
+        icon INTERGER NOT NULL)''');
         await db.execute('''CREATE TABLE $_operationTable
         (id INTEGER PRIMARY KEY AUTOINCREMENT,
         value NUM NOT NULL,
@@ -61,7 +61,7 @@ class DatabaseHelper {
     await db.execute('PRAGMA foreign_keys = ON');
   }
 
-  void insertCategory(String name, String color, String icon) async {
+  void insertCategory(String name, String color, int icon) async {
     await _database!.rawInsert(
       'INSERT INTO Category(name, color, icon) VALUES(?, ?, ?)',
       [name, color, icon],

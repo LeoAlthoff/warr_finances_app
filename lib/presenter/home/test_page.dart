@@ -40,7 +40,7 @@ class TestPage extends StatelessWidget {
           TextButton(
             onPressed: () {
               DatabaseHelper.instance
-                  .insertCategory("Nome", "Colors.Blue", "Icons.person");
+                  .insertCategory("Nome", "Colors.Blue", Icons.person.codePoint);
             },
             child: const Text("Insert Category"),
           ),
