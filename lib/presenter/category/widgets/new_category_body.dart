@@ -31,7 +31,10 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Center(child: Text('Escolha a cor da Categoria')),
+            title: const Text(
+              'Escolha a cor da Categoria',
+              textAlign: TextAlign.center,
+            ),
             content: SingleChildScrollView(
               child: ColorPicker(
                 pickerColor: pickerColor,

@@ -18,6 +18,7 @@ class InputWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+        
         borderRadius: BorderRadius.circular(15.0),
       ),
       height: 40,
@@ -32,14 +33,17 @@ class InputWidget extends StatelessWidget {
         keyboardType: TextInputType.text,
         cursorColor: Colors.white,
         decoration: InputDecoration(
-          focusColor: Colors.white,
-          iconColor: Colors.white,
           enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.white)),
+            borderSide: BorderSide(color: Colors.white),
+          ),
           focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.white)),
+            borderSide: BorderSide(color: Colors.white),
+          ),
           border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10.0))),
+            borderRadius: BorderRadius.all(
+              Radius.circular(10.0),
+            ),
+          ),
           icon: Icon(
             icon,
             color: Colors.white,

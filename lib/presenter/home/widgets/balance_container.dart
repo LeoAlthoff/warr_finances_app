@@ -5,7 +5,7 @@ import '../../../shared/utils/format_money.dart';
 class BalanceContainer extends StatelessWidget {
   final bool expense;
   final String origin;
-  final String value;
+  final num value;
   final IconData icon;
   final String source;
   final String time;
