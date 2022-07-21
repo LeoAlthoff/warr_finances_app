@@ -1,3 +1,12 @@
+/*
+  Future<List<Map<String, dynamic>>> teste(String monthYear) async {
+    List<Map<String, dynamic>> list = await _database!.rawQuery(
+      "SELECT c.icon, c.name, c.color FROM Category AS c LEFT JOIN Operation AS o ON c.id = o.categoryId WHERE date LIKE ?",
+      [monthYear],
+    );
+    return list;
+  }
+*/
 import 'dart:async';
 
 import 'package:sqflite/sqflite.dart';
@@ -37,12 +46,12 @@ class DatabaseHelper {
          )''');
         await db.rawInsert(
           '''INSERT INTO Category(name, color, icon) 
-         VALUES('Salário', 'Color(0xff000000)', 57522),
-          ('Alimentação', 'Color(0xfff50707)', 58674),
-          ('Compras', 'Color(0xfff0f507)', 58778),
-          ('Aluguel', 'Color(0xff072cf5)', 58152),
-          ('Telefone', 'Color(0xff09ab10)', 58530),
-          ('Contas', 'Color(0xff920a79)', 983299)
+         VALUES('Salário', '0xff000000', 57522),
+          ('Alimentação', '0xfff50707', 58674),
+          ('Compras', '0xfff0f507', 58778),
+          ('Aluguel', '0xff072cf5', 58152),
+          ('Telefone', '0xff09ab10', 58530),
+          ('Contas', '0xff920a79', 983299)
         ''',
         );
 
@@ -55,6 +64,15 @@ class DatabaseHelper {
         ''');
       },
     );
+  }
+
+  Future<List<Map<String, dynamic>>> teste(String monthYear) async {
+    List<Map<String, dynamic>> list = await _database!.rawQuery(
+      "SELECT c.icon, c.name, c.color, SUM(o.value) FROM Category AS c LEFT JOIN Operation AS o ON c.id = o.categoryId ORDER BY c.name WHERE date LIKE ?",
+      [monthYear],
+    );
+    print(list);
+    return list;
   }
 
   static Future _onConfigure(Database db) async {
@@ -80,32 +98,64 @@ class DatabaseHelper {
     return await _database!.rawQuery('SELECT * FROM Category');
   }
 
-  Future<Map<int, double>> queryOperation(String monthYear) async {
+  Future<List<Map<String, dynamic>>> queryCategoryForSummary(
+      String monthYear) async {
+    Map<String, double> map1 = await queryOperation(monthYear);
+
+    Map<String, dynamic> result = {
+      'id': 0,
+      'name': '',
+      'color': '',
+      'icon': '',
+      'sum': 0
+    };
+    List<Map<String, dynamic>> list = [];
+    List<Map<String, dynamic>> temp = [];
+
+    map1.forEach((id, value) async {
+      list = await getCategory(int.parse(id));
+      result.addAll({
+        'id': id,
+        'name': list[0]['name'],
+        'color': list[0]['color'],
+        'icon': list[0]['icon'],
+        'sum': map1[id]
+      });
+      temp.add(result);
+      print(result);
+      print(temp);
+    });
+    return temp;
+  }
+
+  Future<Map<String, double>> queryOperation(String monthYear) async {
     List<Map<String, dynamic>> list = await _database!.query(
       'Operation',
       where: 'entry = ? AND date LIKE ? ',
       whereArgs: [0, '%$monthYear%'],
       orderBy: "categoryId",
     );
-    Set differentIds = {};
+
+    Set<int> differentIds = {};
 
     for (Map<String, dynamic> item in list) {
       differentIds.add(item['categoryId']);
     }
 
-    Map<int, double> sumId = {};
+    Map<String, double> sumId = {};
 
     for (int id in differentIds) {
-      sumId.addAll({id: 0});
+      sumId.addAll({id.toString(): 0});
       for (Map<String, dynamic> operation in list) {
-        double newSum = sumId[id]!;
+        double newSum = sumId[id.toString()]!;
         if (operation['categoryId'] == id) {
-          num adding = operation['value'] as num;
+          num adding = operation['value'];
           newSum += adding;
-          sumId[id] = newSum;
+          sumId[id.toString()] = newSum;
         }
       }
     }
+    print(sumId);
     return sumId;
   }
 
@@ -117,12 +167,12 @@ class DatabaseHelper {
     return list[0]['id'];
   }
 
-  Future<String> getCategory(int id) async {
+  Future<List<Map<String, dynamic>>> getCategory(int id) async {
     List<Map<String, dynamic>> list = await _database!.rawQuery(
-      'SELECT Name FROM Category WHERE id= ?',
+      'SELECT * FROM Category WHERE id= ?',
       [id],
     );
-    return list[0]['Name'];
+    return list;
   }
 
   Future<Map<String, List<Map<String, dynamic>>>> selectContainer() async {

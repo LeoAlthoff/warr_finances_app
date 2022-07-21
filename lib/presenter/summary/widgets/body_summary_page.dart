@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_teste_app/shared/utils/database_helper.dart';
 import 'package:pie_chart/pie_chart.dart';
 
@@ -59,56 +60,61 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
             ],
           ),
         ),
-        PieChart(
-          dataMap: dataMap,
-          colorList: ItensSummaryPage.colorList,
-          chartRadius: MediaQuery.of(context).size.width / 2,
-          chartValuesOptions: const ChartValuesOptions(
-            showChartValuesOutside: true,
-            showChartValuesInPercentage: true,
-            showChartValueBackground: false,
-            chartValueStyle: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-          ),
-          legendOptions: const LegendOptions(
-            showLegends: false,
-          ),
+        FutureBuilder(
+          future: DatabaseHelper.instance.queryOperation('06/2022'),
+          builder: ((context, AsyncSnapshot snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return PieChart(
+              dataMap: snapshot.data,
+              colorList: ItensSummaryPage.colorList,
+              chartRadius: MediaQuery.of(context).size.width / 2,
+              chartValuesOptions: const ChartValuesOptions(
+                showChartValuesOutside: true,
+                showChartValuesInPercentage: true,
+                showChartValueBackground: false,
+                chartValueStyle: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              legendOptions: const LegendOptions(
+                showLegends: false,
+              ),
+            );
+          }),
         ),
         const SizedBox(
           height: 15,
         ),
-        InfoChartSummary(
-          icon: Icons.restaurant,
-          category: 'Alimentação',
-          value: getCurrency(dataMap['Alimentação']),
-          colorIcon: ItensSummaryPage.colorList[0],
-        ),
-        InfoChartSummary(
-          icon: Icons.shopping_bag,
-          category: 'Compras',
-          value: getCurrency(dataMap['Compras']),
-          colorIcon: ItensSummaryPage.colorList[1],
-        ),
-        InfoChartSummary(
-          icon: Icons.house,
-          category: 'Aluguel',
-          value: getCurrency(dataMap['Aluguel']),
-          colorIcon: ItensSummaryPage.colorList[2],
-        ),
-        InfoChartSummary(
-          icon: Icons.phone,
-          category: 'Telefone',
-          value: getCurrency(dataMap['Telefone']),
-          colorIcon: ItensSummaryPage.colorList[3],
-        ),
-        InfoChartSummary(
-          icon: Icons.request_page_rounded,
-          category: 'Contas',
-          value: getCurrency(dataMap['Contas']),
-          colorIcon: ItensSummaryPage.colorList[4],
+        FutureBuilder(
+          future: DatabaseHelper.instance.queryCategoryForSummary('06/2022'),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              shrinkWrap: true,
+              padding: const EdgeInsets.all(8),
+              itemCount: snapshot.data.length,
+              itemBuilder: (BuildContext context, int index) {
+                if (snapshot.data! == null) {
+                  return const Center(
+                    child: Text('Nenhuma operação cadastrada neste mês'),
+                  );
+                }
+                return InfoChartSummary(
+                  icon: IconData(snapshot.data[index]['icon']),
+                  category: snapshot.data[index]['name'],
+                  value: getCurrency(snapshot.data[index]['sum']),
+                  colorIcon: Color(int.parse(snapshot.data[index]['color'])),
+                );
+              },
+            );
+          },
         ),
       ],
     );

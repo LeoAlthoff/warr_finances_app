@@ -1,7 +1,7 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
-import '../../../shared/utils/database_helper.dart';
 
+import '../../../shared/utils/database_helper.dart';
 import '../../../shared/widgets/input_text_container.dart';
 import '../../category/new_category_page.dart';
 import 'toggle_buttons_register.dart';
@@ -90,6 +90,29 @@ class _BodyRegisterState extends State<BodyRegister> {
       int categoryId = await DatabaseHelper.instance.selectCategory(category);
       DatabaseHelper.instance
           .insertOperation(value, name, operation, date, categoryId);
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Cadastro'),
+            content: const Text('Cadastro realizado com sucesso!'),
+            actions: [
+              TextButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        const Color.fromRGBO(238, 46, 93, 1)),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text(
+                    'Ok',
+                    style: TextStyle(color: Colors.white),
+                  ))
+            ],
+          );
+        },
+      );
     }
   }
 

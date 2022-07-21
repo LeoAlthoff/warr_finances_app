@@ -15,9 +15,8 @@ class TestPage extends StatelessWidget {
       body: Column(
         children: [
           TextButton(
-            onPressed: () {
-              DatabaseHelper.instance
-                  .insertOperation(2500, 'NomeTeste', 1, '15/07/2022', 1);
+            onPressed: () async {
+              await DatabaseHelper.instance.queryCategoryForSummary('06/2022');
             },
             child: const Text("insert Operation"),
           ),
@@ -25,7 +24,7 @@ class TestPage extends StatelessWidget {
             onPressed: () {
               DatabaseHelper.instance.selectOperation();
             },
-            child: const Text("Query Operation"),
+            child: const Text("select Operation"),
           ),
           TextButton(
             onPressed: () {},
@@ -58,9 +57,15 @@ class TestPage extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              DatabaseHelper.instance.queryOperation("06/2022");
+              DatabaseHelper.instance.getCategory(2);
             },
             child: const Text("Query Operation"),
+          ),
+          TextButton(
+            onPressed: () {
+              DatabaseHelper.instance.teste('%06/2022%');
+            },
+            child: const Text("Teste"),
           ),
         ],
       ),
