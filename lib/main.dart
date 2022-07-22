@@ -4,11 +4,13 @@ import 'config.dart';
 import 'presenter/home/home_page.dart';
 
 import 'presenter/login/splash_screen_login/splash_screen_login_page.dart';
+import 'shared/utils/database_helper.dart';
 
 void main() {
   runApp(
     App(),
   );
+  DatabaseHelper();
 }
 
 class App extends StatefulWidget {

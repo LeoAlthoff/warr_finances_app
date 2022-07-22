@@ -97,9 +97,9 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
               padding: const EdgeInsets.all(8),
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
-                if (snapshot.data! == null) {
+                if (!snapshot.hasData) {
                   return const Center(
-                    child: Text('Nenhuma operação cadastrada neste mês'),
+                    child: CircularProgressIndicator(),
                   );
                 }
                 return InfoChartSummary(

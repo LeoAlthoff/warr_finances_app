@@ -36,13 +36,13 @@ class TestPage extends StatelessWidget {
             },
             child: const Text("Delete Operation"),
           ),
-          TextButton(
-            onPressed: () {
-              DatabaseHelper.instance.insertCategory(
-                  "Nome", "Colors.amber.hashCode", Icons.person.codePoint);
-            },
-            child: const Text("Insert Category"),
-          ),
+          // TextButton(
+          //   onPressed: () {
+          //     DatabaseHelper.instance.insertCategory(
+          //         "Nome", , Icons.person.codePoint);
+          //   },
+          //   child: const Text("Insert Category"),
+          // ),
           TextButton(
             onPressed: () {
               DatabaseHelper.instance.queryCategory();

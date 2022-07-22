@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../shared/utils/database_helper.dart';
 
-import '../../../config.dart';
+import '../../../shared/utils/database_helper.dart';
 import 'balance_container.dart';
 import 'main_container_home.dart';
 
@@ -21,7 +20,7 @@ class BodyHome extends StatelessWidget {
             future: DatabaseHelper.instance.selectSum(),
             builder: ((context, AsyncSnapshot snapshot) {
               if (!snapshot.hasData) {
-                return const CircularProgressIndicator();
+                return const Center(child: CircularProgressIndicator());
               }
               return SizedBox(
                 height: 200,

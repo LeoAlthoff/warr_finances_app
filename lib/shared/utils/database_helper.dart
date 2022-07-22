@@ -36,7 +36,7 @@ class DatabaseHelper {
         FOREIGN KEY(categoryId) REFERENCES Category(id)
          )''');
         await db.rawInsert(
-          '''INSERT INTO Category(name, color, icon) 
+          '''INSERT INTO Category(name, color, icon)
          VALUES('Salário', '0xff000000', 57522),
           ('Alimentação', '0xfff50707', 58674),
           ('Compras', '0xfff0f507', 58778),
@@ -51,7 +51,7 @@ class DatabaseHelper {
         VALUES(2500, 'Warren Tecnologia', 1, '01/07/2022', 1),
         (2500, 'Ifood', 0, '22/06/2022', 2),
         (620, 'Angeloni', 0, '18/06/2022', 3),
-        (15500, 'Professor Ailton', 1, '01/07/2022', 1)   
+        (15500, 'Professor Ailton', 1, '01/07/2022', 1)
         ''');
       },
     );
@@ -72,21 +72,24 @@ class DatabaseHelper {
     List<Map<String, dynamic>> listNegative = await _database!.rawQuery(
       "SELECT SUM(value) FROM Operation WHERE entry = 0",
     );
-    // List<Map<String, dynamic>> listLastEntry = await _database!.rawQuery(
-    //   "SELECT date FROM Operation WHERE entry = 0",
-    // );
-    // List<Map<String, dynamic>> listLastOut = await _database!.rawQuery(
-    //   "SELECT SUM(value) FROM Operation WHERE entry = 0",
-    // );
-    // List<Map<String, dynamic>> listNegative = await _database!.rawQuery(
-    //   "SELECT SUM(value) FROM Operation WHERE entry = 0",
-    // );
+
+    if (listPositive[0]['SUM(value)'] == null) {
+      listPositive = [
+        {'SUM(value)': 0}
+      ];
+    }
+    if (listNegative[0]['SUM(value)'] == null) {
+      listNegative = [
+        {'SUM(value)': 0}
+      ];
+    }
     Map<String, dynamic> map = {
       'entries': listPositive,
       'output': listNegative,
-      'total': listPositive[0]['SUM(value)'] - listNegative[0]['SUM(value)']
+      'total': listPositive[0]['SUM(value)'] - listNegative[0]['SUM(value)'],
+      'entryIsNull': false,
+      'outIsNull': false
     };
-    print(map);
     return map;
   }
 
@@ -138,8 +141,8 @@ class DatabaseHelper {
         'sum': map1[id]
       });
       temp.add(result);
-      print(result);
-      print(temp);
+      // print(result);
+      // print(temp);
     });
     return temp;
   }
