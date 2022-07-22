@@ -110,7 +110,7 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
           height: 15,
         ),
         FutureBuilder(
-          future: DatabaseHelper.instance.teste(dateFormated),
+          future: DatabaseHelper.instance.queryForSummaryChart(dateFormated),
           //future: DatabaseHelper.instance.queryCategoryForSummary('06/2022'),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (!snapshot.hasData) {

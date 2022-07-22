@@ -57,9 +57,10 @@ class DatabaseHelper {
     );
   }
 
-  Future<List<Map<String, dynamic>>> teste(String mounthYear) async {
+  Future<List<Map<String, dynamic>>> queryForSummaryChart(
+      String mounthYear) async {
     List<Map<String, dynamic>> list = await _database!.rawQuery(
-        "SELECT c.icon, c.name, c.color, SUM(o.value) FROM Category AS c INNER JOIN Operation AS o ON c.id = o.categoryId WHERE o.date LIKE ? GROUP BY c.name",
+        "SELECT c.icon, c.name, c.color, SUM(o.value) FROM Category AS c INNER JOIN Operation AS o ON c.id = o.categoryId WHERE o.date LIKE ? AND o.entry=0 GROUP BY c.name",
         ['%$mounthYear%']);
     print(list);
     return list;

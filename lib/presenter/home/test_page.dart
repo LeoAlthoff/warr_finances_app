@@ -63,7 +63,7 @@ class TestPage extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              DatabaseHelper.instance.teste("06/2022");
+              DatabaseHelper.instance.queryForSummaryChart("06/2022");
 
               // DatabaseHelper.instance.selectSum();
             },
