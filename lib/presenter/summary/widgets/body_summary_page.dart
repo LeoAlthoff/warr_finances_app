@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/shared/utils/database_helper.dart';
+import '../../../shared/utils/database_helper.dart';
 import 'package:intl/intl.dart';
 import 'package:pie_chart/pie_chart.dart';
 
@@ -15,8 +15,11 @@ class ItensSummaryPage extends StatefulWidget {
     Colors.purple,
   ];
 
-  const ItensSummaryPage({
+  late DateTime dateRaw;
+
+  ItensSummaryPage({
     Key? key,
+    required this.dateRaw,
   }) : super(key: key);
 
   @override
@@ -24,10 +27,10 @@ class ItensSummaryPage extends StatefulWidget {
 }
 
 class _ItensSummaryPageState extends State<ItensSummaryPage> {
-  String date = DateFormat('MM/yyyy').format(DateTime.now());
-
   @override
   Widget build(BuildContext context) {
+    String dateFormated = DateFormat('MM/yyyy').format(widget.dateRaw);
+
     return Column(
       children: [
         Padding(
@@ -37,26 +40,48 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: const [
-              Icon(
-                Icons.arrow_back_ios,
-                size: 20,
+            children: [
+              TextButton(
+                onPressed: () {
+                  widget.dateRaw = DateTime(
+                    widget.dateRaw.year,
+                    widget.dateRaw.month - 1,
+                    widget.dateRaw.day,
+                  );
+                  dateFormated = DateFormat("MM/yyyy").format(widget.dateRaw);
+                  setState(() {});
+                },
+                child: const Icon(
+                  Icons.arrow_back_ios,
+                  size: 20,
+                ),
               ),
               Text(
-                'Saídas: julho, 2022',
-                style: TextStyle(
+                'Saídas: $dateFormated',
+                style: const TextStyle(
                   fontSize: 18,
                 ),
               ),
-              Icon(
-                Icons.arrow_forward_ios,
-                size: 20,
+              TextButton(
+                onPressed: () {
+                  widget.dateRaw = DateTime(
+                    widget.dateRaw.year,
+                    widget.dateRaw.month + 1,
+                    widget.dateRaw.day,
+                  );
+                  dateFormated = DateFormat("MM/yyyy").format(widget.dateRaw);
+                  setState(() {});
+                },
+                child: const Icon(
+                  Icons.arrow_forward_ios,
+                  size: 20,
+                ),
               ),
             ],
           ),
         ),
         FutureBuilder(
-          future: DatabaseHelper.instance.queryOperation('06/2022'),
+          future: DatabaseHelper.instance.queryOperation(dateFormated),
           builder: ((context, AsyncSnapshot snapshot) {
             if (!snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
@@ -85,7 +110,7 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
           height: 15,
         ),
         FutureBuilder(
-          future: DatabaseHelper.instance.teste("06/2022"),
+          future: DatabaseHelper.instance.teste(dateFormated),
           //future: DatabaseHelper.instance.queryCategoryForSummary('06/2022'),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (!snapshot.hasData) {

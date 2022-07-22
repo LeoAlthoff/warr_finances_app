@@ -8,9 +8,9 @@ class Summary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: ItensSummaryPage(),
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: ItensSummaryPage(dateRaw: DateTime.now()),
       ),
     );
   }
