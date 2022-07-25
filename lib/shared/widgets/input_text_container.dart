@@ -28,7 +28,6 @@ class TextInputContainer extends StatelessWidget {
         vertical: 0,
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
         borderRadius: BorderRadius.circular(5),
       ),
       child: TextField(
@@ -38,7 +37,7 @@ class TextInputContainer extends StatelessWidget {
             : [],
         decoration: InputDecoration(
           labelText: textValue,
-          border: InputBorder.none,
+          border: OutlineInputBorder(),
         ),
       ),
     );

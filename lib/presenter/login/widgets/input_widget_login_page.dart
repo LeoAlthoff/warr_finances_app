@@ -18,7 +18,6 @@ class InputWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        
         borderRadius: BorderRadius.circular(15.0),
       ),
       height: 40,

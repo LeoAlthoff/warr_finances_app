@@ -32,13 +32,6 @@ class BalanceContainer extends StatelessWidget {
       decoration: BoxDecoration(
         color: getColorByTheme(context),
         borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 5,
-            spreadRadius: 5,
-            color: getColorByTheme(context),
-          ),
-        ],
       ),
       child: Padding(
         padding: const EdgeInsets.all(12.0),

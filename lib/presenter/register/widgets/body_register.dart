@@ -147,7 +147,6 @@ class _BodyRegisterState extends State<BodyRegister> {
             vertical: 5,
           ),
           decoration: BoxDecoration(
-            color: Colors.white,
             borderRadius: BorderRadius.circular(5),
           ),
           // child: DropdownButtonHideUnderline(
@@ -174,7 +173,6 @@ class _BodyRegisterState extends State<BodyRegister> {
                         value: value['name'],
                         child: Text(
                           value['name'],
-                          style: const TextStyle(color: Colors.black54),
                         ),
                       ),
                     )
@@ -215,7 +213,6 @@ class _BodyRegisterState extends State<BodyRegister> {
             horizontal: 10,
           ),
           decoration: BoxDecoration(
-            color: Colors.white,
             borderRadius: BorderRadius.circular(5),
           ),
           child: DateTimePicker(
