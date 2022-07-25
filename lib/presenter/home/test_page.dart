@@ -53,11 +53,11 @@ class TestPage extends StatelessWidget {
             onPressed: () {
               DatabaseHelper.instance.deleteAllData();
             },
-            child: const Text("update Category"),
+            child: const Text("Delete Database"),
           ),
           TextButton(
             onPressed: () {
-              DatabaseHelper.instance.getCategory(2);
+              DatabaseHelper.instance.queryOperation("07/2022");
             },
             child: const Text("Query Operation"),
           ),

@@ -83,7 +83,7 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
       );
     } else {
       DatabaseHelper.instance.insertCategory(categoryController.text.toString(),
-          '0x${currentColor.value}', iconList[indexIcon].codePoint);
+          currentColor.value, iconList[indexIcon].codePoint);
 
       isSelected[indexIcon] = false;
       // setState(() {});

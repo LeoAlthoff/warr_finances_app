@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../shared/utils/database_helper.dart';
 import 'package:intl/intl.dart';
 import 'package:pie_chart/pie_chart.dart';
 
+import '../../../shared/utils/database_helper.dart';
 import '../../../shared/utils/format_money.dart';
 import 'info_chart_summary.dart';
 
@@ -81,14 +81,18 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
           ),
         ),
         FutureBuilder(
-          future: DatabaseHelper.instance.queryOperation(dateFormated),
-          builder: ((context, AsyncSnapshot snapshot) {
+          future: Future.wait([
+            DatabaseHelper.instance.queryOperation(dateFormated),
+            DatabaseHelper.instance.getColorsCategory(dateFormated)
+          ]),
+          builder: ((context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (!snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
             }
             return PieChart(
-              dataMap: snapshot.data,
-              colorList: ItensSummaryPage.colorList,
+              dataMap: snapshot.data![0],
+              // colorList: ItensSummaryPage.colorList,
+              colorList: snapshot.data![1],
               chartRadius: MediaQuery.of(context).size.width / 2,
               chartValuesOptions: const ChartValuesOptions(
                 showChartValuesOutside: true,
@@ -111,7 +115,6 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
         ),
         FutureBuilder(
           future: DatabaseHelper.instance.queryForSummaryChart(dateFormated),
-          //future: DatabaseHelper.instance.queryCategoryForSummary('06/2022'),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (!snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
@@ -132,7 +135,7 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
                       fontFamily: 'MaterialIcons'),
                   category: snapshot.data[index]['name'],
                   value: getCurrency(snapshot.data[index]['SUM(o.value)']),
-                  colorIcon: Color(int.parse(snapshot.data[index]['color'])),
+                  colorIcon: Color(snapshot.data[index]['color']),
                 );
               },
             );

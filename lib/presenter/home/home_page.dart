@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+
 import '../register/register_page.dart';
 import '../summary/summary_page.dart';
 import 'widgets/body_home.dart';
 import 'widgets/drawer_home.dart';
 
+// ignore: must_be_immutable
 class HomePage extends StatefulWidget {
   int currentPage;
   HomePage({Key? key, this.currentPage = 0}) : super(key: key);
