@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_teste_app/theme.dart';
 
 import '../register/register_page.dart';
 import '../summary/summary_page.dart';
@@ -50,7 +51,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(238, 46, 93, 1),
+        backgroundColor: MyTheme.isDark
+            ? const Color.fromARGB(214, 238, 46, 94)
+            : const Color.fromRGBO(238, 46, 93, 1),
         title: Text(getTitleAppBar()),
         centerTitle: true,
       ),
@@ -59,7 +62,9 @@ class _HomePageState extends State<HomePage> {
         currentIndex: widget.currentPage,
         type: BottomNavigationBarType.fixed,
         unselectedItemColor: Colors.black,
-        selectedItemColor: const Color.fromRGBO(238, 46, 93, 1),
+        selectedItemColor: MyTheme.isDark
+            ? const Color.fromARGB(214, 238, 46, 94)
+            : const Color.fromRGBO(238, 46, 93, 1),
         showUnselectedLabels: false,
         onTap: (index) {
           setCurrentPage(index);

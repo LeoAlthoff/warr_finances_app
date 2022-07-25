@@ -4,6 +4,7 @@ import 'package:pie_chart/pie_chart.dart';
 
 import '../../../shared/utils/database_helper.dart';
 import '../../../shared/utils/format_money.dart';
+import '../../../theme.dart';
 import 'info_chart_summary.dart';
 
 class ItensSummaryPage extends StatefulWidget {
@@ -43,9 +44,11 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
                   dateFormated = DateFormat("MM/yyyy").format(widget.dateRaw);
                   setState(() {});
                 },
-                child: const Icon(
+                child: Icon(
                   Icons.arrow_back_ios,
-                  color: Color.fromRGBO(238, 46, 93, 1),
+                  color: MyTheme.isDark
+                      ? const Color.fromARGB(214, 238, 46, 94)
+                      : const Color.fromRGBO(238, 46, 93, 1),
                   size: 20,
                 ),
               ),
@@ -65,9 +68,11 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
                   dateFormated = DateFormat("MM/yyyy").format(widget.dateRaw);
                   setState(() {});
                 },
-                child: const Icon(
+                child: Icon(
                   Icons.arrow_forward_ios,
-                  color: Color.fromRGBO(238, 46, 93, 1),
+                  color: MyTheme.isDark
+                      ? const Color.fromARGB(214, 238, 46, 94)
+                      : const Color.fromRGBO(238, 46, 93, 1),
                   size: 20,
                 ),
               ),

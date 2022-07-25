@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../config.dart';
+import '../../../theme.dart';
 import '../../category/new_category_page.dart';
 import '../../login/widgets/login_page.dart';
 import '../test_page.dart';
@@ -18,23 +19,27 @@ class DrawerHome extends StatelessWidget {
           SizedBox(
             height: 130,
             child: DrawerHeader(
-              decoration: const BoxDecoration(
-                color: Color.fromRGBO(238, 46, 93, 1),
+              decoration: BoxDecoration(
+                color: MyTheme.isDark
+                    ? const Color.fromARGB(214, 238, 46, 94)
+                    : const Color.fromRGBO(238, 46, 93, 1),
               ),
               child: Column(
                 children: [
                   Row(
-                    children: const [
+                    children: [
                       CircleAvatar(
                           radius: 10,
                           backgroundColor: Colors.white,
                           child: Icon(
                             Icons.person,
-                            color: Color.fromRGBO(238, 46, 93, 1),
+                            color: MyTheme.isDark
+                                ? const Color.fromARGB(214, 238, 46, 94)
+                                : const Color.fromRGBO(238, 46, 93, 1),
                             size: 20,
                           )),
-                      SizedBox(width: 10),
-                      Align(
+                      const SizedBox(width: 10),
+                      const Align(
                         alignment: Alignment.topLeft,
                         child: Text(
                           'Rodrigo',

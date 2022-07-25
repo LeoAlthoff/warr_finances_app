@@ -20,7 +20,7 @@ class TextInputContainer extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.symmetric(
-        horizontal: 30,
+        horizontal: 18,
         vertical: 10,
       ),
       padding: const EdgeInsets.symmetric(
@@ -37,7 +37,7 @@ class TextInputContainer extends StatelessWidget {
             : [],
         decoration: InputDecoration(
           labelText: textValue,
-          border: OutlineInputBorder(),
+          border: const OutlineInputBorder(),
         ),
       ),
     );

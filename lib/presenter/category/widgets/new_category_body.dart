@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_teste_app/shared/utils/get_color_bytheme.dart';
 
 import '../../../shared/utils/constants.dart';
 import '../../../shared/utils/database_helper.dart';
@@ -152,8 +153,8 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
                         child: Ink(
                           decoration: BoxDecoration(
                             color: isSelected[index]
-                                ? Colors.white
-                                : Colors.grey.shade200,
+                                ? getColorByTheme(context)
+                                : getColorByTheme(context),
                             borderRadius: BorderRadius.circular(30),
                             border: isSelected[index]
                                 ? Border.all(color: Colors.black54, width: 2)
@@ -164,9 +165,8 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
                           ),
                           child: Icon(
                             iconList[index],
-                            color: isSelected[index]
-                                ? currentColor
-                                : Colors.black38,
+                            color:
+                                isSelected[index] ? currentColor : Colors.grey,
                             size: isSelected[index] ? 32 : 28,
                           ),
                         ));
@@ -187,8 +187,7 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 30),
               padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(5)),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(5)),
               child: InkWell(
                 onTap: () {
                   colorPicker();
