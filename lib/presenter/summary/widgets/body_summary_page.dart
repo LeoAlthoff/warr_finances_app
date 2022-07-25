@@ -7,14 +7,6 @@ import '../../../shared/utils/format_money.dart';
 import 'info_chart_summary.dart';
 
 class ItensSummaryPage extends StatefulWidget {
-  static List<Color> colorList = const [
-    Colors.red,
-    Colors.yellow,
-    Colors.blue,
-    Colors.green,
-    Colors.purple,
-  ];
-
   late DateTime dateRaw;
 
   ItensSummaryPage({
@@ -35,7 +27,7 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(
-            vertical: 30,
+            vertical: 15,
             horizontal: 15,
           ),
           child: Row(
@@ -53,6 +45,7 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
                 },
                 child: const Icon(
                   Icons.arrow_back_ios,
+                  color: Color.fromRGBO(238, 46, 93, 1),
                   size: 20,
                 ),
               ),
@@ -74,6 +67,7 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
                 },
                 child: const Icon(
                   Icons.arrow_forward_ios,
+                  color: Color.fromRGBO(238, 46, 93, 1),
                   size: 20,
                 ),
               ),
@@ -91,7 +85,6 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
             }
             return PieChart(
               dataMap: snapshot.data![0],
-              // colorList: ItensSummaryPage.colorList,
               colorList: snapshot.data![1],
               chartRadius: MediaQuery.of(context).size.width / 2,
               chartValuesOptions: const ChartValuesOptions(
@@ -101,7 +94,6 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
                 chartValueStyle: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
                 ),
               ),
               legendOptions: const LegendOptions(

@@ -59,6 +59,7 @@ class _HomePageState extends State<HomePage> {
         currentIndex: widget.currentPage,
         type: BottomNavigationBarType.fixed,
         unselectedItemColor: Colors.black,
+        selectedItemColor: const Color.fromRGBO(238, 46, 93, 1),
         showUnselectedLabels: false,
         onTap: (index) {
           setCurrentPage(index);

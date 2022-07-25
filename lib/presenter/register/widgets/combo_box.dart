@@ -34,8 +34,8 @@ class _ComboBoxState extends State<ComboBox> {
         vertical: 5,
       ),
       decoration: BoxDecoration(
-        color: getColorByTheme(context),
         borderRadius: BorderRadius.circular(5),
+        border: Border.all(),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
