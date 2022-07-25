@@ -26,14 +26,13 @@ class DrawerHome extends StatelessWidget {
                   Row(
                     children: const [
                       CircleAvatar(
-                        child: Icon(
-                          Icons.person,
-                          color: Color.fromRGBO(238, 46, 93, 1),
-                          size: 20,
-                        ),
-                        radius: 10,
-                        backgroundColor: Colors.white,
-                      ),
+                          radius: 10,
+                          backgroundColor: Colors.white,
+                          child: Icon(
+                            Icons.person,
+                            color: Color.fromRGBO(238, 46, 93, 1),
+                            size: 20,
+                          )),
                       SizedBox(width: 10),
                       Align(
                         alignment: Alignment.topLeft,
@@ -92,12 +91,12 @@ class DrawerHome extends StatelessWidget {
           ),
           const SizedBox(height: 7),
           ListTile(
-            title: Text('Segurança'),
-            leading: Icon(Icons.shield_outlined),
+            title: const Text('Segurança'),
+            leading: const Icon(Icons.shield_outlined),
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => NewCategoryPage(),
+                  builder: (context) => const NewCategoryPage(),
                 ),
               );
             },
@@ -109,7 +108,7 @@ class DrawerHome extends StatelessWidget {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => TestPage(),
+                  builder: (context) => const TestPage(),
                 ),
               );
             },

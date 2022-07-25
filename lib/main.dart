@@ -7,12 +7,14 @@ import 'shared/utils/database_helper.dart';
 
 void main() {
   runApp(
-    App(),
+    const App(),
   );
   DatabaseHelper();
 }
 
 class App extends StatefulWidget {
+  const App({Key? key}) : super(key: key);
+
   @override
   State<App> createState() => _AppState();
 }

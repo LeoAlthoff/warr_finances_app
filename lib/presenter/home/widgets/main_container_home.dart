@@ -69,7 +69,7 @@ class MainContainerHome extends StatelessWidget {
               children: [
                 Text(
                   entry,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20,
                   ),
                 ),
@@ -83,7 +83,7 @@ class MainContainerHome extends StatelessWidget {
             const SizedBox(height: 30),
             Text(
               getCurrency(value),
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.w500,
               ),
@@ -91,7 +91,7 @@ class MainContainerHome extends StatelessWidget {
             const SizedBox(height: 5),
             Text(
               subText,
-              style: TextStyle(),
+              style: const TextStyle(),
             ),
           ],
         ),

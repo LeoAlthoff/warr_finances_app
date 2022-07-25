@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pie_chart/pie_chart.dart';
 
 import '../../../shared/utils/database_helper.dart';
@@ -81,14 +82,27 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
           ),
         ),
         FutureBuilder(
-          future: DatabaseHelper.instance.queryOperation(dateFormated),
-          builder: ((context, AsyncSnapshot snapshot) {
+          future: Future.wait([
+            DatabaseHelper.instance.queryOperation(dateFormated),
+            DatabaseHelper.instance.getColorsCategory(dateFormated)
+          ]),
+          builder: ((context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (!snapshot.hasData) {
-              return const Center(child: CircularProgressIndicator());
+              return const CircularProgressIndicator();
+            }
+            if (snapshot.data![0].isEmpty) {
+              return const Center(
+                  child: Center(
+                child: Text(
+                  'Nenhuma saída cadastrada neste mês.',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ));
             }
             return PieChart(
-              dataMap: snapshot.data,
-              colorList: ItensSummaryPage.colorList,
+              dataMap: snapshot.data![0],
+              // colorList: ItensSummaryPage.colorList,
+              colorList: snapshot.data![1],
               chartRadius: MediaQuery.of(context).size.width / 2,
               chartValuesOptions: const ChartValuesOptions(
                 showChartValuesOutside: true,
@@ -111,15 +125,15 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
         ),
         FutureBuilder(
           future: DatabaseHelper.instance.queryForSummaryChart(dateFormated),
-          //future: DatabaseHelper.instance.queryCategoryForSummary('06/2022'),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (!snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
             }
-            if (snapshot.data[0]['name'] == '') {
-              return const Center(
-                  child: Text('Nenhuma saída cadastrada neste mês!'));
+            if (snapshot.data.isEmpty) {
+              return Center(
+                  child: Lottie.asset('assets/lottie/not_found.json'));
             }
+
             return ListView.builder(
               physics: const BouncingScrollPhysics(),
               shrinkWrap: true,
@@ -136,7 +150,7 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
                       fontFamily: 'MaterialIcons'),
                   category: snapshot.data[index]['name'],
                   value: getCurrency(snapshot.data[index]['SUM(o.value)']),
-                  colorIcon: Color(int.parse(snapshot.data[index]['color'])),
+                  colorIcon: Color(snapshot.data[index]['color']),
                 );
               },
             );
