@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pie_chart/pie_chart.dart';
 
 import '../../../shared/utils/database_helper.dart';
@@ -86,7 +87,16 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
           ]),
           builder: ((context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (!snapshot.hasData) {
-              return const Center(child: CircularProgressIndicator());
+              return const CircularProgressIndicator();
+            }
+            if (snapshot.data![0].isEmpty) {
+              return const Center(
+                  child: Center(
+                child: Text(
+                  'Nenhuma saída cadastrada neste mês.',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ));
             }
             return PieChart(
               dataMap: snapshot.data![0],
@@ -116,6 +126,11 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
             if (!snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
             }
+            if (snapshot.data.isEmpty) {
+              return Center(
+                  child: Lottie.asset('assets/lottie/not_found.json'));
+            }
+
             return ListView.builder(
               physics: const BouncingScrollPhysics(),
               shrinkWrap: true,
