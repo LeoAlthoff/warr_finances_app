@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../shared/utils/database_helper.dart';
 import 'package:intl/intl.dart';
 import 'package:pie_chart/pie_chart.dart';
 
+import '../../../shared/utils/database_helper.dart';
 import '../../../shared/utils/format_money.dart';
 import 'info_chart_summary.dart';
 
@@ -115,6 +115,10 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (!snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
+            }
+            if (snapshot.data[0]['name'] == '') {
+              return const Center(
+                  child: Text('Nenhuma saída cadastrada neste mês!'));
             }
             return ListView.builder(
               physics: const BouncingScrollPhysics(),
