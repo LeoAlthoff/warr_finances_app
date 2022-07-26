@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.attach_money),
-            label: "Cadastrar",
+            label: "Cadastro",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.stacked_bar_chart_outlined),

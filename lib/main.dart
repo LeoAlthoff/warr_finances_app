@@ -46,15 +46,3 @@ class _AppState extends State<App> {
     );
   }
 }
-
-// class AppTheme {
-//   static final light = ThemeData(
-//     backgroundColor: Colors.red,
-//     primaryColor: Colors.black,
-//   );
-//   static final dark = ThemeData(
-//     backgroundColor: Colors.black87,
-//     primaryColor: Colors.white,
-//     scaffoldBackgroundColor: Colors.blue,
-//   );
-// }

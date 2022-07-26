@@ -102,11 +102,12 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
               dataMap: snapshot.data![0],
               colorList: snapshot.data![1],
               chartRadius: MediaQuery.of(context).size.width / 2,
-              chartValuesOptions: const ChartValuesOptions(
+              chartValuesOptions: ChartValuesOptions(
                 showChartValuesOutside: true,
                 showChartValuesInPercentage: true,
                 showChartValueBackground: false,
                 chartValueStyle: TextStyle(
+                  color: MyTheme.isDark ? Colors.white : Colors.black,
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
                 ),
