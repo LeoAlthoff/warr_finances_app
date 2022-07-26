@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/theme.dart';
 
 import '../../shared/utils/is_dark.dart';
 import '../register/register_page.dart';
@@ -82,7 +81,7 @@ class _HomePageState extends State<HomePage> {
             label: "Cadastro",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.stacked_bar_chart_outlined),
+            icon: Icon(Icons.stacked_bar_chart),
             label: "Resumo",
           ),
         ],

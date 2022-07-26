@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/presenter/home/home_page.dart';
-import 'package:flutter_teste_app/presenter/register/register_page.dart';
-import 'package:flutter_teste_app/presenter/register/widgets/body_register.dart';
+import '../home_page.dart';
 
 import '../../../shared/utils/database_helper.dart';
 import 'balance_container.dart';
