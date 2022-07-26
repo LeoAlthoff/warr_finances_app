@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../shared/utils/is_dark.dart';
 import '../../../theme.dart';
 
 class CustomButtons extends StatelessWidget {
@@ -33,7 +34,7 @@ class CustomButtons extends StatelessWidget {
           onPressed: () {},
           child: Container(
             decoration: BoxDecoration(
-              color: MyTheme.isDark
+              color: isDark(context)
                   ? const Color.fromARGB(214, 238, 46, 94)
                   : const Color.fromRGBO(238, 46, 93, 1),
               borderRadius: BorderRadius.circular(5),

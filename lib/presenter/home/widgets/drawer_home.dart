@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../config.dart';
+import '../../../shared/utils/is_dark.dart';
 import '../../../theme.dart';
 import '../../category/new_category_page.dart';
 import '../../login/widgets/login_page.dart';
@@ -20,7 +21,7 @@ class DrawerHome extends StatelessWidget {
             height: 130,
             child: DrawerHeader(
               decoration: BoxDecoration(
-                color: MyTheme.isDark
+                color: isDark(context)
                     ? const Color.fromARGB(214, 238, 46, 94)
                     : const Color.fromRGBO(238, 46, 93, 1),
               ),
@@ -33,7 +34,7 @@ class DrawerHome extends StatelessWidget {
                           backgroundColor: Colors.white,
                           child: Icon(
                             Icons.person,
-                            color: MyTheme.isDark
+                            color: isDark(context)
                                 ? const Color.fromARGB(214, 238, 46, 94)
                                 : const Color.fromRGBO(238, 46, 93, 1),
                             size: 20,

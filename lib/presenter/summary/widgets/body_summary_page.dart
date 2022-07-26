@@ -5,6 +5,7 @@ import 'package:pie_chart/pie_chart.dart';
 
 import '../../../shared/utils/database_helper.dart';
 import '../../../shared/utils/format_money.dart';
+import '../../../shared/utils/is_dark.dart';
 import '../../../theme.dart';
 import 'info_chart_summary.dart';
 
@@ -47,7 +48,7 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
                 },
                 child: Icon(
                   Icons.arrow_back_ios,
-                  color: MyTheme.isDark
+                  color: isDark(context)
                       ? const Color.fromARGB(214, 238, 46, 94)
                       : const Color.fromRGBO(238, 46, 93, 1),
                   size: 20,
@@ -71,7 +72,7 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
                 },
                 child: Icon(
                   Icons.arrow_forward_ios,
-                  color: MyTheme.isDark
+                  color: isDark(context)
                       ? const Color.fromARGB(214, 238, 46, 94)
                       : const Color.fromRGBO(238, 46, 93, 1),
                   size: 20,
@@ -107,7 +108,7 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
                 showChartValuesInPercentage: true,
                 showChartValueBackground: false,
                 chartValueStyle: TextStyle(
-                  color: MyTheme.isDark ? Colors.white : Colors.black,
+                  color: isDark(context) ? Colors.white : Colors.black,
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
                 ),
