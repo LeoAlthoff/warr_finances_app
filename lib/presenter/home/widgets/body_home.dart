@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_teste_app/presenter/home/home_page.dart';
+import 'package:flutter_teste_app/presenter/register/register_page.dart';
+import 'package:flutter_teste_app/presenter/register/widgets/body_register.dart';
 
 import '../../../shared/utils/database_helper.dart';
 import 'balance_container.dart';
@@ -77,21 +80,80 @@ class BodyHome extends StatelessWidget {
                       child: Text('Nenhuma operação cadastrada'),
                     );
                   }
-                  return BalanceContainer(
-                    expense: snapshot.data!['operation']![index]['entry'] == 1
-                        ? false
-                        : true,
-                    origin: snapshot.data!['operation']![index]['name'],
-                    value: snapshot.data!['operation']![index]['value'],
-                    icon: IconData(
-                        snapshot.data!['category']![
-                            snapshot.data!['operation']![index]['categoryId'] -
-                                1]['icon'],
-                        fontFamily: 'MaterialIcons'),
-                    source: snapshot.data!['category']![
-                        snapshot.data!['operation']![index]['categoryId'] -
-                            1]['name'],
-                    time: snapshot.data!['operation']![index]['date'],
+                  return GestureDetector(
+                    onLongPress: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text('Alterar informações?'),
+                              content: const Text('O que você deseja fazer?'),
+                              actions: [
+                                TextButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        const Color.fromRGBO(238, 46, 93, 1)),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text(
+                                    'Cancelar',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                                TextButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        const Color.fromRGBO(238, 46, 93, 1)),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => HomePage(
+                                          currentPage: 1,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: const Text(
+                                    'Editar',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                                TextButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        const Color.fromRGBO(238, 46, 93, 1)),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text(
+                                    'Deletar',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                )
+                              ],
+                            );
+                          });
+                    },
+                    child: BalanceContainer(
+                      expense: snapshot.data!['operation']![index]['entry'] == 1
+                          ? false
+                          : true,
+                      origin: snapshot.data!['operation']![index]['name'],
+                      value: snapshot.data!['operation']![index]['value'],
+                      icon: IconData(
+                          snapshot.data!['category']![snapshot
+                                  .data!['operation']![index]['categoryId'] -
+                              1]['icon'],
+                          fontFamily: 'MaterialIcons'),
+                      source: snapshot.data!['category']![
+                          snapshot.data!['operation']![index]['categoryId'] -
+                              1]['name'],
+                      time: snapshot.data!['operation']![index]['date'],
+                    ),
                   );
                 },
               );

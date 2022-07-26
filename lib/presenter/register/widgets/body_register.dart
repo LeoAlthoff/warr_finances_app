@@ -223,10 +223,17 @@ class _BodyRegisterState extends State<BodyRegister> {
             ),
           ),
           child: DateTimePicker(
+            decoration: const InputDecoration(
+              hintText: 'Data',
+              border: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              errorBorder: InputBorder.none,
+              disabledBorder: InputBorder.none,
+            ),
             controller: data,
             firstDate: DateTime(2000),
             lastDate: DateTime(2100),
-            dateLabelText: 'Data',
             locale: const Locale('pt', 'BR'),
           ),
         ),
