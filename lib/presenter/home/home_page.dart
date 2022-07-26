@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_teste_app/theme.dart';
 
+import '../../shared/utils/is_dark.dart';
 import '../register/register_page.dart';
 import '../summary/summary_page.dart';
 import 'widgets/body_home.dart';
@@ -51,7 +52,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: MyTheme.isDark
+        backgroundColor: isDark(context)
             ? const Color.fromARGB(214, 238, 46, 94)
             : const Color.fromRGBO(238, 46, 93, 1),
         title: Text(getTitleAppBar()),
@@ -62,7 +63,7 @@ class _HomePageState extends State<HomePage> {
         currentIndex: widget.currentPage,
         type: BottomNavigationBarType.fixed,
         unselectedItemColor: Colors.black,
-        selectedItemColor: MyTheme.isDark
+        selectedItemColor: isDark(context)
             ? const Color.fromARGB(214, 238, 46, 94)
             : const Color.fromRGBO(238, 46, 93, 1),
         showUnselectedLabels: false,

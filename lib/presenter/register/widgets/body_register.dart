@@ -1,10 +1,8 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/main.dart';
-import 'package:flutter_teste_app/shared/utils/get_color_bytheme.dart';
+import 'package:flutter_teste_app/shared/utils/is_dark.dart';
 import 'package:flutter_teste_app/theme.dart';
 
-import '../../../config.dart';
 import '../../../shared/utils/database_helper.dart';
 import '../../../shared/widgets/input_text_container.dart';
 import '../../category/new_category_page.dart';
@@ -154,7 +152,8 @@ class _BodyRegisterState extends State<BodyRegister> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             border: Border.all(
-                color: MyTheme.isDark ? Colors.white38 : Colors.black38),
+              color: isDark(context) ? Colors.white38 : Colors.black38,
+            ),
           ),
           child: FutureBuilder<List<Map<String, dynamic>>>(
             future: DatabaseHelper.instance.queryCategory(),
@@ -219,7 +218,7 @@ class _BodyRegisterState extends State<BodyRegister> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             border: Border.all(
-              color: (MyTheme.isDark ? Colors.white38 : Colors.black38),
+              color: isDark(context) ? Colors.white38 : Colors.black38,
             ),
           ),
           child: DateTimePicker(
