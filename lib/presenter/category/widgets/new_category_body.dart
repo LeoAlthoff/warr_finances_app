@@ -102,7 +102,7 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 30),
+            const SizedBox(height: 15),
             TextInputContainer(
               textValue: 'Nome da categoria',
               controller: categoryController,
@@ -175,7 +175,7 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
               ),
             ),
             const Padding(
-              padding: EdgeInsets.all(30.0),
+              padding: EdgeInsets.all(15.0),
               child: Text(
                 'Cor',
                 style: TextStyle(
@@ -213,7 +213,7 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
                 ),
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 15),
             Center(
               child: Container(
                 width: MediaQuery.of(context).size.width,

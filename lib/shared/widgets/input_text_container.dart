@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../utils/is_dark.dart';
+
 class TextInputContainer extends StatelessWidget {
   final String textValue;
   final TextEditingController? controller;
@@ -37,7 +39,20 @@ class TextInputContainer extends StatelessWidget {
             : [],
         decoration: InputDecoration(
           labelText: textValue,
-          border: const OutlineInputBorder(),
+          labelStyle: TextStyle(color: Theme.of(context).hintColor),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+                color: isDark(context) ? Colors.white38 : Colors.black38),
+          ),
+          focusColor: isDark(context)
+              ? const Color.fromARGB(214, 238, 46, 94)
+              : const Color.fromRGBO(238, 46, 93, 1),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: isDark(context) ? Colors.white38 : Colors.black38,
+              width: 1,
+            ),
+          ),
         ),
       ),
     );
