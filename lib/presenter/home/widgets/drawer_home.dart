@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/presenter/home/home_page.dart';
-import 'package:flutter_teste_app/shared/utils/database_helper.dart';
 
 import '../../../config.dart';
+import '../../../shared/utils/database_helper.dart';
 import '../../../shared/utils/is_dark.dart';
 import '../../category/new_category_page.dart';
 import '../../login/widgets/login_page.dart';
+import '../home_page.dart';
 import '../test_page.dart';
 
 class DrawerHome extends StatelessWidget {
@@ -120,7 +120,7 @@ class DrawerHome extends StatelessWidget {
                 return AlertDialog(
                   title: const Text(
                       'Essa ação deletará todas as operações registradas.'),
-                  content: const Text('Você tem certeza que quer excluí-las?.'),
+                  content: const Text('Você tem certeza que quer excluí-las?'),
                   actions: [
                     TextButton(
                       style: ButtonStyle(
@@ -183,6 +183,13 @@ class DrawerHome extends StatelessWidget {
             leading: const Icon(Icons.dark_mode),
             onTap: () {
               currentTheme.switchTheme();
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: ((context) => HomePage(
+                        currentPage: 0,
+                      )),
+                ),
+              );
             },
           ),
           const Divider(

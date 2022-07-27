@@ -5,8 +5,6 @@ import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
   static const _dbVersion = 1;
-  static const _operationTable = 'operation';
-  static const _categoryTable = 'category';
   static Database? _database;
   static final DatabaseHelper instance = DatabaseHelper();
 
@@ -22,13 +20,13 @@ class DatabaseHelper {
       path,
       version: _dbVersion,
       onCreate: (Database db, int version) async {
-        await db.execute('''CREATE TABLE $_categoryTable
+        await db.execute('''CREATE TABLE category
         (id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         color INTERGER NOT NULL,
         icon INTERGER NOT NULL)''');
 
-        await db.execute('''CREATE TABLE $_operationTable
+        await db.execute('''CREATE TABLE operation
         (id INTEGER PRIMARY KEY AUTOINCREMENT,
         value NUM NOT NULL,
         name TEXT NOT NULL,
@@ -36,6 +34,12 @@ class DatabaseHelper {
         date TEXT NO NULL,
         categoryId INTERGER,
         FOREIGN KEY(categoryId) REFERENCES Category(id)
+         )''');
+
+        await db.execute('''CREATE TABLE user
+        (email TEXT PRIMARY KEY,
+        name TEXT NOT NULL,
+        password TEXT NOT NULL
          )''');
 
         await db.rawInsert(
@@ -55,6 +59,10 @@ class DatabaseHelper {
         (2500, 'Ifood', 0, '22/06/2022', 2),
         (620, 'Angeloni', 0, '18/06/2022', 3),
         (15500, 'Professor Ailton', 1, '01/07/2022', 1)
+        ''');
+        await db.rawInsert('''
+        INSERT INTO user (emal, name, password)
+        VALUES('admin@admin.com.br', 'Admin', 'admin'),
         ''');
       },
     );
@@ -119,12 +127,31 @@ class DatabaseHelper {
     );
   }
 
+  void insertUser(String email, String name, String password) async {
+    await _database!.rawInsert(
+      'INSERT INTO user(email, name, password) VALUES(?, ?, ?)',
+      [email, name, password],
+    );
+  }
+
   void insertOperation(
       double value, String name, int entry, String date, int categoryId) async {
     await _database!.rawInsert(
       'INSERT INTO Operation(value, name, entry, date, categoryId) VALUES(?, ?, ?, ?, ?)',
       [value, name, entry, date, categoryId],
     );
+  }
+
+  Future<bool> validateUser(String email, String password) async {
+    var result = await _database!.rawQuery(
+      'SELECT * FROM user WHERE email=? AND password=?',
+      [email, password],
+    );
+    if (result[0][0] == null) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   Future<List<Map<String, dynamic>>> queryCategory() async {

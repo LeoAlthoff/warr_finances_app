@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_teste_app/shared/utils/database_helper.dart';
 
 import 'input_widget_login_page.dart';
 
@@ -78,13 +79,19 @@ class SignUpPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      DatabaseHelper.instance.insertUser(
+                        emailController.text,
+                        nomeController.text,
+                        passwordController.text,
+                      );
+                    },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
                         const Color.fromARGB(255, 247, 170, 189),
                       ),
                     ),
-                    child: Text(
+                    child: const Text(
                       'Criar Conta',
                       style: TextStyle(color: Colors.white, fontSize: 14),
                     ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_teste_app/shared/utils/database_helper.dart';
 
+import '../widgets/login_page.dart';
 import '../widgets/login_page_body.dart';
 
 class ButtonEntrarLoginPage extends StatelessWidget {
@@ -40,9 +41,7 @@ class ButtonEntrarLoginPage extends StatelessWidget {
                             backgroundColor: MaterialStateProperty.all(
                                 const Color.fromRGBO(238, 46, 93, 1)),
                           ),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
+                          onPressed: () {},
                           child: const Text(
                             'Ok',
                             style: TextStyle(color: Colors.white),

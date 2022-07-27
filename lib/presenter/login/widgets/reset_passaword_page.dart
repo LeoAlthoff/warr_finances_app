@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'input_widget_login_page.dart';
+import 'login_page.dart';
 
 class ResetPassawordPage extends StatelessWidget {
   ResetPassawordPage({Key? key}) : super(key: key);
@@ -17,6 +18,20 @@ class ResetPassawordPage extends StatelessWidget {
           child: Center(
             child: Column(
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        navigateBackToHomeScreen(context);
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
                 Padding(
                   padding: const EdgeInsets.all(25.0),
                   child: Container(

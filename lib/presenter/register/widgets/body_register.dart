@@ -1,15 +1,17 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
-import '../../../shared/utils/is_dark.dart';
 
 import '../../../shared/utils/database_helper.dart';
+import '../../../shared/utils/is_dark.dart';
 import '../../../shared/widgets/input_text_container.dart';
 import '../../category/new_category_page.dart';
 import 'toggle_buttons_register.dart';
 
 class BodyRegister extends StatefulWidget {
-  const BodyRegister({
+  int? id;
+  BodyRegister({
     Key? key,
+    this.id,
   }) : super(key: key);
 
   @override
@@ -25,6 +27,7 @@ class _BodyRegisterState extends State<BodyRegister> {
 
   String category = '';
   bool categorySelected = false;
+  bool isEditing = false;
 
   TextEditingController data = TextEditingController();
 
@@ -38,6 +41,12 @@ class _BodyRegisterState extends State<BodyRegister> {
     data.clear();
     setState(() {});
   }
+
+  // Future<bool> edit() async {
+  //   Map<String, dynamic> map = await DatabaseHelper.instance.selectOperation();
+  //   data.text = map[0];
+  //   return false;
+  // }
 
   int getOperation() {
     if (isSelected[0]) {
@@ -119,6 +128,10 @@ class _BodyRegisterState extends State<BodyRegister> {
 
   @override
   Widget build(BuildContext context) {
+    // if (widget.id != null) {
+    //   isEditing = true;
+    //   edit();
+    // }
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
