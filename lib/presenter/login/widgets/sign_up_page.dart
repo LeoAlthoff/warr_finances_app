@@ -84,14 +84,9 @@ class SignUpPage extends StatelessWidget {
                         const Color.fromARGB(255, 247, 170, 189),
                       ),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: const [
-                        Text(
-                          'Criar Conta',
-                          style: TextStyle(color: Colors.white, fontSize: 14),
-                        ),
-                      ],
+                    child: Text(
+                      'Criar Conta',
+                      style: TextStyle(color: Colors.white, fontSize: 14),
                     ),
                   ),
                 ),
