@@ -6,8 +6,8 @@ import '../utils/is_dark.dart';
 class TextInputContainer extends StatelessWidget {
   final String textValue;
   final TextEditingController? controller;
-  TextInputType type;
-  bool numericFormatter;
+  final TextInputType type;
+  final bool numericFormatter;
 
   TextInputContainer({
     Key? key,

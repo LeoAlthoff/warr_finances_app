@@ -9,7 +9,9 @@ import 'widgets/drawer_home.dart';
 // ignore: must_be_immutable
 class HomePage extends StatefulWidget {
   int currentPage;
-  HomePage({Key? key, this.currentPage = 0}) : super(key: key);
+  final Function? callback;
+
+  HomePage({Key? key, this.currentPage = 0, this.callback}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -26,6 +28,10 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     pageController = PageController(initialPage: widget.currentPage);
+  }
+
+  void callback() {
+    setState(() {});
   }
 
   setCurrentPage(index) {
@@ -57,7 +63,7 @@ class _HomePageState extends State<HomePage> {
         title: Text(getTitleAppBar()),
         centerTitle: true,
       ),
-      drawer: const DrawerHome(),
+      drawer: DrawerHome(callback: callback),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: widget.currentPage,
         type: BottomNavigationBarType.fixed,
