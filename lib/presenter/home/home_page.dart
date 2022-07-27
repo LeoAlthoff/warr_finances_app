@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/theme.dart';
+import '../../theme.dart';
 
 import '../../shared/utils/is_dark.dart';
 import '../register/register_page.dart';

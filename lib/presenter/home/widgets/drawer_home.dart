@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_teste_app/presenter/home/home_page.dart';
 
 import '../../../config.dart';
 import '../../../shared/utils/is_dark.dart';
-import '../../../theme.dart';
 import '../../category/new_category_page.dart';
 import '../../login/widgets/login_page.dart';
 import '../test_page.dart';
@@ -132,6 +132,13 @@ class DrawerHome extends StatelessWidget {
             leading: const Icon(Icons.dark_mode),
             onTap: () {
               currentTheme.switchTheme();
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: ((context) => HomePage(
+                        currentPage: 0,
+                      )),
+                ),
+              );
             },
           ),
           const Divider(

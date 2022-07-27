@@ -36,6 +36,12 @@ class TextInputContainer extends StatelessWidget {
             ? [FilteringTextInputFormatter.allow(RegExp(r'[0-9]+\.?[0-9]*$'))]
             : [],
         decoration: InputDecoration(
+          focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.black87,
+              width: 1,
+            ),
+          ),
           labelText: textValue,
           border: const OutlineInputBorder(),
         ),

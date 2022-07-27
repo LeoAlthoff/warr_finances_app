@@ -223,6 +223,14 @@ class DatabaseHelper {
     return map;
   }
 
+  // Future<Map<String, List<Map<String, dynamic>>>> selectOperationById(
+  //     int id) async {
+  //    List<Map<String, dynamic>> map = [];
+  //   map['operation'] = await _database!
+  //       .rawQuery('SELECT * FROM operation WHERE id = ?', ['$id']);
+  //   return map;
+  // }
+
   void deleteCategory(int id) async {
     await _database!.rawDelete(
       'DELETE FROM Category WHERE id = ?',
@@ -230,10 +238,10 @@ class DatabaseHelper {
     );
   }
 
-  void deleteOperation(String name) async {
+  void deleteOperation(int id) async {
     await _database!.rawDelete(
-      'DELETE FROM operation WHERE name = ?',
-      [name],
+      'DELETE FROM operation WHERE id = ?',
+      ['$id'],
     );
   }
 

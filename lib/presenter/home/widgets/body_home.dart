@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/presenter/home/home_page.dart';
-import 'package:flutter_teste_app/presenter/register/register_page.dart';
-import 'package:flutter_teste_app/presenter/register/widgets/body_register.dart';
 
 import '../../../shared/utils/database_helper.dart';
+import '../home_page.dart';
 import 'balance_container.dart';
 import 'main_container_home.dart';
 
@@ -83,60 +81,127 @@ class BodyHome extends StatelessWidget {
                   return GestureDetector(
                     onLongPress: () {
                       showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: const Text('Alterar informações?'),
-                              content: const Text('O que você deseja fazer?'),
-                              actions: [
-                                TextButton(
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        const Color.fromRGBO(238, 46, 93, 1)),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text(
-                                    'Cancelar',
-                                    style: TextStyle(color: Colors.white),
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text('Alterar informações?'),
+                            content: const Text('O que você deseja fazer?'),
+                            actions: [
+                              TextButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                    const Color.fromRGBO(238, 46, 93, 1),
                                   ),
                                 ),
-                                TextButton(
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        const Color.fromRGBO(238, 46, 93, 1)),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text(
+                                  'Cancelar',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                              TextButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                    const Color.fromRGBO(238, 46, 93, 1),
                                   ),
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => HomePage(
-                                          currentPage: 1,
-                                        ),
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => HomePage(
+                                        currentPage: 1,
                                       ),
-                                    );
-                                  },
-                                  child: const Text(
-                                    'Editar',
-                                    style: TextStyle(color: Colors.white),
+                                    ),
+                                  );
+                                },
+                                child: const Text(
+                                  'Editar',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                              TextButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                    const Color.fromRGBO(238, 46, 93, 1),
                                   ),
                                 ),
-                                TextButton(
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        const Color.fromRGBO(238, 46, 93, 1)),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text(
-                                    'Deletar',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                )
-                              ],
-                            );
-                          });
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: const Text('Você tem certeza'),
+                                        content: const Text(
+                                            'Deseja deletar esta operação?'),
+                                        actions: [
+                                          TextButton(
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(
+                                                const Color.fromRGBO(
+                                                    238, 46, 93, 1),
+                                              ),
+                                            ),
+                                            onPressed: () {
+                                              Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      HomePage(
+                                                    currentPage: 0,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: const Text(
+                                              'Não',
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                          TextButton(
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(
+                                                const Color.fromRGBO(
+                                                    238, 46, 93, 1),
+                                              ),
+                                            ),
+                                            onPressed: () {
+                                              DatabaseHelper.instance
+                                                  .deleteOperation(snapshot
+                                                          .data!['operation']![
+                                                      index]['id']);
+                                              Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      HomePage(
+                                                    currentPage: 0,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: const Text(
+                                              'Sim',
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                                child: const Text(
+                                  'Deletar',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              )
+                            ],
+                          );
+                        },
+                      );
                     },
                     child: BalanceContainer(
                       expense: snapshot.data!['operation']![index]['entry'] == 1

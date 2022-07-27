@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:flutter_teste_app/shared/utils/get_color_bytheme.dart';
+import '../../../shared/utils/get_color_bytheme.dart';
 
 import '../../../shared/utils/constants.dart';
 import '../../../shared/utils/database_helper.dart';
