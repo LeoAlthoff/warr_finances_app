@@ -30,12 +30,10 @@ class _SplashScreenLoginPageState extends State<SplashScreenLoginPage> {
         gradient: LinearGradient(
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
-          colors:[
+          colors: [
             Color.fromRGBO(238, 46, 93, 1),
             Color.fromARGB(255, 238, 135, 161),
-            
           ],
-
         ),
       ),
       child: Lottie.asset(

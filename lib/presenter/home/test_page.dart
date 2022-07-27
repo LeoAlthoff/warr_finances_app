@@ -15,9 +15,8 @@ class TestPage extends StatelessWidget {
       body: Column(
         children: [
           TextButton(
-            onPressed: () {
-              DatabaseHelper.instance
-                  .insertOperation(2500, 'NomeTeste', 1, '15/07/2022', 1);
+            onPressed: () async {
+              await DatabaseHelper.instance.queryCategoryForSummary('06/2022');
             },
             child: const Text("insert Operation"),
           ),
@@ -25,7 +24,7 @@ class TestPage extends StatelessWidget {
             onPressed: () {
               DatabaseHelper.instance.selectOperation();
             },
-            child: const Text("Query Operation"),
+            child: const Text("select Operation"),
           ),
           TextButton(
             onPressed: () {},
@@ -37,13 +36,13 @@ class TestPage extends StatelessWidget {
             },
             child: const Text("Delete Operation"),
           ),
-          TextButton(
-            onPressed: () {
-              DatabaseHelper.instance.insertCategory(
-                  "Nome", "Colors.Blue", Icons.person.codePoint);
-            },
-            child: const Text("Insert Category"),
-          ),
+          // TextButton(
+          //   onPressed: () {
+          //     DatabaseHelper.instance.insertCategory(
+          //         "Nome", , Icons.person.codePoint);
+          //   },
+          //   child: const Text("Insert Category"),
+          // ),
           TextButton(
             onPressed: () {
               DatabaseHelper.instance.queryCategory();
@@ -54,13 +53,21 @@ class TestPage extends StatelessWidget {
             onPressed: () {
               DatabaseHelper.instance.deleteAllData();
             },
-            child: const Text("update Category"),
+            child: const Text("Delete Database"),
           ),
           TextButton(
             onPressed: () {
-              DatabaseHelper.instance.queryOperation("06/2022");
+              DatabaseHelper.instance.queryOperation("07/2022");
             },
             child: const Text("Query Operation"),
+          ),
+          TextButton(
+            onPressed: () {
+              DatabaseHelper.instance.queryForSummaryChart("06/2022");
+
+              // DatabaseHelper.instance.selectSum();
+            },
+            child: const Text("Teste"),
           ),
         ],
       ),

@@ -18,7 +18,6 @@ class _ToggleButtonsRegisterState extends State<ToggleButtonsRegister> {
       constraints: const BoxConstraints(minWidth: 175, minHeight: 50),
       isSelected: widget.isSelected,
       borderColor: Colors.grey,
-      selectedBorderColor: const Color.fromRGBO(238, 46, 93, 1),
       borderRadius: const BorderRadius.all(Radius.circular(10)),
       onPressed: (int index) {
         setState(() {

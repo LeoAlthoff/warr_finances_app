@@ -1,14 +1,17 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
-import '../../../shared/utils/database_helper.dart';
 
+import '../../../shared/utils/database_helper.dart';
+import '../../../shared/utils/is_dark.dart';
 import '../../../shared/widgets/input_text_container.dart';
 import '../../category/new_category_page.dart';
 import 'toggle_buttons_register.dart';
 
 class BodyRegister extends StatefulWidget {
-  const BodyRegister({
+  int? id;
+  BodyRegister({
     Key? key,
+    this.id,
   }) : super(key: key);
 
   @override
@@ -24,6 +27,7 @@ class _BodyRegisterState extends State<BodyRegister> {
 
   String category = '';
   bool categorySelected = false;
+  bool isEditing = false;
 
   TextEditingController data = TextEditingController();
 
@@ -37,6 +41,12 @@ class _BodyRegisterState extends State<BodyRegister> {
     data.clear();
     setState(() {});
   }
+
+  // Future<bool> edit() async {
+  //   Map<String, dynamic> map = await DatabaseHelper.instance.selectOperation();
+  //   data.text = map[0];
+  //   return false;
+  // }
 
   int getOperation() {
     if (isSelected[0]) {
@@ -90,29 +100,61 @@ class _BodyRegisterState extends State<BodyRegister> {
       int categoryId = await DatabaseHelper.instance.selectCategory(category);
       DatabaseHelper.instance
           .insertOperation(value, name, operation, date, categoryId);
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Cadastro'),
+            content: const Text('Cadastro realizado com sucesso!'),
+            actions: [
+              TextButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        const Color.fromRGBO(238, 46, 93, 1)),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text(
+                    'Ok',
+                    style: TextStyle(color: Colors.white),
+                  ))
+            ],
+          );
+        },
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    // if (widget.id != null) {
+    //   isEditing = true;
+    //   edit();
+    // }
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
+        const SizedBox(height: 5),
         TextInputContainer(
           textValue: 'Nome',
           controller: operationName,
         ),
+        const SizedBox(height: 10),
         TextInputContainer(
           textValue: 'Preço',
           controller: price,
           type: const TextInputType.numberWithOptions(),
           numericFormatter: true,
         ),
+        const SizedBox(height: 15),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             ToggleButtonsRegister(isSelected: isSelected),
           ],
         ),
+        const SizedBox(height: 15),
         Container(
           width: MediaQuery.of(context).size.width,
           margin: const EdgeInsets.symmetric(
@@ -124,10 +166,11 @@ class _BodyRegisterState extends State<BodyRegister> {
             vertical: 5,
           ),
           decoration: BoxDecoration(
-            color: Colors.white,
             borderRadius: BorderRadius.circular(5),
+            border: Border.all(
+              color: isDark(context) ? Colors.white38 : Colors.black38,
+            ),
           ),
-          // child: DropdownButtonHideUnderline(
           child: FutureBuilder<List<Map<String, dynamic>>>(
             future: DatabaseHelper.instance.queryCategory(),
             builder: (
@@ -142,16 +185,13 @@ class _BodyRegisterState extends State<BodyRegister> {
                 hint: categorySelected
                     ? null
                     : const Text('Selecione uma categoria!'),
-                // disabledHint: Text(category),
                 value: categorySelected ? category : null,
-
                 items: snapshot.data!
                     .map<DropdownMenuItem<String>>(
                       (Map<String, dynamic> value) => DropdownMenuItem<String>(
                         value: value['name'],
                         child: Text(
                           value['name'],
-                          style: const TextStyle(color: Colors.black54),
                         ),
                       ),
                     )
@@ -166,6 +206,7 @@ class _BodyRegisterState extends State<BodyRegister> {
             },
           ),
         ),
+        const SizedBox(height: 15),
         InkWell(
           onTap: () {
             Navigator.of(context).push(
@@ -174,29 +215,46 @@ class _BodyRegisterState extends State<BodyRegister> {
               ),
             );
           },
-          child: const Text('Criar uma nova categoria'),
+          child: const Text(
+            'Criar uma nova categoria',
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              decoration: TextDecoration.underline,
+            ),
+          ),
         ),
+        const SizedBox(height: 15),
         Container(
           width: MediaQuery.of(context).size.width,
           margin: const EdgeInsets.symmetric(
             horizontal: 30,
-            vertical: 10,
+            vertical: 5,
           ),
           padding: const EdgeInsets.symmetric(
             horizontal: 10,
           ),
           decoration: BoxDecoration(
-            color: Colors.white,
             borderRadius: BorderRadius.circular(5),
+            border: Border.all(
+              color: isDark(context) ? Colors.white38 : Colors.black38,
+            ),
           ),
           child: DateTimePicker(
+            decoration: const InputDecoration(
+              hintText: 'Data',
+              border: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              errorBorder: InputBorder.none,
+              disabledBorder: InputBorder.none,
+            ),
             controller: data,
             firstDate: DateTime(2000),
             lastDate: DateTime(2100),
-            dateLabelText: 'Data',
             locale: const Locale('pt', 'BR'),
           ),
         ),
+        const SizedBox(height: 15),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
@@ -24,8 +25,9 @@ class DatabaseHelper {
         await db.execute('''CREATE TABLE $_categoryTable
         (id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
-        color TEXT NOT NULL,
-        icon INT NOT NULL)''');
+        color INTERGER NOT NULL,
+        icon INTERGER NOT NULL)''');
+
         await db.execute('''CREATE TABLE $_operationTable
         (id INTEGER PRIMARY KEY AUTOINCREMENT,
         value NUM NOT NULL,
@@ -35,14 +37,15 @@ class DatabaseHelper {
         categoryId INTERGER,
         FOREIGN KEY(categoryId) REFERENCES Category(id)
          )''');
+
         await db.rawInsert(
-          '''INSERT INTO Category(name, color, icon) 
-         VALUES('Salário', 'Color(0xff000000)', 57522),
-          ('Alimentação', 'Color(0xfff50707)', 58674),
-          ('Compras', 'Color(0xfff0f507)', 58778),
-          ('Aluguel', 'Color(0xff072cf5)', 58152),
-          ('Telefone', 'Color(0xff09ab10)', 58530),
-          ('Contas', 'Color(0xff920a79)', 983299)
+          '''INSERT INTO Category(name, color, icon)
+         VALUES('Salário', 4294198070, 57522),
+          ('Alimentação', 4294961979, 58674),
+          ('Compras', 4280391411, 58778),
+          ('Aluguel', 4283215696, 58152),
+          ('Telefone', 4288423856 , 58530),
+          ('Contas', 4288585374 , 983299)
         ''',
         );
 
@@ -51,17 +54,65 @@ class DatabaseHelper {
         VALUES(2500, 'Warren Tecnologia', 1, '01/07/2022', 1),
         (2500, 'Ifood', 0, '22/06/2022', 2),
         (620, 'Angeloni', 0, '18/06/2022', 3),
-        (15500, 'Professor Ailton', 1, '01/07/2022', 1)   
+        (15500, 'Professor Ailton', 1, '01/07/2022', 1)
         ''');
       },
     );
+  }
+
+  Future<List<Map<String, dynamic>>> queryForSummaryChart(
+      String monthYear) async {
+    List<Map<String, dynamic>> list = await _database!.rawQuery(
+        "SELECT c.icon, c.name, c.color, SUM(o.value) FROM Category AS c INNER JOIN Operation AS o ON c.id = o.categoryId WHERE o.date LIKE ? AND o.entry=0 GROUP BY c.name",
+        ['%$monthYear%']);
+    return list;
+  }
+
+  Future<Map<String, dynamic>> selectSum() async {
+    List<Map<String, dynamic>> listPositive = await _database!.rawQuery(
+      "SELECT SUM(value) FROM Operation WHERE entry = 1",
+    );
+    List<Map<String, dynamic>> listNegative = await _database!.rawQuery(
+      "SELECT SUM(value) FROM Operation WHERE entry = 0",
+    );
+
+    if (listPositive[0]['SUM(value)'] == null) {
+      listPositive = [
+        {'SUM(value)': 0}
+      ];
+    }
+    if (listNegative[0]['SUM(value)'] == null) {
+      listNegative = [
+        {'SUM(value)': 0}
+      ];
+    }
+    Map<String, dynamic> map = {
+      'entries': listPositive,
+      'output': listNegative,
+      'total': listPositive[0]['SUM(value)'] - listNegative[0]['SUM(value)'],
+      'entryIsNull': false,
+      'outIsNull': false
+    };
+    return map;
+  }
+
+  Future<List<Color>> getColorsCategory(String monthYear) async {
+    List<Color> listColor = [];
+    List<Map<String, dynamic>> list = await queryForSummaryChart(monthYear);
+
+    for (Map<String, dynamic> map in list) {
+      int color = map['color'];
+      Color colorAdd = Color(color);
+      listColor.add(colorAdd);
+    }
+    return listColor;
   }
 
   static Future _onConfigure(Database db) async {
     await db.execute('PRAGMA foreign_keys = ON');
   }
 
-  void insertCategory(String name, String color, int icon) async {
+  void insertCategory(String name, int color, int icon) async {
     await _database!.rawInsert(
       'INSERT INTO Category(name, color, icon) VALUES(?, ?, ?)',
       [name, color, icon],
@@ -77,32 +128,66 @@ class DatabaseHelper {
   }
 
   Future<List<Map<String, dynamic>>> queryCategory() async {
-    return await _database!.rawQuery('SELECT * FROM Category');
+    List<Map<String, dynamic>> list =
+        await _database!.rawQuery('SELECT * FROM Category');
+    // print(list);
+    return list;
   }
 
-  Future<Map<int, double>> queryOperation(String monthYear) async {
+  Future<List<Map<String, dynamic>>> queryCategoryForSummary(
+      String monthYear) async {
+    Map<String, double> map1 = await queryOperation(monthYear);
+
+    Map<String, dynamic> result = {
+      'id': 0,
+      'name': '',
+      'color': '',
+      'icon': '',
+      'sum': 0
+    };
+    List<Map<String, dynamic>> list = [];
+    List<Map<String, dynamic>> temp = [];
+
+    map1.forEach((id, value) async {
+      list = await getCategory(int.parse(id));
+      result.addAll({
+        'id': id,
+        'name': list[0]['name'],
+        'color': list[0]['color'],
+        'icon': list[0]['icon'],
+        'sum': map1[id]
+      });
+      // temp.add(result);
+      // print(result);
+      // print(temp);
+    });
+    return temp;
+  }
+
+  Future<Map<String, double>> queryOperation(String monthYear) async {
     List<Map<String, dynamic>> list = await _database!.query(
       'Operation',
       where: 'entry = ? AND date LIKE ? ',
       whereArgs: [0, '%$monthYear%'],
       orderBy: "categoryId",
     );
-    Set differentIds = {};
+
+    Set<int> differentIds = {};
 
     for (Map<String, dynamic> item in list) {
       differentIds.add(item['categoryId']);
     }
 
-    Map<int, double> sumId = {};
+    Map<String, double> sumId = {};
 
     for (int id in differentIds) {
-      sumId.addAll({id: 0});
+      sumId.addAll({id.toString(): 0});
       for (Map<String, dynamic> operation in list) {
-        double newSum = sumId[id]!;
+        double newSum = sumId[id.toString()]!;
         if (operation['categoryId'] == id) {
-          num adding = operation['value'] as num;
+          num adding = operation['value'];
           newSum += adding;
-          sumId[id] = newSum;
+          sumId[id.toString()] = newSum;
         }
       }
     }
@@ -117,28 +202,34 @@ class DatabaseHelper {
     return list[0]['id'];
   }
 
-  Future<String> getCategory(int id) async {
+  Future<List<Map<String, dynamic>>> getCategory(int id) async {
     List<Map<String, dynamic>> list = await _database!.rawQuery(
-      'SELECT Name FROM Category WHERE id= ?',
+      'SELECT * FROM Category WHERE id= ?',
       [id],
     );
-    return list[0]['Name'];
+    return list;
   }
 
   Future<Map<String, List<Map<String, dynamic>>>> selectContainer() async {
     Map<String, List<Map<String, dynamic>>> map = {};
     map['operation'] = await _database!.rawQuery('SELECT * FROM operation');
     map['category'] = await _database!.rawQuery('SELECT * FROM Category');
-    print(map);
     return map;
   }
 
   Future<Map<String, List<Map<String, dynamic>>>> selectOperation() async {
     Map<String, List<Map<String, dynamic>>> map = {};
     map['operation'] = await _database!.rawQuery('SELECT * FROM operation');
-    print(map);
     return map;
   }
+
+  // Future<Map<String, List<Map<String, dynamic>>>> selectOperationById(
+  //     int id) async {
+  //    List<Map<String, dynamic>> map = [];
+  //   map['operation'] = await _database!
+  //       .rawQuery('SELECT * FROM operation WHERE id = ?', ['$id']);
+  //   return map;
+  // }
 
   void deleteCategory(int id) async {
     await _database!.rawDelete(
@@ -147,10 +238,16 @@ class DatabaseHelper {
     );
   }
 
-  void deleteOperation(String name) async {
+  void deleteOperation(int id) async {
     await _database!.rawDelete(
-      'DELETE FROM operation WHERE name = ?',
-      [name],
+      'DELETE FROM operation WHERE id = ?',
+      ['$id'],
+    );
+  }
+
+  void deleteAllOperations() async {
+    await _database!.rawDelete(
+      'DELETE FROM operation',
     );
   }
 

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../../shared/utils/format_money.dart';
+import '../../../shared/utils/get_color_bytheme.dart';
 
 class MainContainerHome extends StatelessWidget {
   final int index;
   final String subText;
-  final double value;
+  final num value;
   late final String entry;
   late final IconData icon;
   late final Color iconColor;
@@ -28,8 +29,7 @@ class MainContainerHome extends StatelessWidget {
         entry = "Entradas";
         icon = Icons.arrow_circle_up;
         iconColor = Colors.green;
-        textColor = Colors.black;
-        background = Colors.white;
+
         break;
       case 2:
         entry = "Saídas";
@@ -42,7 +42,7 @@ class MainContainerHome extends StatelessWidget {
         entry = "Total";
         icon = Icons.attach_money;
         iconColor = Colors.white;
-        textColor = Colors.white;
+
         background = const Color.fromARGB(255, 233, 70, 124);
     }
   }
@@ -56,15 +56,8 @@ class MainContainerHome extends StatelessWidget {
       ),
       width: MediaQuery.of(context).size.width - 40,
       decoration: BoxDecoration(
-        color: background,
+        color: getColorByTheme(context),
         borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 5,
-            spreadRadius: 5,
-            color: Colors.grey.shade200,
-          ),
-        ],
       ),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -76,9 +69,8 @@ class MainContainerHome extends StatelessWidget {
               children: [
                 Text(
                   entry,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20,
-                    color: textColor,
                   ),
                 ),
                 Icon(
@@ -91,18 +83,15 @@ class MainContainerHome extends StatelessWidget {
             const SizedBox(height: 30),
             Text(
               getCurrency(value),
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.w500,
-                color: textColor,
               ),
             ),
             const SizedBox(height: 5),
             Text(
               subText,
-              style: TextStyle(
-                color: textColor,
-              ),
+              style: const TextStyle(),
             ),
           ],
         ),

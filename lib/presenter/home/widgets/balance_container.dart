@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../shared/utils/format_money.dart';
+import '../../../shared/utils/get_color_bytheme.dart';
 
 class BalanceContainer extends StatelessWidget {
   final bool expense;
@@ -29,15 +30,8 @@ class BalanceContainer extends StatelessWidget {
       ),
       height: 130,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: getColorByTheme(context),
         borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 5,
-            spreadRadius: 5,
-            color: Colors.grey.shade200,
-          ),
-        ],
       ),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -49,13 +43,13 @@ class BalanceContainer extends StatelessWidget {
               style: const TextStyle(fontSize: 17),
             ),
             const SizedBox(height: 10),
-            // Text(
-            //   expense ? '- ${getCurrency(value)}' : getCurrency(value),
-            //   style: TextStyle(
-            //     fontSize: 27,
-            //     color: expense ? Colors.red : Colors.green,
-            //   ),
-            // ),
+            Text(
+              expense ? '- ${getCurrency(value)}' : getCurrency(value),
+              style: TextStyle(
+                color: expense ? Colors.red : Colors.green,
+                fontSize: 27,
+              ),
+            ),
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

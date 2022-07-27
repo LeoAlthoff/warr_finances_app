@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../utils/is_dark.dart';
+
 class TextInputContainer extends StatelessWidget {
   final String textValue;
   final TextEditingController? controller;
-  TextInputType type;
-  bool numericFormatter;
+  final TextInputType type;
+  final bool numericFormatter;
 
   TextInputContainer({
     Key? key,
@@ -20,7 +22,7 @@ class TextInputContainer extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.symmetric(
-        horizontal: 30,
+        horizontal: 18,
         vertical: 10,
       ),
       padding: const EdgeInsets.symmetric(
@@ -28,17 +30,30 @@ class TextInputContainer extends StatelessWidget {
         vertical: 0,
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
         borderRadius: BorderRadius.circular(5),
       ),
       child: TextField(
         controller: controller,
+        cursorColor: isDark(context) ? Colors.white38 : Colors.black38,
         inputFormatters: numericFormatter
             ? [FilteringTextInputFormatter.allow(RegExp(r'[0-9]+\.?[0-9]*$'))]
             : [],
         decoration: InputDecoration(
           labelText: textValue,
-          border: InputBorder.none,
+          labelStyle: TextStyle(color: Theme.of(context).hintColor),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+                color: isDark(context) ? Colors.white38 : Colors.black38),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: isDark(context) ? Colors.white38 : Colors.black38,
+              width: 1,
+            ),
+          ),
+          focusColor: isDark(context)
+              ? const Color.fromARGB(214, 238, 46, 94)
+              : const Color.fromRGBO(238, 46, 93, 1),
         ),
       ),
     );

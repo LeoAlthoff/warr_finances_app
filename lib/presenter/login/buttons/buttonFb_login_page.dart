@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../widgets/login_page_body.dart';
 
 class ButtonFbLoginPage extends StatelessWidget {
   const ButtonFbLoginPage({
@@ -17,9 +16,7 @@ class ButtonFbLoginPage extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
         ),
         child: ElevatedButton(
-          onPressed: () {
-           
-          },
+          onPressed: () {},
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(
               Colors.blue.shade700,
@@ -38,7 +35,7 @@ class ButtonFbLoginPage extends StatelessWidget {
               Container(
                 width: 35,
                 height: 35,
-                decoration: const  BoxDecoration(
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('assets/images/fb.png'),
                   ),

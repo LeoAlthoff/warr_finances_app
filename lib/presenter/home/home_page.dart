@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 
+import '../../shared/utils/is_dark.dart';
 import '../register/register_page.dart';
 import '../summary/summary_page.dart';
 import 'widgets/body_home.dart';
 import 'widgets/drawer_home.dart';
 
+// ignore: must_be_immutable
 class HomePage extends StatefulWidget {
   int currentPage;
-  HomePage({Key? key, this.currentPage = 0}) : super(key: key);
+  final Function? callback;
+
+  HomePage({Key? key, this.currentPage = 0, this.callback}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -15,15 +19,19 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late PageController pageController;
-  final screens = [
+  final screens = const [
     BodyHome(),
-    const RegistrationPage(),
-    const Summary(),
+    RegistrationPage(),
+    Summary(),
   ];
   @override
   void initState() {
     super.initState();
     pageController = PageController(initialPage: widget.currentPage);
+  }
+
+  void callback() {
+    setState(() {});
   }
 
   setCurrentPage(index) {
@@ -49,15 +57,20 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(238, 46, 93, 1),
+        backgroundColor: isDark(context)
+            ? const Color.fromARGB(214, 238, 46, 94)
+            : const Color.fromRGBO(238, 46, 93, 1),
         title: Text(getTitleAppBar()),
         centerTitle: true,
       ),
-      drawer: const DrawerHome(),
+      drawer: DrawerHome(callback: callback),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: widget.currentPage,
         type: BottomNavigationBarType.fixed,
         unselectedItemColor: Colors.black,
+        selectedItemColor: isDark(context)
+            ? const Color.fromARGB(214, 238, 46, 94)
+            : const Color.fromRGBO(238, 46, 93, 1),
         showUnselectedLabels: false,
         onTap: (index) {
           setCurrentPage(index);
@@ -71,10 +84,10 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.attach_money),
-            label: "Cadastrar",
+            label: "Cadastro",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.stacked_bar_chart_outlined),
+            icon: Icon(Icons.stacked_bar_chart),
             label: "Resumo",
           ),
         ],

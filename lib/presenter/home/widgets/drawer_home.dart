@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+
+import '../../../config.dart';
+import '../../../shared/utils/database_helper.dart';
+import '../../../shared/utils/is_dark.dart';
 import '../../category/new_category_page.dart';
 import '../../login/widgets/login_page.dart';
+import '../home_page.dart';
 import '../test_page.dart';
 
 class DrawerHome extends StatelessWidget {
+  final Function? callback;
+
   const DrawerHome({
     Key? key,
+    required this.callback,
   }) : super(key: key);
 
   @override
@@ -16,24 +24,27 @@ class DrawerHome extends StatelessWidget {
           SizedBox(
             height: 130,
             child: DrawerHeader(
-              decoration: const BoxDecoration(
-                color: Color.fromRGBO(238, 46, 93, 1),
+              decoration: BoxDecoration(
+                color: isDark(context)
+                    ? const Color.fromARGB(214, 238, 46, 94)
+                    : const Color.fromRGBO(238, 46, 93, 1),
               ),
               child: Column(
                 children: [
                   Row(
-                    children: const [
+                    children: [
                       CircleAvatar(
-                        child: Icon(
-                          Icons.person,
-                          color: Color.fromRGBO(238, 46, 93, 1),
-                          size: 20,
-                        ),
-                        radius: 10,
-                        backgroundColor: Colors.white,
-                      ),
-                      SizedBox(width: 10),
-                      Align(
+                          radius: 10,
+                          backgroundColor: Colors.white,
+                          child: Icon(
+                            Icons.person,
+                            color: isDark(context)
+                                ? const Color.fromARGB(214, 238, 46, 94)
+                                : const Color.fromRGBO(238, 46, 93, 1),
+                            size: 20,
+                          )),
+                      const SizedBox(width: 10),
+                      const Align(
                         alignment: Alignment.topLeft,
                         child: Text(
                           'Rodrigo',
@@ -90,15 +101,66 @@ class DrawerHome extends StatelessWidget {
           ),
           const SizedBox(height: 7),
           ListTile(
-            title: Text('Segurança'),
-            leading: Icon(Icons.shield_outlined),
+            title: const Text('Segurança'),
+            leading: const Icon(Icons.shield_outlined),
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => NewCategoryPage(),
+                  builder: (context) => const NewCategoryPage(),
                 ),
               );
             },
+          ),
+          ListTile(
+            title: const Text('Apagar todas as operações'),
+            leading: const Icon(Icons.delete_forever),
+            onTap: () => showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: const Text(
+                      'Essa ação deletará todas as operações registradas.'),
+                  content: const Text('Você tem certeza que quer excluí-las?'),
+                  actions: [
+                    TextButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                            const Color.fromRGBO(238, 46, 93, 1)),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text(
+                        'Não',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    TextButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                            const Color.fromRGBO(238, 46, 93, 1)),
+                      ),
+                      onPressed: () async {
+                        DatabaseHelper.instance.deleteAllOperations();
+                        callback;
+                        Navigator.of(context).pop();
+                        await Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return HomePage(currentPage: 0);
+                            },
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'Sim',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
           const SizedBox(height: 7),
           ListTile(
@@ -107,16 +169,29 @@ class DrawerHome extends StatelessWidget {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => TestPage(),
+                  builder: (context) => const TestPage(),
                 ),
               );
             },
           ),
-          const ListTile(
-            title: Text('Configurações'),
-            leading: Icon(Icons.settings),
-          ),
           const SizedBox(height: 7),
+          const Divider(
+            height: 1,
+          ),
+          ListTile(
+            title: const Text('Dark Theme'),
+            leading: const Icon(Icons.dark_mode),
+            onTap: () {
+              currentTheme.switchTheme();
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: ((context) => HomePage(
+                        currentPage: 0,
+                      )),
+                ),
+              );
+            },
+          ),
           const Divider(
             height: 1,
           ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../shared/utils/get_color_bytheme.dart';
+
 class InfoChartSummary extends StatelessWidget {
   final IconData icon;
   final String category;
@@ -19,7 +21,7 @@ class InfoChartSummary extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: getColorByTheme(context),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Padding(

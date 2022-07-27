@@ -9,8 +9,13 @@ class NewCategoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: NewCategoryBody(),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromRGBO(238, 46, 93, 1),
+        centerTitle: true,
+        title: const Text('Criar nova categoria'),
+      ),
+      body: const NewCategoryBody(),
     );
   }
 }

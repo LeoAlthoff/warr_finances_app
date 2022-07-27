@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/shared/utils/database_helper.dart';
+import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pie_chart/pie_chart.dart';
 
+import '../../../shared/utils/database_helper.dart';
 import '../../../shared/utils/format_money.dart';
+import '../../../shared/utils/is_dark.dart';
 import 'info_chart_summary.dart';
 
 class ItensSummaryPage extends StatefulWidget {
-  static List<Color> colorList = const [
-    Colors.red,
-    Colors.yellow,
-    Colors.blue,
-    Colors.green,
-    Colors.purple,
-  ];
+  late DateTime dateRaw;
 
-  const ItensSummaryPage({
+  ItensSummaryPage({
     Key? key,
+    required this.dateRaw,
   }) : super(key: key);
 
   @override
@@ -23,92 +21,138 @@ class ItensSummaryPage extends StatefulWidget {
 }
 
 class _ItensSummaryPageState extends State<ItensSummaryPage> {
-  Map<String, double> dataMap = {
-    'Alimentação': 250,
-    'Compras': 1350,
-    'Aluguel': 1600,
-    'Telefone': 95.55,
-    'Contas': 458.9,
-  };
   @override
   Widget build(BuildContext context) {
+    String dateFormated = DateFormat('MM/yyyy').format(widget.dateRaw);
+
     return Column(
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(
-            vertical: 30,
+            vertical: 15,
             horizontal: 15,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: const [
-              Icon(
-                Icons.arrow_back_ios,
-                size: 20,
+            children: [
+              TextButton(
+                onPressed: () {
+                  widget.dateRaw = DateTime(
+                    widget.dateRaw.year,
+                    widget.dateRaw.month - 1,
+                    widget.dateRaw.day,
+                  );
+                  dateFormated = DateFormat("MM/yyyy").format(widget.dateRaw);
+                  setState(() {});
+                },
+                child: Icon(
+                  Icons.arrow_back_ios,
+                  color: isDark(context)
+                      ? const Color.fromARGB(214, 238, 46, 94)
+                      : const Color.fromRGBO(238, 46, 93, 1),
+                  size: 20,
+                ),
               ),
               Text(
-                'Saídas: julho, 2022',
-                style: TextStyle(
+                'Saídas: $dateFormated',
+                style: const TextStyle(
                   fontSize: 18,
                 ),
               ),
-              Icon(
-                Icons.arrow_forward_ios,
-                size: 20,
+              TextButton(
+                onPressed: () {
+                  widget.dateRaw = DateTime(
+                    widget.dateRaw.year,
+                    widget.dateRaw.month + 1,
+                    widget.dateRaw.day,
+                  );
+                  dateFormated = DateFormat("MM/yyyy").format(widget.dateRaw);
+                  setState(() {});
+                },
+                child: Icon(
+                  Icons.arrow_forward_ios,
+                  color: isDark(context)
+                      ? const Color.fromARGB(214, 238, 46, 94)
+                      : const Color.fromRGBO(238, 46, 93, 1),
+                  size: 20,
+                ),
               ),
             ],
           ),
         ),
-        PieChart(
-          dataMap: dataMap,
-          colorList: ItensSummaryPage.colorList,
-          chartRadius: MediaQuery.of(context).size.width / 2,
-          chartValuesOptions: const ChartValuesOptions(
-            showChartValuesOutside: true,
-            showChartValuesInPercentage: true,
-            showChartValueBackground: false,
-            chartValueStyle: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-          ),
-          legendOptions: const LegendOptions(
-            showLegends: false,
-          ),
+        FutureBuilder(
+          future: Future.wait([
+            DatabaseHelper.instance.queryOperation(dateFormated),
+            DatabaseHelper.instance.getColorsCategory(dateFormated)
+          ]),
+          builder: ((context, AsyncSnapshot<List<dynamic>> snapshot) {
+            if (!snapshot.hasData) {
+              return const CircularProgressIndicator();
+            }
+            if (snapshot.data![0].isEmpty) {
+              return const Center(
+                  child: Center(
+                child: Text(
+                  'Nenhuma saída cadastrada neste mês.',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ));
+            }
+            return PieChart(
+              dataMap: snapshot.data![0],
+              colorList: snapshot.data![1],
+              chartRadius: MediaQuery.of(context).size.width / 2,
+              chartValuesOptions: ChartValuesOptions(
+                showChartValuesOutside: true,
+                showChartValuesInPercentage: true,
+                showChartValueBackground: false,
+                chartValueStyle: TextStyle(
+                  color: isDark(context) ? Colors.white : Colors.black,
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              legendOptions: const LegendOptions(
+                showLegends: false,
+              ),
+            );
+          }),
         ),
         const SizedBox(
           height: 15,
         ),
-        InfoChartSummary(
-          icon: Icons.restaurant,
-          category: 'Alimentação',
-          value: getCurrency(dataMap['Alimentação']),
-          colorIcon: ItensSummaryPage.colorList[0],
-        ),
-        InfoChartSummary(
-          icon: Icons.shopping_bag,
-          category: 'Compras',
-          value: getCurrency(dataMap['Compras']),
-          colorIcon: ItensSummaryPage.colorList[1],
-        ),
-        InfoChartSummary(
-          icon: Icons.house,
-          category: 'Aluguel',
-          value: getCurrency(dataMap['Aluguel']),
-          colorIcon: ItensSummaryPage.colorList[2],
-        ),
-        InfoChartSummary(
-          icon: Icons.phone,
-          category: 'Telefone',
-          value: getCurrency(dataMap['Telefone']),
-          colorIcon: ItensSummaryPage.colorList[3],
-        ),
-        InfoChartSummary(
-          icon: Icons.request_page_rounded,
-          category: 'Contas',
-          value: getCurrency(dataMap['Contas']),
-          colorIcon: ItensSummaryPage.colorList[4],
+        FutureBuilder(
+          future: DatabaseHelper.instance.queryForSummaryChart(dateFormated),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (snapshot.data.isEmpty) {
+              return Center(
+                  child: Lottie.asset('assets/lottie/not_found.json'));
+            }
+
+            return ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              shrinkWrap: true,
+              padding: const EdgeInsets.all(8),
+              itemCount: snapshot.data.length,
+              itemBuilder: (BuildContext context, int index) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return InfoChartSummary(
+                  icon: IconData(snapshot.data[index]['icon'],
+                      fontFamily: 'MaterialIcons'),
+                  category: snapshot.data[index]['name'],
+                  value: getCurrency(snapshot.data[index]['SUM(o.value)']),
+                  colorIcon: Color(snapshot.data[index]['color']),
+                );
+              },
+            );
+          },
         ),
       ],
     );

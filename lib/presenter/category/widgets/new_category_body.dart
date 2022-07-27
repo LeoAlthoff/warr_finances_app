@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/presenter/home/home_page.dart';
-import 'package:flutter_teste_app/shared/widgets/input_text_container.dart';
-import '../../../shared/widgets/input_text_container.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import '../../../shared/utils/get_color_bytheme.dart';
+
+import '../../../shared/utils/constants.dart';
+import '../../../shared/utils/database_helper.dart';
+import '../../../shared/widgets/input_text_container.dart';
+import '../../home/home_page.dart';
 
 class NewCategoryBody extends StatefulWidget {
   const NewCategoryBody({Key? key}) : super(key: key);
@@ -12,11 +15,14 @@ class NewCategoryBody extends StatefulWidget {
 }
 
 class _NewCategoryBodyState extends State<NewCategoryBody> {
+  final categoryController = TextEditingController();
+
+  late int indexIcon;
+
   Color pickerColor = const Color.fromARGB(255, 102, 23, 141);
 
-  Color currentColor = Colors.blueGrey.shade100;
-
-  List<bool> _selections = List.generate(3, (_) => false);
+  Color currentColor = const Color.fromRGBO(238, 46, 93, 1);
+  int currentCodeColor = 0;
 
   void changeColor(Color color) {
     setState(() => pickerColor = color);
@@ -43,7 +49,6 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
                 onPressed: () {
                   setState(() => currentColor = pickerColor);
                   Navigator.of(context).pop();
-                  print(currentColor);
                 },
               ),
             ],
@@ -51,23 +56,59 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
         });
   }
 
+  void saveCategory() {
+    if (categoryController.text == '' || indexIcon.toString() == '') {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Informações inválidas!'),
+            content: const Text('Você não pode deixar nenhum campo em branco.'),
+            actions: [
+              TextButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                      const Color.fromRGBO(238, 46, 93, 1)),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  'Ok',
+                  style: TextStyle(color: Colors.white),
+                ),
+              )
+            ],
+          );
+        },
+      );
+    } else {
+      DatabaseHelper.instance.insertCategory(categoryController.text.toString(),
+          currentColor.value, iconList[indexIcon].codePoint);
+
+      isSelected[indexIcon] = false;
+      // setState(() {});
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: ((context) => HomePage(currentPage: 1)),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: const Color.fromRGBO(238, 46, 93, 1),
-        title: const Center(
-          child: Text('Criar nova categoria'),
-        ),
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 30),
-            TextInputContainer(textValue: 'Nome da categoria'),
+            const SizedBox(height: 15),
+            TextInputContainer(
+              textValue: 'Nome da categoria',
+              controller: categoryController,
+            ),
             const Padding(
-              padding: EdgeInsets.all(30.0),
+              padding: EdgeInsets.all(20.0),
               child: Text(
                 'Ícone',
                 style: TextStyle(
@@ -76,17 +117,65 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
                 ),
               ),
             ),
-            // CarouselSlider(
-            //   options: CarouselOptions(
-            //     height: 200,
-            //     enableInfiniteScroll: false,
-            //     reverse: false,
-            //     autoPlayCurve: Curves.fastOutSlowIn,
-            //   ),
-            //   items: const [WrapIcons(), WrapIconsOne(), WrapIconsTwo()],
-            // ),
+            Center(
+              child: Ink(
+                padding: const EdgeInsets.all(20.0),
+                width: 1200,
+                height: 220,
+                child: GridView.count(
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  primary: true,
+                  crossAxisCount: 3,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 8,
+                  childAspectRatio: 1,
+                  children: List.generate(isSelected.length, (index) {
+                    return InkWell(
+                        customBorder: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        splashColor: const Color.fromRGBO(238, 46, 93, 1),
+                        onTap: () {
+                          setState(() {
+                            for (int indexBtn = 0;
+                                indexBtn < isSelected.length;
+                                indexBtn++) {
+                              if (indexBtn == index) {
+                                isSelected[indexBtn] = true;
+                              } else {
+                                isSelected[indexBtn] = false;
+                              }
+                            }
+                          });
+                          indexIcon = index;
+                        },
+                        child: Ink(
+                          decoration: BoxDecoration(
+                            color: isSelected[index]
+                                ? getColorByTheme(context)
+                                : getColorByTheme(context),
+                            borderRadius: BorderRadius.circular(30),
+                            border: isSelected[index]
+                                ? Border.all(color: Colors.black54, width: 2)
+                                : Border.all(
+                                    color: Colors.grey,
+                                    width: 1.5,
+                                  ),
+                          ),
+                          child: Icon(
+                            iconList[index],
+                            color:
+                                isSelected[index] ? currentColor : Colors.grey,
+                            size: isSelected[index] ? 32 : 28,
+                          ),
+                        ));
+                  }),
+                ),
+              ),
+            ),
             const Padding(
-              padding: EdgeInsets.all(30.0),
+              padding: EdgeInsets.all(15.0),
               child: Text(
                 'Cor',
                 style: TextStyle(
@@ -95,50 +184,47 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                InkWell(
-                  child: const Text(
-                    'Escolha uma cor:',
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
-                  ),
-                  onTap: () {
-                    colorPicker();
-                  },
-                ),
-                const SizedBox(width: 35),
-                InkWell(
-                  onTap: () {
-                    colorPicker();
-                  },
-                  child: Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      color: currentColor,
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 30),
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(5)),
+              child: InkWell(
+                onTap: () {
+                  colorPicker();
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Escolha uma cor:',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
                     ),
-                  ),
-                )
-              ],
+                    const SizedBox(width: 35),
+                    Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        color: currentColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 15),
             Center(
               child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                decoration: const BoxDecoration(
-                  color: Color.fromRGBO(238, 46, 93, 1),
+                width: MediaQuery.of(context).size.width,
+                margin: const EdgeInsets.symmetric(horizontal: 30),
+                decoration: BoxDecoration(
+                  color: const Color.fromRGBO(238, 46, 93, 1),
+                  borderRadius: BorderRadius.circular(5),
                 ),
-                height: 40,
-                width: 300,
                 child: MaterialButton(
                   onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: ((context) => HomePage(currentPage: 1)),
-                      ),
-                    );
+                    saveCategory();
                   },
                   child: const Text(
                     'Salvar categoria',
@@ -150,7 +236,7 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

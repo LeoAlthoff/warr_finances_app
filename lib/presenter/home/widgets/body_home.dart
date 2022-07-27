@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/shared/utils/database_helper.dart';
 
+import '../../../shared/utils/database_helper.dart';
+import '../home_page.dart';
 import 'balance_container.dart';
 import 'main_container_home.dart';
 
@@ -16,29 +17,37 @@ class BodyHome extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: 200,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.only(left: 5),
-              children: [
-                MainContainerHome(
-                  index: 1,
-                  subText: 'Última entrada dia 1º de julho',
-                  value: 18000,
+          FutureBuilder(
+            future: DatabaseHelper.instance.selectSum(),
+            builder: ((context, AsyncSnapshot snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              return SizedBox(
+                height: 200,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.only(left: 5),
+                  children: [
+                    MainContainerHome(
+                      index: 1,
+                      subText: 'Última entrada dia 1º de julho',
+                      value: snapshot.data['entries'][0]['SUM(value)'],
+                    ),
+                    MainContainerHome(
+                      index: 2,
+                      subText: 'Última entrada dia 22 de junho',
+                      value: snapshot.data['output'][0]['SUM(value)'],
+                    ),
+                    MainContainerHome(
+                      index: 3,
+                      subText: '1º à 31 de julho',
+                      value: snapshot.data['total'],
+                    ),
+                  ],
                 ),
-                MainContainerHome(
-                  index: 2,
-                  subText: 'Última entrada dia 22 de junho',
-                  value: 870,
-                ),
-                MainContainerHome(
-                  index: 3,
-                  subText: '1º à 31 de julho',
-                  value: 17130,
-                ),
-              ],
-            ),
+              );
+            }),
           ),
           const Padding(
             padding: EdgeInsets.only(left: 20),
@@ -69,21 +78,147 @@ class BodyHome extends StatelessWidget {
                       child: Text('Nenhuma operação cadastrada'),
                     );
                   }
-                  return BalanceContainer(
-                    expense: snapshot.data!['operation']![index]['entry'] == 1
-                        ? false
-                        : true,
-                    origin: snapshot.data!['operation']![index]['name'],
-                    value: snapshot.data!['operation']![index]['value'],
-                    icon: IconData(
-                        snapshot.data!['category']![
-                            snapshot.data!['operation']![index]['categoryId'] -
-                                1]['icon'],
-                        fontFamily: 'MaterialIcons'),
-                    source: snapshot.data!['category']![
-                        snapshot.data!['operation']![index]['categoryId'] -
-                            1]['name'],
-                    time: snapshot.data!['operation']![index]['date'],
+                  return GestureDetector(
+                    onLongPress: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text('Alterar informações?'),
+                            content: const Text('O que você deseja fazer?'),
+                            actions: [
+                              TextButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                    const Color.fromRGBO(238, 46, 93, 1),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text(
+                                  'Cancelar',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                              TextButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                    const Color.fromRGBO(238, 46, 93, 1),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => HomePage(
+                                        currentPage: 1,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: const Text(
+                                  'Editar',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                              TextButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                    const Color.fromRGBO(238, 46, 93, 1),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: const Text('Você tem certeza'),
+                                        content: const Text(
+                                            'Deseja deletar esta operação?'),
+                                        actions: [
+                                          TextButton(
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(
+                                                const Color.fromRGBO(
+                                                    238, 46, 93, 1),
+                                              ),
+                                            ),
+                                            onPressed: () {
+                                              Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      HomePage(
+                                                    currentPage: 0,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: const Text(
+                                              'Não',
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                          TextButton(
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(
+                                                const Color.fromRGBO(
+                                                    238, 46, 93, 1),
+                                              ),
+                                            ),
+                                            onPressed: () {
+                                              DatabaseHelper.instance
+                                                  .deleteOperation(snapshot
+                                                          .data!['operation']![
+                                                      index]['id']);
+                                              Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      HomePage(
+                                                    currentPage: 0,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: const Text(
+                                              'Sim',
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                                child: const Text(
+                                  'Deletar',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              )
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: BalanceContainer(
+                      expense: snapshot.data!['operation']![index]['entry'] == 1
+                          ? false
+                          : true,
+                      origin: snapshot.data!['operation']![index]['name'],
+                      value: snapshot.data!['operation']![index]['value'],
+                      icon: IconData(
+                          snapshot.data!['category']![snapshot
+                                  .data!['operation']![index]['categoryId'] -
+                              1]['icon'],
+                          fontFamily: 'MaterialIcons'),
+                      source: snapshot.data!['category']![
+                          snapshot.data!['operation']![index]['categoryId'] -
+                              1]['name'],
+                      time: snapshot.data!['operation']![index]['date'],
+                    ),
                   );
                 },
               );
