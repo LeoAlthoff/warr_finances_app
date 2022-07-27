@@ -135,22 +135,26 @@ class _BodyRegisterState extends State<BodyRegister> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
+        const SizedBox(height: 5),
         TextInputContainer(
           textValue: 'Nome',
           controller: operationName,
         ),
+        const SizedBox(height: 10),
         TextInputContainer(
           textValue: 'Preço',
           controller: price,
           type: const TextInputType.numberWithOptions(),
           numericFormatter: true,
         ),
+        const SizedBox(height: 15),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             ToggleButtonsRegister(isSelected: isSelected),
           ],
         ),
+        const SizedBox(height: 15),
         Container(
           width: MediaQuery.of(context).size.width,
           margin: const EdgeInsets.symmetric(
@@ -202,6 +206,7 @@ class _BodyRegisterState extends State<BodyRegister> {
             },
           ),
         ),
+        const SizedBox(height: 15),
         InkWell(
           onTap: () {
             Navigator.of(context).push(
@@ -218,11 +223,12 @@ class _BodyRegisterState extends State<BodyRegister> {
             ),
           ),
         ),
+        const SizedBox(height: 15),
         Container(
           width: MediaQuery.of(context).size.width,
           margin: const EdgeInsets.symmetric(
             horizontal: 30,
-            vertical: 10,
+            vertical: 5,
           ),
           padding: const EdgeInsets.symmetric(
             horizontal: 10,
@@ -248,6 +254,7 @@ class _BodyRegisterState extends State<BodyRegister> {
             locale: const Locale('pt', 'BR'),
           ),
         ),
+        const SizedBox(height: 15),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [

@@ -245,6 +245,12 @@ class DatabaseHelper {
     );
   }
 
+  void deleteAllOperations() async {
+    await _database!.rawDelete(
+      'DELETE FROM operation',
+    );
+  }
+
   void deleteAllData() async {
     var databasesPath = await getDatabasesPath();
     String path = '${databasesPath}warrFinances.db';
