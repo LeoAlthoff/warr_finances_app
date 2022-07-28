@@ -14,6 +14,8 @@ class BodyLoginPage extends StatefulWidget {
     Key? key,
   }) : super(key: key);
 
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
   @override
   State<BodyLoginPage> createState() => _BodyLoginPageState();
 }

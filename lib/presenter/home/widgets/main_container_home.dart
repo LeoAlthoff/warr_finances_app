@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../shared/utils/format_money.dart';
 import '../../../shared/utils/get_color_bytheme.dart';
+import '../../../shared/utils/is_dark.dart';
 
 class MainContainerHome extends StatelessWidget {
   final int index;
@@ -11,7 +12,6 @@ class MainContainerHome extends StatelessWidget {
   late final IconData icon;
   late final Color iconColor;
   late final Color textColor;
-  late final Color background;
 
   // ignore: prefer_const_constructors_in_immutables
   MainContainerHome({
@@ -35,15 +35,13 @@ class MainContainerHome extends StatelessWidget {
         entry = "Saídas";
         icon = Icons.arrow_circle_down;
         iconColor = Colors.red;
-        textColor = Colors.black;
-        background = Colors.white;
+        textColor = Colors.white;
+
         break;
       case 3:
         entry = "Total";
         icon = Icons.attach_money;
         iconColor = Colors.white;
-
-        background = const Color.fromARGB(255, 233, 70, 124);
     }
   }
 
@@ -56,7 +54,11 @@ class MainContainerHome extends StatelessWidget {
       ),
       width: MediaQuery.of(context).size.width - 40,
       decoration: BoxDecoration(
-        color: getColorByTheme(context),
+        color: index == 3
+            ? isDark(context)
+                ? const Color.fromARGB(214, 238, 46, 94)
+                : const Color.fromRGBO(238, 46, 93, 1)
+            : getColorByTheme(context),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Padding(
@@ -69,8 +71,9 @@ class MainContainerHome extends StatelessWidget {
               children: [
                 Text(
                   entry,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 20,
+                    color: index == 3 ? Colors.white : Colors.black,
                   ),
                 ),
                 Icon(
@@ -83,15 +86,15 @@ class MainContainerHome extends StatelessWidget {
             const SizedBox(height: 30),
             Text(
               getCurrency(value),
-              style: const TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.w500,
-              ),
+              style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.w500,
+                  color: index == 3 ? Colors.white : Colors.black),
             ),
             const SizedBox(height: 5),
             Text(
               subText,
-              style: const TextStyle(),
+              style: TextStyle(color: index == 3 ? Colors.white : Colors.black),
             ),
           ],
         ),

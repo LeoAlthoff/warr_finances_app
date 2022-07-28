@@ -239,6 +239,22 @@ class DatabaseHelper {
     return list;
   }
 
+  Future<List<Map<String, dynamic>>> updateOperation(String name, double value,
+      int operation, String date, int categoryId, int id) async {
+    List<Map<String, dynamic>> list = await _database!.rawQuery(
+        'UPDATE operation SET value = ?, name = ?, entry = ?, date = ?, categoryId = ? WHERE id= ?',
+        [value, name, operation, date, categoryId, id]);
+    return list;
+  }
+
+  Future<String> getCategoryName(int id) async {
+    List<Map<String, dynamic>> list = await _database!.rawQuery(
+      'SELECT name FROM Category WHERE id= ?',
+      [id],
+    );
+    return list[0]['name'];
+  }
+
   Future<Map<String, List<Map<String, dynamic>>>> selectContainer() async {
     Map<String, List<Map<String, dynamic>>> map = {};
     map['operation'] = await _database!.rawQuery('SELECT * FROM operation');
@@ -252,6 +268,21 @@ class DatabaseHelper {
     return map;
   }
 
+  Future<List<Map<String, dynamic>>> selectOperationById(int id) async {
+    List<Map<String, dynamic>> list = [];
+    list = await _database!
+        .rawQuery('SELECT * FROM operation WHERE id = ?', ['$id']);
+    return list;
+  }
+
+  // Future<Map<String, List<Map<String, dynamic>>>> selectOperationById(
+  //     int id) async {
+  //    List<Map<String, dynamic>> map = [];
+  //   map['operation'] = await _database!
+  //       .rawQuery('SELECT * FROM operation WHERE id = ?', ['$id']);
+  //   return map;
+  // }
+
   void deleteCategory(int id) async {
     await _database!.rawDelete(
       'DELETE FROM Category WHERE id = ?',
@@ -259,10 +290,10 @@ class DatabaseHelper {
     );
   }
 
-  void deleteOperation(String name) async {
+  void deleteOperation(int id) async {
     await _database!.rawDelete(
-      'DELETE FROM operation WHERE name = ?',
-      [name],
+      'DELETE FROM operation WHERE id = ?',
+      ['$id'],
     );
   }
 
