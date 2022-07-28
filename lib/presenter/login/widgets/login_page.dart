@@ -25,16 +25,16 @@ void nagigateToHomeScreen(BuildContext context) {
 }
 
 void navigateToResetPassword(BuildContext context) {
-  Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => ResetPassawordPage()));
+  Navigator.of(context)
+      .push(MaterialPageRoute(builder: (context) => ResetPassawordPage()));
 }
 
 void navigateToSignUpPage(BuildContext context) {
   Navigator.of(context)
-      .pushReplacement(MaterialPageRoute(builder: (context) => SignUpPage()));
+      .push(MaterialPageRoute(builder: (context) => SignUpPage()));
 }
 
 void navigateBackToHomeScreen(BuildContext context) {
   Navigator.of(context)
-      .pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
+      .push(MaterialPageRoute(builder: (context) => LoginPage()));
 }
