@@ -79,29 +79,7 @@ class _BodyRegisterState extends State<BodyRegister> {
         price.text == '' ||
         getOperation() == -1 ||
         data.text == '') {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('Informações inválidas!'),
-            content: const Text('Você não pode deixar nenhum campo em branco.'),
-            actions: [
-              TextButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                        const Color.fromRGBO(238, 46, 93, 1)),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text(
-                    'Ok',
-                    style: TextStyle(color: Colors.white),
-                  ))
-            ],
-          );
-        },
-      );
+      showDialogInvalidInfo();
     } else {
       String name = operationName.text;
       double value = double.parse(price.text);
@@ -116,29 +94,7 @@ class _BodyRegisterState extends State<BodyRegister> {
         DatabaseHelper.instance
             .insertOperation(value, name, operation, date, categoryId);
       }
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('Cadastro'),
-            content: const Text('Cadastro realizado com sucesso!'),
-            actions: [
-              TextButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                        const Color.fromRGBO(238, 46, 93, 1)),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text(
-                    'Ok',
-                    style: TextStyle(color: Colors.white),
-                  ))
-            ],
-          );
-        },
-      );
+      showDialogSuccessfulRegister();
     }
   }
 
@@ -275,54 +231,12 @@ class _BodyRegisterState extends State<BodyRegister> {
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               TextButton(
                 onPressed: () {
                   if (isEditing) {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: const Text('Cancelar'),
-                          content: const Text('Deseja cancelar a edição?'),
-                          actions: [
-                            TextButton(
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                    const Color.fromRGBO(238, 46, 93, 1)),
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text(
-                                'Não',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                            TextButton(
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                    const Color.fromRGBO(238, 46, 93, 1)),
-                              ),
-                              onPressed: () {
-                                isEditing = false;
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        HomePage(currentPage: 0),
-                                  ),
-                                );
-                              },
-                              child: const Text(
-                                'Sim',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    );
+                    showAlertDialogCancelEdit(context);
                   } else {
                     cleanEntries();
                     setState(() {});
@@ -375,6 +289,103 @@ class _BodyRegisterState extends State<BodyRegister> {
           ),
         ),
       ],
+    );
+  }
+
+  Future<dynamic> showAlertDialogCancelEdit(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Cancelar'),
+          content: const Text('Deseja cancelar a edição?'),
+          actions: [
+            TextButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                    const Color.fromRGBO(238, 46, 93, 1)),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text(
+                'Não',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            TextButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                    const Color.fromRGBO(238, 46, 93, 1)),
+              ),
+              onPressed: () {
+                isEditing = false;
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => HomePage(currentPage: 0),
+                  ),
+                );
+              },
+              child: const Text(
+                'Sim',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<dynamic> showDialogSuccessfulRegister() {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Cadastro'),
+          content: const Text('Cadastro realizado com sucesso!'),
+          actions: [
+            TextButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                      const Color.fromRGBO(238, 46, 93, 1)),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  'Ok',
+                  style: TextStyle(color: Colors.white),
+                ))
+          ],
+        );
+      },
+    );
+  }
+
+  Future<dynamic> showDialogInvalidInfo() {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Informações inválidas!'),
+          content: const Text('Você não pode deixar nenhum campo em branco.'),
+          actions: [
+            TextButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                      const Color.fromRGBO(238, 46, 93, 1)),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  'Ok',
+                  style: TextStyle(color: Colors.white),
+                ))
+          ],
+        );
+      },
     );
   }
 }

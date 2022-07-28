@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../shared/utils/database_helper.dart';
 
+import '../../../shared/utils/database_helper.dart';
 import 'input_widget_login_page.dart';
 
 class SignUpPage extends StatefulWidget {
