@@ -213,7 +213,7 @@ class DatabaseHelper {
   Future<List<Map<String, dynamic>>> updateOperation(String name, double value,
       int operation, String date, int categoryId, int id) async {
     List<Map<String, dynamic>> list = await _database!.rawQuery(
-        'UPDATE SET value = ?, name = ?, entry = ?, date = ?, categoryId = ? FROM Category WHERE id= ?',
+        'UPDATE operation SET value = ?, name = ?, entry = ?, date = ?, categoryId = ? WHERE id= ?',
         [value, name, operation, date, categoryId, id]);
     return list;
   }

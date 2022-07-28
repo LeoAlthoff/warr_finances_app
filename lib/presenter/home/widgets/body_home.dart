@@ -111,8 +111,11 @@ class BodyHome extends StatelessWidget {
                                 onPressed: () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          HomePage(currentPage: 1),
+                                      builder: (context) => HomePage(
+                                        currentPage: 1,
+                                        id: snapshot.data!['operation']![index]
+                                            ['id'],
+                                      ),
                                     ),
                                   );
                                 },

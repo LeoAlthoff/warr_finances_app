@@ -8,10 +8,12 @@ import 'widgets/drawer_home.dart';
 
 // ignore: must_be_immutable
 class HomePage extends StatefulWidget {
+  int? id;
   int currentPage;
   final Function? callback;
 
-  HomePage({Key? key, this.currentPage = 0, this.callback}) : super(key: key);
+  HomePage({Key? key, this.currentPage = 0, this.id, this.callback})
+      : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -19,11 +21,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late PageController pageController;
-  final screens = const [
-    BodyHome(),
-    RegistrationPage(),
-    Summary(),
-  ];
+
   @override
   void initState() {
     super.initState();
@@ -55,6 +53,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final screens = [
+      BodyHome(),
+      RegistrationPage(
+        id: widget.id,
+      ),
+      Summary(),
+    ];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: isDark(context)

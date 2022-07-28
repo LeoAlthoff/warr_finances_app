@@ -5,14 +5,13 @@ import '../../../shared/utils/database_helper.dart';
 import '../../../shared/utils/is_dark.dart';
 import '../../../shared/widgets/input_text_container.dart';
 import '../../category/new_category_page.dart';
+import '../../home/home_page.dart';
 import 'toggle_buttons_register.dart';
 
 class BodyRegister extends StatefulWidget {
   int? id;
 
-  BodyRegister({
-    Key? key,
-  }) : super(key: key);
+  BodyRegister({Key? key, this.id}) : super(key: key);
 
   @override
   State<BodyRegister> createState() => _BodyRegisterState();
@@ -28,6 +27,7 @@ class _BodyRegisterState extends State<BodyRegister> {
   String category = '';
   bool categorySelected = false;
   bool isEditing = false;
+  bool getEditValues = false;
 
   TextEditingController data = TextEditingController();
 
@@ -55,24 +55,26 @@ class _BodyRegisterState extends State<BodyRegister> {
     List temp = date.split('-');
     return temp.length == 3
         ? ('${temp[2]}/${temp[1]}/${temp[0]}')
-        : 'Data inválida!';
+        : date;
   }
 
   Future<void> setEdit() async {
     List list = await DatabaseHelper.instance.selectOperationById(widget.id!);
     print(list);
     operationName.text = list[0]['name'];
-    price.text = list[0]['value'];
+    price.text = list[0]['value'].toString();
     data.text = list[0]['date'];
+    categorySelected = true;
     category =
         await DatabaseHelper.instance.getCategoryName(list[0]['categoryId']);
     if (list[0]['entry'] == 1) {
       isSelected[0] = true;
       isSelected[1] = false;
     } else {
-      isSelected[1] = false;
-      isSelected[0] = true;
+      isSelected[0] = false;
+      isSelected[1] = true;
     }
+    setState(() {});
   }
 
   void save() async {
@@ -145,7 +147,8 @@ class _BodyRegisterState extends State<BodyRegister> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.id != null) {
+    if (widget.id != null && !getEditValues) {
+      getEditValues = true;
       isEditing = true;
       setEdit();
     }
@@ -194,7 +197,7 @@ class _BodyRegisterState extends State<BodyRegister> {
               context,
               AsyncSnapshot<List<Map<String, dynamic>>> snapshot,
             ) {
-              if (!snapshot.hasData) {
+              if (!snapshot.hasData || (category.isEmpty && categorySelected)) {
                 return const CircularProgressIndicator();
               }
               return DropdownButtonHideUnderline(
@@ -277,8 +280,56 @@ class _BodyRegisterState extends State<BodyRegister> {
           children: [
             TextButton(
               onPressed: () {
-                cleanEntries();
-                setState(() {});
+                if (isEditing) {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text('Cancelar'),
+                        content: const Text('Deseja cancelar a edição?'),
+                        actions: [
+                          TextButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  const Color.fromRGBO(238, 46, 93, 1)),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text(
+                              'Não',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                          TextButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  const Color.fromRGBO(238, 46, 93, 1)),
+                            ),
+                            onPressed: () {
+                              isEditing = false;
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      HomePage(currentPage: 0),
+                                ),
+                              );
+                              // Navigator.of(context).pop();
+                              // setState(() {});
+                            },
+                            child: const Text(
+                              'Sim',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                } else {
+                  cleanEntries();
+                  setState(() {});
+                }
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -287,9 +338,9 @@ class _BodyRegisterState extends State<BodyRegister> {
                     border: Border.all(color: Colors.grey.shade400)),
                 padding:
                     const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                child: const Text(
-                  'Limpar',
-                  style: TextStyle(
+                child: Text(
+                  isEditing ? 'Cancelar' : 'Limpar',
+                  style: const TextStyle(
                     fontSize: 18,
                     color: Colors.black,
                   ),
@@ -299,6 +350,11 @@ class _BodyRegisterState extends State<BodyRegister> {
             TextButton(
               onPressed: () {
                 save();
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => HomePage(currentPage: 0),
+                  ),
+                );
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -307,9 +363,9 @@ class _BodyRegisterState extends State<BodyRegister> {
                 ),
                 padding:
                     const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                child: const Text(
-                  'Enviar',
-                  style: TextStyle(
+                child: Text(
+                  isEditing ? 'Atualizar' : 'Enviar',
+                  style: const TextStyle(
                     fontSize: 18,
                     color: Colors.white,
                   ),
