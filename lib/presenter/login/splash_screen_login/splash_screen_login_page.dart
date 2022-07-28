@@ -14,7 +14,7 @@ class _SplashScreenLoginPageState extends State<SplashScreenLoginPage> {
   @override
   void initState() {
     Future.delayed(const Duration(seconds: 2)).then((value) {
-      Navigator.of(context).push(
+      Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) {
           return const LoginPage();
         }),

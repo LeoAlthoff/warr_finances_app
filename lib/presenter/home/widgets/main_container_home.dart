@@ -11,7 +11,6 @@ class MainContainerHome extends StatelessWidget {
   late final String entry;
   late final IconData icon;
   late final Color iconColor;
-  late final Color textColor;
 
   // ignore: prefer_const_constructors_in_immutables
   MainContainerHome({
@@ -35,7 +34,6 @@ class MainContainerHome extends StatelessWidget {
         entry = "Saídas";
         icon = Icons.arrow_circle_down;
         iconColor = Colors.red;
-        textColor = Colors.white;
 
         break;
       case 3:
@@ -73,7 +71,11 @@ class MainContainerHome extends StatelessWidget {
                   entry,
                   style: TextStyle(
                     fontSize: 20,
-                    color: index == 3 ? Colors.white : Colors.black,
+                    color: index == 3
+                        ? Colors.white
+                        : isDark(context)
+                            ? Colors.white
+                            : Colors.black,
                   ),
                 ),
                 Icon(
@@ -89,12 +91,21 @@ class MainContainerHome extends StatelessWidget {
               style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.w500,
-                  color: index == 3 ? Colors.white : Colors.black),
+                  color: index == 3
+                      ? Colors.white
+                      : isDark(context)
+                          ? Colors.white
+                          : Colors.black),
             ),
             const SizedBox(height: 5),
             Text(
               subText,
-              style: TextStyle(color: index == 3 ? Colors.white : Colors.black),
+              style: TextStyle(
+                  color: index == 3
+                      ? Colors.white
+                      : isDark(context)
+                          ? Colors.white
+                          : Colors.black),
             ),
           ],
         ),

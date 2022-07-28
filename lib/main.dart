@@ -37,7 +37,7 @@ class _AppState extends State<App> {
         GlobalWidgetsLocalizations.delegate
       ],
       supportedLocales: const [Locale('pt', 'BR')],
-      title: 'MeuAppTeste',
+      title: 'Warr Finances',
       home: const SplashScreenLoginPage(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(),
