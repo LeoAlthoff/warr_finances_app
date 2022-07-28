@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/shared/utils/database_helper.dart';
+import '../../../shared/utils/database_helper.dart';
 
 import '../widgets/login_page.dart';
 import '../widgets/login_page_body.dart';
