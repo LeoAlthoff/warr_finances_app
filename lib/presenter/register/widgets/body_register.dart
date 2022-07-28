@@ -42,12 +42,6 @@ class _BodyRegisterState extends State<BodyRegister> {
     setState(() {});
   }
 
-  // Future<bool> edit() async {
-  //   Map<String, dynamic> map = await DatabaseHelper.instance.selectOperation();
-  //   data.text = map[0];
-  //   return false;
-  // }
-
   int getOperation() {
     if (isSelected[0]) {
       return 1;
@@ -278,104 +272,107 @@ class _BodyRegisterState extends State<BodyRegister> {
           ),
         ),
         const SizedBox(height: 15),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            TextButton(
-              onPressed: () {
-                if (isEditing) {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: const Text('Cancelar'),
-                        content: const Text('Deseja cancelar a edição?'),
-                        actions: [
-                          TextButton(
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(
-                                  const Color.fromRGBO(238, 46, 93, 1)),
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextButton(
+                onPressed: () {
+                  if (isEditing) {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text('Cancelar'),
+                          content: const Text('Deseja cancelar a edição?'),
+                          actions: [
+                            TextButton(
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    const Color.fromRGBO(238, 46, 93, 1)),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text(
+                                'Não',
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text(
-                              'Não',
-                              style: TextStyle(color: Colors.white),
+                            TextButton(
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    const Color.fromRGBO(238, 46, 93, 1)),
+                              ),
+                              onPressed: () {
+                                isEditing = false;
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        HomePage(currentPage: 0),
+                                  ),
+                                );
+                              },
+                              child: const Text(
+                                'Sim',
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
-                          ),
-                          TextButton(
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(
-                                  const Color.fromRGBO(238, 46, 93, 1)),
-                            ),
-                            onPressed: () {
-                              isEditing = false;
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      HomePage(currentPage: 0),
-                                ),
-                              );
-                            },
-                            child: const Text(
-                              'Sim',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                } else {
-                  cleanEntries();
-                  setState(() {});
-                }
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white60,
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(color: Colors.grey.shade400)),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                child: Text(
-                  isEditing ? 'Cancelar' : 'Limpar',
-                  style: const TextStyle(
-                    fontSize: 18,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                save();
-                if (isEditing) {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => HomePage(currentPage: 0),
+                          ],
+                        );
+                      },
+                    );
+                  } else {
+                    cleanEntries();
+                    setState(() {});
+                  }
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white60,
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(color: Colors.grey.shade400)),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                  child: Text(
+                    isEditing ? 'Cancelar' : 'Limpar',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
                     ),
-                  );
-                }
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color.fromRGBO(238, 46, 93, 1),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                child: Text(
-                  isEditing ? 'Atualizar' : 'Enviar',
-                  style: const TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
                   ),
                 ),
               ),
-            ),
-          ],
+              TextButton(
+                onPressed: () {
+                  save();
+                  if (isEditing) {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(currentPage: 0),
+                      ),
+                    );
+                  }
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color.fromRGBO(238, 46, 93, 1),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                  child: Text(
+                    isEditing ? 'Atualizar' : 'Enviar',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );
