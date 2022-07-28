@@ -3,11 +3,18 @@ import 'package:flutter_teste_app/shared/utils/database_helper.dart';
 
 import 'input_widget_login_page.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends StatefulWidget {
   SignUpPage({Key? key}) : super(key: key);
+
+  @override
+  State<SignUpPage> createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
+  final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final nomeController = TextEditingController();
+  final passwordController1 = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +40,7 @@ class SignUpPage extends StatelessWidget {
                   height: 30,
                 ),
                 InputWidget(
-                  controller: nomeController,
+                  controller: nameController,
                   icon: Icons.person,
                   isPassword: false,
                   labelTextInput: 'Nome',
@@ -60,7 +67,7 @@ class SignUpPage extends StatelessWidget {
                   height: 15,
                 ),
                 InputWidget(
-                  controller: passwordController,
+                  controller: passwordController1,
                   icon: Icons.lock,
                   isPassword: true,
                   labelTextInput: 'Confirmar Senha',
@@ -80,11 +87,93 @@ class SignUpPage extends StatelessWidget {
                   ),
                   child: ElevatedButton(
                     onPressed: () {
-                      DatabaseHelper.instance.insertUser(
-                        emailController.text,
-                        nomeController.text,
-                        passwordController.text,
-                      );
+                      if (passwordController.text != passwordController1.text) {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title:
+                                  const Text('As senhas precisam ser iguais!'),
+                              actions: [
+                                TextButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        const Color.fromRGBO(238, 46, 93, 1)),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text(
+                                    'Ok',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                )
+                              ],
+                            );
+                          },
+                        );
+                      } else if (emailController.text.isEmpty ||
+                          nameController.text.isEmpty ||
+                          passwordController.text.isEmpty ||
+                          passwordController1.text.isEmpty) {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text(
+                                  'Nenhum dos campos pode estar vazio!'),
+                              actions: [
+                                TextButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        const Color.fromRGBO(238, 46, 93, 1)),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text(
+                                    'Ok',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                )
+                              ],
+                            );
+                          },
+                        );
+                      } else {
+                        DatabaseHelper.instance.insertUser(
+                          emailController.text,
+                          nameController.text,
+                          passwordController.text,
+                        );
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title:
+                                  const Text('Dados cadastrados com sucesso!'),
+                              actions: [
+                                TextButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        const Color.fromRGBO(238, 46, 93, 1)),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text(
+                                    'Ok',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                )
+                              ],
+                            );
+                          },
+                        );
+                        emailController.clear();
+                        nameController.clear();
+                        passwordController.clear();
+                      }
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(

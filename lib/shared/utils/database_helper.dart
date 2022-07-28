@@ -60,9 +60,10 @@ class DatabaseHelper {
         (620, 'Angeloni', 0, '18/06/2022', 3),
         (15500, 'Professor Ailton', 1, '01/07/2022', 1)
         ''');
+
         await db.rawInsert('''
-        INSERT INTO user (emal, name, password)
-        VALUES('admin@admin.com.br', 'Admin', 'admin'),
+        INSERT INTO user (email, name, password)
+        VALUES('admin@admin.com.br', 'Admin', 'admin')
         ''');
       },
     );
@@ -147,17 +148,21 @@ class DatabaseHelper {
       'SELECT * FROM user WHERE email=? AND password=?',
       [email, password],
     );
-    if (result[0][0] == null) {
-      return false;
-    } else {
+    var resultAll = await _database!.rawQuery(
+      'SELECT * FROM user',
+    );
+    if (result.isNotEmpty &&
+        result[0]['email'] == email &&
+        result[0]['password'] == password) {
       return true;
+    } else {
+      return false;
     }
   }
 
   Future<List<Map<String, dynamic>>> queryCategory() async {
     List<Map<String, dynamic>> list =
         await _database!.rawQuery('SELECT * FROM Category');
-    // print(list);
     return list;
   }
 
@@ -184,9 +189,6 @@ class DatabaseHelper {
         'icon': list[0]['icon'],
         'sum': map1[id]
       });
-      // temp.add(result);
-      // print(result);
-      // print(temp);
     });
     return temp;
   }

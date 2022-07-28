@@ -128,10 +128,6 @@ class _BodyRegisterState extends State<BodyRegister> {
 
   @override
   Widget build(BuildContext context) {
-    // if (widget.id != null) {
-    //   isEditing = true;
-    //   edit();
-    // }
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [

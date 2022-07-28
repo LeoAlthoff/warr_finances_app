@@ -28,7 +28,7 @@ class InputWidget extends StatelessWidget {
       ),
       child: TextField(
         obscureText: isPassword,
-        controller: TextEditingController(),
+        controller: controller,
         keyboardType: TextInputType.text,
         cursorColor: Colors.white,
         decoration: InputDecoration(

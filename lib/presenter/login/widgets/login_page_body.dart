@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_teste_app/shared/utils/database_helper.dart';
 
 import 'package:lottie/lottie.dart';
 
@@ -8,11 +9,16 @@ import '../buttons/buttonGg_login_page.dart';
 import 'input_widget_login_page.dart';
 import 'login_page.dart';
 
-class BodyLoginPage extends StatelessWidget {
+class BodyLoginPage extends StatefulWidget {
   BodyLoginPage({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<BodyLoginPage> createState() => _BodyLoginPageState();
+}
+
+class _BodyLoginPageState extends State<BodyLoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   @override
@@ -90,8 +96,38 @@ class BodyLoginPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                   child: ElevatedButton(
-                    onPressed: () {
-                      nagigateToHomeScreen(context);
+                    onPressed: () async {
+                      bool result = await DatabaseHelper.instance.validateUser(
+                        emailController.text,
+                        passwordController.text,
+                      );
+                      if (result) {
+                        nagigateToHomeScreen(context);
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text('Login incorreto!'),
+                              actions: [
+                                TextButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        const Color.fromRGBO(238, 46, 93, 1)),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text(
+                                    'Ok',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                )
+                              ],
+                            );
+                          },
+                        );
+                      }
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
