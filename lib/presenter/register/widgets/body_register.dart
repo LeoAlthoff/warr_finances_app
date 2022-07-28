@@ -351,11 +351,13 @@ class _BodyRegisterState extends State<BodyRegister> {
             TextButton(
               onPressed: () {
                 save();
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => HomePage(currentPage: 0),
-                  ),
-                );
+                if (isEditing) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => HomePage(currentPage: 0),
+                    ),
+                  );
+                }
               },
               child: Container(
                 decoration: BoxDecoration(
