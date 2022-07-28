@@ -10,7 +10,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: Color.fromRGBO(238, 46, 93, 1),
       body: SingleChildScrollView(
         child: BodyLoginPage(),
@@ -18,22 +18,23 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
+
 void nagigateToHomeScreen(BuildContext context) {
   Navigator.of(context)
-      .push(MaterialPageRoute(builder: (context) => HomePage()));
+      .pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
 }
 
 void navigateToResetPassword(BuildContext context) {
-  Navigator.of(context)
-      .push(MaterialPageRoute(builder: (context) => ResetPassawordPage()));
+  Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => ResetPassawordPage()));
 }
 
 void navigateToSignUpPage(BuildContext context) {
   Navigator.of(context)
-      .push(MaterialPageRoute(builder: (context) => SignUpPage()));
+      .pushReplacement(MaterialPageRoute(builder: (context) => SignUpPage()));
 }
 
 void navigateBackToHomeScreen(BuildContext context) {
   Navigator.of(context)
-      .push(MaterialPageRoute(builder: (context) => LoginPage()));
+      .pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
 }

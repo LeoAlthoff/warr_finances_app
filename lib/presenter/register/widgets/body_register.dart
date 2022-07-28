@@ -64,7 +64,6 @@ class _BodyRegisterState extends State<BodyRegister> {
 
   Future<void> setEdit() async {
     List list = await DatabaseHelper.instance.selectOperationById(widget.id!);
-    print(list);
     operationName.text = list[0]['name'];
     price.text = list[0]['value'].toString();
     data.text = list[0]['date'];
@@ -157,7 +156,7 @@ class _BodyRegisterState extends State<BodyRegister> {
       setEdit();
     }
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const SizedBox(height: 5),
         TextInputContainer(

@@ -104,7 +104,7 @@ class DrawerHome extends StatelessWidget {
             title: const Text('Segurança'),
             leading: const Icon(Icons.shield_outlined),
             onTap: () {
-              Navigator.of(context).push(
+              Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                   builder: (context) => const NewCategoryPage(),
                 ),
@@ -144,7 +144,7 @@ class DrawerHome extends StatelessWidget {
                         DatabaseHelper.instance.deleteAllOperations();
                         callback;
                         Navigator.of(context).pop();
-                        await Navigator.of(context).push(
+                        await Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (context) {
                               return HomePage(currentPage: 0);
@@ -183,13 +183,6 @@ class DrawerHome extends StatelessWidget {
             leading: const Icon(Icons.dark_mode),
             onTap: () {
               currentTheme.switchTheme();
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: ((context) => HomePage(
-                        currentPage: 0,
-                      )),
-                ),
-              );
             },
           ),
           const Divider(
@@ -199,7 +192,7 @@ class DrawerHome extends StatelessWidget {
             title: const Text('Sair da conta'),
             leading: const Icon(Icons.arrow_back),
             onTap: () {
-              Navigator.of(context).push(
+              Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                   builder: (context) => const LoginPage(),
                 ),

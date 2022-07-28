@@ -26,7 +26,8 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Center(
+      child: Container(
+        height: MediaQuery.of(context).size.height,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: Column(

@@ -85,7 +85,7 @@ class BodyHome extends StatelessWidget {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            title: const Text('Alterar informações?'),
+                            title: const Text('Alterar informações'),
                             content: const Text('O que você deseja fazer?'),
                             actions: [
                               TextButton(
@@ -109,7 +109,7 @@ class BodyHome extends StatelessWidget {
                                   ),
                                 ),
                                 onPressed: () {
-                                  Navigator.of(context).push(
+                                  Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
                                       builder: (context) => HomePage(
                                         currentPage: 1,
@@ -148,7 +148,8 @@ class BodyHome extends StatelessWidget {
                                               ),
                                             ),
                                             onPressed: () {
-                                              Navigator.of(context).push(
+                                              Navigator.of(context)
+                                                  .pushReplacement(
                                                 MaterialPageRoute(
                                                   builder: (context) =>
                                                       HomePage(
@@ -176,7 +177,8 @@ class BodyHome extends StatelessWidget {
                                                   .deleteOperation(snapshot
                                                           .data!['operation']![
                                                       index]['id']);
-                                              Navigator.of(context).push(
+                                              Navigator.of(context)
+                                                  .pushReplacement(
                                                 MaterialPageRoute(
                                                   builder: (context) =>
                                                       HomePage(

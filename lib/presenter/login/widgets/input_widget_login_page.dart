@@ -23,7 +23,7 @@ class InputWidget extends StatelessWidget {
       height: 40,
       width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.symmetric(
-        horizontal: 40,
+        horizontal: 20,
         vertical: 10,
       ),
       child: TextField(
