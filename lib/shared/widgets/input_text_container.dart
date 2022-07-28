@@ -9,7 +9,7 @@ class TextInputContainer extends StatelessWidget {
   final TextInputType type;
   final bool numericFormatter;
 
-  TextInputContainer({
+  const TextInputContainer({
     Key? key,
     required this.textValue,
     this.type = TextInputType.text,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_teste_app/presenter/register/widgets/body_register.dart';
 
 import '../../../shared/utils/database_helper.dart';
 import '../home_page.dart';
@@ -110,9 +111,8 @@ class BodyHome extends StatelessWidget {
                                 onPressed: () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) => HomePage(
-                                        currentPage: 1,
-                                      ),
+                                      builder: (context) =>
+                                          HomePage(currentPage: 1),
                                     ),
                                   );
                                 },

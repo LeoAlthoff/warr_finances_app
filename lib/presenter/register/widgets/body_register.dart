@@ -9,9 +9,9 @@ import 'toggle_buttons_register.dart';
 
 class BodyRegister extends StatefulWidget {
   int? id;
+
   BodyRegister({
     Key? key,
-    this.id,
   }) : super(key: key);
 
   @override
@@ -42,12 +42,6 @@ class _BodyRegisterState extends State<BodyRegister> {
     setState(() {});
   }
 
-  // Future<bool> edit() async {
-  //   Map<String, dynamic> map = await DatabaseHelper.instance.selectOperation();
-  //   data.text = map[0];
-  //   return false;
-  // }
-
   int getOperation() {
     if (isSelected[0]) {
       return 1;
@@ -62,6 +56,23 @@ class _BodyRegisterState extends State<BodyRegister> {
     return temp.length == 3
         ? ('${temp[2]}/${temp[1]}/${temp[0]}')
         : 'Data inválida!';
+  }
+
+  Future<void> setEdit() async {
+    List list = await DatabaseHelper.instance.selectOperationById(widget.id!);
+    print(list);
+    operationName.text = list[0]['name'];
+    price.text = list[0]['value'];
+    data.text = list[0]['date'];
+    category =
+        await DatabaseHelper.instance.getCategoryName(list[0]['categoryId']);
+    if (list[0]['entry'] == 1) {
+      isSelected[0] = true;
+      isSelected[1] = false;
+    } else {
+      isSelected[1] = false;
+      isSelected[0] = true;
+    }
   }
 
   void save() async {
@@ -98,8 +109,14 @@ class _BodyRegisterState extends State<BodyRegister> {
       int operation = getOperation();
       String date = formatDate(data.text);
       int categoryId = await DatabaseHelper.instance.selectCategory(category);
-      DatabaseHelper.instance
-          .insertOperation(value, name, operation, date, categoryId);
+      if (isEditing) {
+        DatabaseHelper.instance.updateOperation(
+            name, value, operation, date, categoryId, widget.id!);
+        isEditing = false;
+      } else {
+        DatabaseHelper.instance
+            .insertOperation(value, name, operation, date, categoryId);
+      }
       showDialog(
         context: context,
         builder: (context) {
@@ -128,10 +145,10 @@ class _BodyRegisterState extends State<BodyRegister> {
 
   @override
   Widget build(BuildContext context) {
-    // if (widget.id != null) {
-    //   isEditing = true;
-    //   edit();
-    // }
+    if (widget.id != null) {
+      isEditing = true;
+      setEdit();
+    }
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [

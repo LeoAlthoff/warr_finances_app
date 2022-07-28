@@ -210,6 +210,22 @@ class DatabaseHelper {
     return list;
   }
 
+  Future<List<Map<String, dynamic>>> updateOperation(String name, double value,
+      int operation, String date, int categoryId, int id) async {
+    List<Map<String, dynamic>> list = await _database!.rawQuery(
+        'UPDATE SET value = ?, name = ?, entry = ?, date = ?, categoryId = ? FROM Category WHERE id= ?',
+        [value, name, operation, date, categoryId, id]);
+    return list;
+  }
+
+  Future<String> getCategoryName(int id) async {
+    List<Map<String, dynamic>> list = await _database!.rawQuery(
+      'SELECT name FROM Category WHERE id= ?',
+      [id],
+    );
+    return list[0]['name'];
+  }
+
   Future<Map<String, List<Map<String, dynamic>>>> selectContainer() async {
     Map<String, List<Map<String, dynamic>>> map = {};
     map['operation'] = await _database!.rawQuery('SELECT * FROM operation');
@@ -221,6 +237,13 @@ class DatabaseHelper {
     Map<String, List<Map<String, dynamic>>> map = {};
     map['operation'] = await _database!.rawQuery('SELECT * FROM operation');
     return map;
+  }
+
+  Future<List<Map<String, dynamic>>> selectOperationById(int id) async {
+    List<Map<String, dynamic>> list = [];
+    list = await _database!
+        .rawQuery('SELECT * FROM operation WHERE id = ?', ['$id']);
+    return list;
   }
 
   // Future<Map<String, List<Map<String, dynamic>>>> selectOperationById(
