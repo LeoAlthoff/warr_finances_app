@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../register/widgets/body_register.dart';
 
 import '../../../shared/utils/database_helper.dart';
 import '../home_page.dart';
@@ -202,7 +201,7 @@ class BodyHome extends StatelessWidget {
                                   'Deletar',
                                   style: TextStyle(color: Colors.white),
                                 ),
-                              )
+                              ),
                             ],
                           );
                         },
