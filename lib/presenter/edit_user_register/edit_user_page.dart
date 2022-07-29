@@ -29,15 +29,6 @@ class _EditUserPageState extends State<EditUserPage> {
   }
 
   @override
-<<<<<<< HEAD
-  void initState() {
-    setInfo();
-    super.initState();
-  }
-
-  @override
-=======
->>>>>>> 18fbbf0d81f78d08ca945d250541dc8a0d2379bf
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
