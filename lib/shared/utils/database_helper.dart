@@ -172,6 +172,12 @@ class DatabaseHelper {
     }
   }
 
+  Future<List<Map<String, Object?>>> getLoggedIn() async {
+    var result =
+        await _database!.query('user', where: 'logged = ?', whereArgs: [1]);
+    return result;
+  }
+
   void logOut() async {
     await _database!.rawUpdate('UPDATE user SET logged = 0');
   }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../../shared/utils/database_helper.dart';
 
 import '../widgets/login_page.dart';
-import '../widgets/login_page_body.dart';
 
 class ButtonEntrarLoginPage extends StatelessWidget {
   final String email;

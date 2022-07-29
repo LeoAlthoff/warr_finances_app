@@ -11,7 +11,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(238, 46, 93, 1),
+      backgroundColor: const Color.fromRGBO(238, 46, 93, 1),
       body: SingleChildScrollView(
         child: BodyLoginPage(),
       ),
@@ -36,5 +36,5 @@ void navigateToSignUpPage(BuildContext context) {
 
 void navigateBackToHomeScreen(BuildContext context) {
   Navigator.of(context)
-      .push(MaterialPageRoute(builder: (context) => LoginPage()));
+      .push(MaterialPageRoute(builder: (context) => const LoginPage()));
 }

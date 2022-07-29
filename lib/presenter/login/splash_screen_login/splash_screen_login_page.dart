@@ -22,7 +22,7 @@ class _SplashScreenLoginPageState extends State<SplashScreenLoginPage> {
           if (logged) {
             return HomePage();
           } else {
-            return LoginPage();
+            return const LoginPage();
           }
         }),
       );

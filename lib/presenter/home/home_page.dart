@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_teste_app/shared/utils/database_helper.dart';
 
 import '../../shared/utils/is_dark.dart';
 import '../register/register_page.dart';
@@ -40,32 +41,44 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  String getTitleAppBar() {
+  Future<String> getTitleAppBar() async {
+    var logged = await DatabaseHelper.instance.getLoggedIn();
+
+    String name = logged[0]['name'].toString();
+
     switch (widget.currentPage) {
       case 1:
         return 'Cadastro';
       case 2:
         return 'Resumo por categoria';
       default:
-        return 'Olá, Rodrigo';
+        return 'Olá, $name';
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final screens = [
-      BodyHome(),
+      const BodyHome(),
       RegistrationPage(
         id: widget.id,
       ),
-      Summary(),
+      const Summary(),
     ];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: isDark(context)
             ? const Color.fromARGB(214, 238, 46, 94)
             : const Color.fromRGBO(238, 46, 93, 1),
-        title: Text(getTitleAppBar()),
+        title: FutureBuilder(
+          future: getTitleAppBar(),
+          builder: (context, AsyncSnapshot<String> snapshot) {
+            if (!snapshot.hasData) {
+              return const CircularProgressIndicator();
+            }
+            return Text(snapshot.data!);
+          },
+        ),
         centerTitle: true,
       ),
       drawer: DrawerHome(callback: callback),

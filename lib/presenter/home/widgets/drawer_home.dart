@@ -22,7 +22,7 @@ class DrawerHome extends StatelessWidget {
       child: ListView(
         children: [
           SizedBox(
-            height: 130,
+            height: 147,
             child: DrawerHeader(
               decoration: BoxDecoration(
                 color: isDark(context)
@@ -34,41 +34,62 @@ class DrawerHome extends StatelessWidget {
                   Row(
                     children: [
                       CircleAvatar(
-                          radius: 10,
-                          backgroundColor: Colors.white,
-                          child: Icon(
-                            Icons.person,
-                            color: isDark(context)
-                                ? const Color.fromARGB(214, 238, 46, 94)
-                                : const Color.fromRGBO(238, 46, 93, 1),
-                            size: 20,
-                          )),
+                        radius: 10,
+                        backgroundColor: Colors.white,
+                        child: Icon(
+                          Icons.person,
+                          color: isDark(context)
+                              ? const Color.fromARGB(214, 238, 46, 94)
+                              : const Color.fromRGBO(238, 46, 93, 1),
+                          size: 20,
+                        ),
+                      ),
                       const SizedBox(width: 10),
-                      const Align(
+                      Align(
                         alignment: Alignment.topLeft,
-                        child: Text(
-                          'Rodrigo',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                          ),
+                        child: FutureBuilder(
+                          future: DatabaseHelper.instance.getLoggedIn(),
+                          builder: (context,
+                              AsyncSnapshot<List<Map<String, Object?>>>
+                                  snapshot) {
+                            if (!snapshot.hasData) {
+                              return const CircularProgressIndicator();
+                            }
+                            return Text(
+                              snapshot.data![0]['name'].toString(),
+                              textAlign: TextAlign.left,
+                              style: const TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 3),
-                  const Align(
+                  const SizedBox(height: 10),
+                  Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(
-                      '          rodrigo@gmail.com',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.white,
-                      ),
+                    child: FutureBuilder(
+                      future: DatabaseHelper.instance.getLoggedIn(),
+                      builder: (context,
+                          AsyncSnapshot<List<Map<String, Object?>>> snapshot) {
+                        if (!snapshot.hasData) {
+                          return const CircularProgressIndicator();
+                        }
+                        return Text(
+                          snapshot.data![0]['email'].toString(),
+                          textAlign: TextAlign.left,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                          ),
+                        );
+                      },
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
                   const Align(
                     alignment: Alignment.center,
                     child: Text(
@@ -80,36 +101,14 @@ class DrawerHome extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 15),
                 ],
               ),
             ),
           ),
-          const ListTile(
-            title: Text('Pesquisa'),
-            leading: Icon(Icons.search),
-          ),
-          const SizedBox(height: 7),
-          const ListTile(
-            title: Text('Notificações'),
-            leading: Icon(Icons.notifications),
-          ),
-          const SizedBox(height: 7),
-          const ListTile(
-            title: Text('Contato'),
-            leading: Icon(Icons.contact_support_rounded),
-          ),
-          const SizedBox(height: 7),
           ListTile(
-            title: const Text('Segurança'),
-            leading: const Icon(Icons.shield_outlined),
-            onTap: () {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => const NewCategoryPage(),
-                ),
-              );
-            },
+            title: const Text('Alterar dados cadastrais'),
+            leading: const Icon(Icons.settings),
+            onTap: () {},
           ),
           ListTile(
             title: const Text('Apagar todas as operações'),
