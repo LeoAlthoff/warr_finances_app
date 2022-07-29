@@ -24,6 +24,7 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
   @override
   Widget build(BuildContext context) {
     String dateFormated = DateFormat("yyyy/MM").format(widget.dateRaw);
+    String dateShow = DateFormat("MM/yyyy").format(widget.dateRaw);
 
     return Column(
       children: [
@@ -54,7 +55,7 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
                 ),
               ),
               Text(
-                'Saídas: $dateFormated',
+                'Saídas: $dateShow',
                 style: const TextStyle(
                   fontSize: 18,
                 ),
