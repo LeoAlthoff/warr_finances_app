@@ -145,6 +145,21 @@ class DatabaseHelper {
     );
   }
 
+  Future<List<Map<String, Object?>>> getUserInfo(String email) async {
+    return await _database!
+        .rawQuery('SELECT * FROM user WHERE email = ?', [email]);
+  }
+
+  void updateUser(
+      {required String email,
+      required String name,
+      required String password,
+      required String emailPast}) {
+    _database!.rawUpdate(
+        'UPDATE user SET email = ?, name = ?, password = ?, logged = 1 WHERE email = ?',
+        [email, name, password, emailPast]);
+  }
+
   Future<bool> validateUser(String email, String password) async {
     var result = await _database!.rawQuery(
       'SELECT * FROM user WHERE email=? AND password=?',
@@ -281,7 +296,8 @@ class DatabaseHelper {
 
   Future<Map<String, List<Map<String, dynamic>>>> selectContainer() async {
     Map<String, List<Map<String, dynamic>>> map = {};
-    map['operation'] = await _database!.rawQuery('SELECT * FROM operation ORDER BY date DESC');
+    map['operation'] =
+        await _database!.rawQuery('SELECT * FROM operation ORDER BY date DESC');
     map['category'] = await _database!.rawQuery('SELECT * FROM Category');
     return map;
   }
