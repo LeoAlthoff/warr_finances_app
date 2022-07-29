@@ -40,7 +40,8 @@ class DatabaseHelper {
         (email TEXT PRIMARY KEY,
         name TEXT NOT NULL,
         password TEXT NOT NULL,
-        logged INTERGER NOT NULL)
+        logged INTERGER NOT NULL,
+        theme INTERGER NOT NULL)
         ''');
 
         await db.rawInsert(
@@ -63,8 +64,8 @@ class DatabaseHelper {
         ''');
 
         await db.rawInsert('''
-        INSERT INTO user (email, name, password, logged)
-        VALUES('admin', 'Admin', 'admin', 0)
+        INSERT INTO user (email, name, password, logged, theme)
+        VALUES('admin', 'Admin', 'admin', 0, 0)
         ''');
       },
     );
@@ -132,7 +133,7 @@ class DatabaseHelper {
 
   void insertUser(String email, String name, String password) async {
     await _database!.rawInsert(
-      'INSERT INTO user(email, name, password, logged) VALUES(?, ?, ?, 0)',
+      'INSERT INTO user(email, name, password, logged, theme) VALUES(?, ?, ?, 0, 0)',
       [email, name, password],
     );
   }
@@ -173,10 +174,27 @@ class DatabaseHelper {
     }
   }
 
+  Future<bool> checkTheme() async {
+    var result =
+        await _database!.query('user', where: 'logged = ?', whereArgs: [1]);
+    if (result[0]['theme'] == 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   Future<List<Map<String, Object?>>> getLoggedIn() async {
     var result =
         await _database!.query('user', where: 'logged = ?', whereArgs: [1]);
     return result;
+  }
+
+  void changeTheme(int theme) async {
+    await _database!.rawUpdate(
+      'UPDATE user SET theme = ? WHERE logged = 1',
+      [theme],
+    );
   }
 
   void logOut() async {
@@ -281,7 +299,8 @@ class DatabaseHelper {
 
   Future<Map<String, List<Map<String, dynamic>>>> selectContainer() async {
     Map<String, List<Map<String, dynamic>>> map = {};
-    map['operation'] = await _database!.rawQuery('SELECT * FROM operation ORDER BY date DESC');
+    map['operation'] =
+        await _database!.rawQuery('SELECT * FROM operation ORDER BY date DESC');
     map['category'] = await _database!.rawQuery('SELECT * FROM Category');
     return map;
   }

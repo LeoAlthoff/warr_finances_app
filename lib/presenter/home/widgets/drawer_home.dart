@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../config.dart';
 import '../../../shared/utils/database_helper.dart';
 import '../../../shared/utils/is_dark.dart';
-import '../../category/new_category_page.dart';
 import '../../login/widgets/login_page.dart';
 import '../home_page.dart';
 import '../test_page.dart';
