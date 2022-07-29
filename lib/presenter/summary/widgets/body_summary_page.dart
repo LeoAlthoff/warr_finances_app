@@ -23,7 +23,7 @@ class ItensSummaryPage extends StatefulWidget {
 class _ItensSummaryPageState extends State<ItensSummaryPage> {
   @override
   Widget build(BuildContext context) {
-    String dateFormated = DateFormat('MM/yyyy').format(widget.dateRaw);
+    String dateFormated = DateFormat("yyyy/MM").format(widget.dateRaw);
 
     return Column(
       children: [
@@ -42,7 +42,7 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
                     widget.dateRaw.month - 1,
                     widget.dateRaw.day,
                   );
-                  dateFormated = DateFormat("MM/yyyy").format(widget.dateRaw);
+                  dateFormated = DateFormat("yyyy/MM").format(widget.dateRaw);
                   setState(() {});
                 },
                 child: Icon(
@@ -66,7 +66,7 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
                     widget.dateRaw.month + 1,
                     widget.dateRaw.day,
                   );
-                  dateFormated = DateFormat("MM/yyyy").format(widget.dateRaw);
+                  dateFormated = DateFormat("yyyy/MM").format(widget.dateRaw);
                   setState(() {});
                 },
                 child: Icon(
