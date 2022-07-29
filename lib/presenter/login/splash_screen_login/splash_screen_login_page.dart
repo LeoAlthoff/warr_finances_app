@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/presenter/home/home_page.dart';
-import 'package:flutter_teste_app/shared/utils/database_helper.dart';
+import '../../home/home_page.dart';
+import '../../../shared/utils/database_helper.dart';
 import 'package:lottie/lottie.dart';
 
 import '../widgets/login_page.dart';

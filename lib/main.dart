@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_teste_app/presenter/home/home_page.dart';
+import 'presenter/home/home_page.dart';
 
 import 'config.dart';
 import 'presenter/login/splash_screen_login/splash_screen_login_page.dart';
