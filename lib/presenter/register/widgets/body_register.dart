@@ -42,12 +42,6 @@ class _BodyRegisterState extends State<BodyRegister> {
     setState(() {});
   }
 
-  // Future<bool> edit() async {
-  //   Map<String, dynamic> map = await DatabaseHelper.instance.selectOperation();
-  //   data.text = map[0];
-  //   return false;
-  // }
-
   int getOperation() {
     if (isSelected[0]) {
       return 1;
@@ -155,229 +149,233 @@ class _BodyRegisterState extends State<BodyRegister> {
       isEditing = true;
       setEdit();
     }
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const SizedBox(height: 5),
-        TextInputContainer(
-          textValue: 'Nome',
-          controller: operationName,
-        ),
-        const SizedBox(height: 10),
-        TextInputContainer(
-          textValue: 'Preço',
-          controller: price,
-          type: const TextInputType.numberWithOptions(),
-          numericFormatter: true,
-        ),
-        const SizedBox(height: 15),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ToggleButtonsRegister(isSelected: isSelected),
-          ],
-        ),
-        const SizedBox(height: 15),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          margin: const EdgeInsets.symmetric(
-            horizontal: 30,
-            vertical: 10,
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(height: 5),
+          TextInputContainer(
+            textValue: 'Nome',
+            controller: operationName,
           ),
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 5,
+          const SizedBox(height: 10),
+          TextInputContainer(
+            textValue: 'Preço',
+            controller: price,
+            type: const TextInputType.numberWithOptions(),
+            numericFormatter: true,
           ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            border: Border.all(
-              color: isDark(context) ? Colors.white38 : Colors.black38,
+          const SizedBox(height: 15),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ToggleButtonsRegister(isSelected: isSelected),
+            ],
+          ),
+          const SizedBox(height: 15),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            margin: const EdgeInsets.symmetric(
+              horizontal: 30,
+              vertical: 10,
             ),
-          ),
-          child: FutureBuilder<List<Map<String, dynamic>>>(
-            future: DatabaseHelper.instance.queryCategory(),
-            builder: (
-              context,
-              AsyncSnapshot<List<Map<String, dynamic>>> snapshot,
-            ) {
-              if (!snapshot.hasData || (category.isEmpty && categorySelected)) {
-                return const CircularProgressIndicator();
-              }
-              return DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                hint: categorySelected
-                    ? null
-                    : const Text('Selecione uma categoria!'),
-                value: categorySelected ? category : null,
-                items: snapshot.data!
-                    .map<DropdownMenuItem<String>>(
-                      (Map<String, dynamic> value) => DropdownMenuItem<String>(
-                        value: value['name'],
-                        child: Text(
-                          value['name'],
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
+              vertical: 5,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              border: Border.all(
+                color: isDark(context) ? Colors.white38 : Colors.black38,
+              ),
+            ),
+            child: FutureBuilder<List<Map<String, dynamic>>>(
+              future: DatabaseHelper.instance.queryCategory(),
+              builder: (
+                context,
+                AsyncSnapshot<List<Map<String, dynamic>>> snapshot,
+              ) {
+                if (!snapshot.hasData ||
+                    (category.isEmpty && categorySelected)) {
+                  return const CircularProgressIndicator();
+                }
+                return DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                  hint: categorySelected
+                      ? null
+                      : const Text('Selecione uma categoria!'),
+                  value: categorySelected ? category : null,
+                  items: snapshot.data!
+                      .map<DropdownMenuItem<String>>(
+                        (Map<String, dynamic> value) =>
+                            DropdownMenuItem<String>(
+                          value: value['name'],
+                          child: Text(
+                            value['name'],
+                          ),
                         ),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    categorySelected = true;
-                    category = newValue!;
-                  });
-                },
-              ));
+                      )
+                      .toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      categorySelected = true;
+                      category = newValue!;
+                    });
+                  },
+                ));
+              },
+            ),
+          ),
+          const SizedBox(height: 15),
+          InkWell(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: ((context) => const NewCategoryPage()),
+                ),
+              );
             },
-          ),
-        ),
-        const SizedBox(height: 15),
-        InkWell(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: ((context) => const NewCategoryPage()),
-              ),
-            );
-          },
-          child: const Text(
-            'Criar uma nova categoria',
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              decoration: TextDecoration.underline,
-            ),
-          ),
-        ),
-        const SizedBox(height: 15),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          margin: const EdgeInsets.symmetric(
-            horizontal: 30,
-            vertical: 5,
-          ),
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            border: Border.all(
-              color: isDark(context) ? Colors.white38 : Colors.black38,
-            ),
-          ),
-          child: DateTimePicker(
-            decoration: const InputDecoration(
-              hintText: 'Data',
-              border: InputBorder.none,
-              focusedBorder: InputBorder.none,
-              enabledBorder: InputBorder.none,
-              errorBorder: InputBorder.none,
-              disabledBorder: InputBorder.none,
-            ),
-            controller: data,
-            firstDate: DateTime(2000),
-            lastDate: DateTime(2100),
-            locale: const Locale('pt', 'BR'),
-          ),
-        ),
-        const SizedBox(height: 15),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            TextButton(
-              onPressed: () {
-                if (isEditing) {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: const Text('Cancelar'),
-                        content: const Text('Deseja cancelar a edição?'),
-                        actions: [
-                          TextButton(
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(
-                                  const Color.fromRGBO(238, 46, 93, 1)),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text(
-                              'Não',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                          TextButton(
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(
-                                  const Color.fromRGBO(238, 46, 93, 1)),
-                            ),
-                            onPressed: () {
-                              isEditing = false;
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      HomePage(currentPage: 0),
-                                ),
-                              );
-                            },
-                            child: const Text(
-                              'Sim',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                } else {
-                  cleanEntries();
-                  setState(() {});
-                }
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white60,
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(color: Colors.grey.shade400)),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                child: Text(
-                  isEditing ? 'Cancelar' : 'Limpar',
-                  style: const TextStyle(
-                    fontSize: 18,
-                    color: Colors.black,
-                  ),
-                ),
+            child: const Text(
+              'Criar uma nova categoria',
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                decoration: TextDecoration.underline,
               ),
             ),
-            TextButton(
-              onPressed: () {
-                save();
-                if (isEditing) {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => HomePage(currentPage: 0),
+          ),
+          const SizedBox(height: 15),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            margin: const EdgeInsets.symmetric(
+              horizontal: 30,
+              vertical: 5,
+            ),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              border: Border.all(
+                color: isDark(context) ? Colors.white38 : Colors.black38,
+              ),
+            ),
+            child: DateTimePicker(
+              decoration: const InputDecoration(
+                hintText: 'Data',
+                border: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                errorBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+              ),
+              controller: data,
+              firstDate: DateTime(2000),
+              lastDate: DateTime(2100),
+              locale: const Locale('pt', 'BR'),
+            ),
+          ),
+          const SizedBox(height: 15),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              TextButton(
+                onPressed: () {
+                  if (isEditing) {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text('Cancelar'),
+                          content: const Text('Deseja cancelar a edição?'),
+                          actions: [
+                            TextButton(
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    const Color.fromRGBO(238, 46, 93, 1)),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text(
+                                'Não',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                            TextButton(
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    const Color.fromRGBO(238, 46, 93, 1)),
+                              ),
+                              onPressed: () {
+                                isEditing = false;
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        HomePage(currentPage: 0),
+                                  ),
+                                );
+                              },
+                              child: const Text(
+                                'Sim',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  } else {
+                    cleanEntries();
+                    setState(() {});
+                  }
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white60,
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(color: Colors.grey.shade400)),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                  child: Text(
+                    isEditing ? 'Cancelar' : 'Limpar',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
                     ),
-                  );
-                }
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color.fromRGBO(238, 46, 93, 1),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                child: Text(
-                  isEditing ? 'Atualizar' : 'Enviar',
-                  style: const TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-      ],
+              TextButton(
+                onPressed: () {
+                  save();
+                  if (isEditing) {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(currentPage: 0),
+                      ),
+                    );
+                  }
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color.fromRGBO(238, 46, 93, 1),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                  child: Text(
+                    isEditing ? 'Atualizar' : 'Enviar',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
