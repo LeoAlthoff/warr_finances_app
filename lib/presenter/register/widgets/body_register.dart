@@ -56,11 +56,18 @@ class _BodyRegisterState extends State<BodyRegister> {
     return temp.length == 3 ? ('${temp[2]}/${temp[1]}/${temp[0]}') : date;
   }
 
+  String formatStringForDateTimeParse(String date) {
+    List temp = date.split('/');
+    return temp.length == 3
+        ? ('${temp[2]}-${temp[1]}-${temp[0]} 00:00:00.000')
+        : date;
+  }
+
   Future<void> setEdit() async {
     List list = await DatabaseHelper.instance.selectOperationById(widget.id!);
     operationName.text = list[0]['name'];
     price.text = list[0]['value'].toString();
-    data.text = list[0]['date'];
+    data.text = formatStringForDateTimeParse(list[0]['date']);
     categorySelected = true;
     category =
         await DatabaseHelper.instance.getCategoryName(list[0]['categoryId']);
@@ -231,7 +238,7 @@ class _BodyRegisterState extends State<BodyRegister> {
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               TextButton(
                 onPressed: () {
@@ -248,7 +255,7 @@ class _BodyRegisterState extends State<BodyRegister> {
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(color: Colors.grey.shade400)),
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
                   child: Text(
                     isEditing ? 'Cancelar' : 'Limpar',
                     style: const TextStyle(

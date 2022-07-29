@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../../shared/utils/database_helper.dart';
-
 import 'package:lottie/lottie.dart';
 
+import '../../../shared/utils/database_helper.dart';
 import '../buttons/buttonFb_login_page.dart';
 import '../buttons/buttonGg_login_page.dart';
-
 import 'input_widget_login_page.dart';
 import 'login_page.dart';
 
