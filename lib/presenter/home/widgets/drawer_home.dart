@@ -197,6 +197,7 @@ class DrawerHome extends StatelessWidget {
                   builder: (context) => const LoginPage(),
                 ),
               );
+              DatabaseHelper.instance.logOut();
             },
           ),
         ],

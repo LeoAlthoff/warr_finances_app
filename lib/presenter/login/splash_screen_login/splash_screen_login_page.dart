@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_teste_app/presenter/home/home_page.dart';
+import 'package:flutter_teste_app/shared/utils/database_helper.dart';
 import 'package:lottie/lottie.dart';
 
 import '../widgets/login_page.dart';
@@ -13,13 +15,19 @@ class SplashScreenLoginPage extends StatefulWidget {
 class _SplashScreenLoginPageState extends State<SplashScreenLoginPage> {
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 2)).then((value) {
+    Future.delayed(const Duration(seconds: 2)).then((value) async {
+      bool logged = await DatabaseHelper.instance.checkLoggedIn();
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) {
-          return const LoginPage();
+          if (logged) {
+            return HomePage();
+          } else {
+            return LoginPage();
+          }
         }),
       );
     });
+
     super.initState();
   }
 
