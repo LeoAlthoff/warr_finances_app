@@ -44,25 +44,6 @@ class DatabaseHelper {
         theme INTERGER NOT NULL)
         ''');
 
-        await db.rawInsert(
-          '''INSERT INTO Category(name, color, icon)
-         VALUES('Salário', 4294198070, 57522),
-          ('Alimentação', 4294961979, 58674),
-          ('Compras', 4280391411, 58778),
-          ('Aluguel', 4283215696, 58152),
-          ('Telefone', 4288423856 , 58530),
-          ('Contas', 4288585374 , 983299)
-        ''',
-        );
-
-        await db.rawInsert('''
-        INSERT INTO Operation (value, name, entry, date, categoryId)
-        VALUES(2500, 'Warren Tecnologia', 1, '2022-07-01', 1),
-        (2500, 'Ifood', 0, '2022-06-22', 2),
-        (620, 'Angeloni', 0, '2022-06-16', 3),
-        (15500, 'Professor Ailton', 1, '2022-07-01', 1)
-        ''');
-
         await db.rawInsert('''
         INSERT INTO user (email, name, password, logged, theme)
         VALUES('admin', 'Admin', 'admin', 0, 0)
@@ -75,7 +56,7 @@ class DatabaseHelper {
       String monthYear) async {
     String temp = monthYear.replaceFirst('/', '-');
     List<Map<String, dynamic>> list = await _database!.rawQuery(
-        "SELECT c.icon, c.name, c.color, SUM(o.value) FROM Category AS c INNER JOIN Operation AS o ON c.id = o.categoryId WHERE o.date LIKE ? AND o.entry=0 GROUP BY c.name",
+        "SELECT c.icon, c.name, c.color, SUM(o.value) FROM Category AS c INNER JOIN Operation AS o ON c.id = o.categoryId WHERE o.date LIKE ? AND o.entry=0 GROUP BY c.name ORDER BY c.id",
         ['%$temp%']);
     return list;
   }
@@ -144,6 +125,21 @@ class DatabaseHelper {
       'INSERT INTO Operation(value, name, entry, date, categoryId) VALUES(?, ?, ?, ?, ?)',
       [value, name, entry, date, categoryId],
     );
+  }
+
+  Future<List<Map<String, Object?>>> getUserInfo(String email) async {
+    return await _database!
+        .rawQuery('SELECT * FROM user WHERE email = ?', [email]);
+  }
+
+  void updateUser(
+      {required String email,
+      required String name,
+      required String password,
+      required String emailPast}) {
+    _database!.rawUpdate(
+        'UPDATE user SET email = ?, name = ?, password = ?, logged = 1 WHERE email = ?',
+        [email, name, password, emailPast]);
   }
 
   Future<bool> validateUser(String email, String password) async {

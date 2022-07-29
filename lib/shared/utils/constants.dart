@@ -1,5 +1,31 @@
 import 'package:flutter/material.dart';
 
+void alertDialog(context, String title, String content) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text(title),
+        content: Text(content),
+        actions: [
+          TextButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                    const Color.fromRGBO(238, 46, 93, 1)),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text(
+                'Ok',
+                style: TextStyle(color: Colors.white),
+              ))
+        ],
+      );
+    },
+  );
+}
+
 List<bool> isSelected = [
   false,
   false,

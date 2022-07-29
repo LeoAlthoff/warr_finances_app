@@ -3,17 +3,19 @@ import 'package:flutter/material.dart';
 import '../../../config.dart';
 import '../../../shared/utils/database_helper.dart';
 import '../../../shared/utils/is_dark.dart';
+import '../../edit_user_register/edit_user_page.dart';
 import '../../login/widgets/login_page.dart';
 import '../home_page.dart';
-import '../test_page.dart';
 
 class DrawerHome extends StatelessWidget {
   final Function? callback;
 
-  const DrawerHome({
+  DrawerHome({
     Key? key,
     required this.callback,
   }) : super(key: key);
+
+  String? email;
 
   @override
   Widget build(BuildContext context) {
@@ -104,10 +106,26 @@ class DrawerHome extends StatelessWidget {
               ),
             ),
           ),
-          ListTile(
-            title: const Text('Alterar dados cadastrais'),
-            leading: const Icon(Icons.settings),
-            onTap: () {},
+          FutureBuilder(
+            future: DatabaseHelper.instance.getLoggedIn(),
+            builder:
+                (context, AsyncSnapshot<List<Map<String, Object?>>> snapshot) {
+              if (!snapshot.hasData) {
+                return const CircularProgressIndicator();
+              }
+              return ListTile(
+                title: const Text('Alterar dados cadastrais'),
+                leading: const Icon(Icons.settings),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => EditUserPage(
+                          email: snapshot.data![0]['email'].toString()),
+                    ),
+                  );
+                },
+              );
+            },
           ),
           ListTile(
             title: const Text('Apagar todas as operações'),
@@ -161,17 +179,6 @@ class DrawerHome extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 7),
-          ListTile(
-            title: const Text('Teste Dev'),
-            leading: const Icon(Icons.settings),
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const TestPage(),
-                ),
-              );
-            },
-          ),
           const SizedBox(height: 7),
           const Divider(
             height: 1,
