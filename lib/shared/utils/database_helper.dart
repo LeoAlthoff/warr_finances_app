@@ -44,6 +44,17 @@ class DatabaseHelper {
         theme INTERGER NOT NULL)
         ''');
 
+        await db.rawInsert(
+          '''INSERT INTO Category(name, color, icon)
+         VALUES('Salário', 4294198070, 57522),
+          ('Alimentação', 4294961979, 58674),
+          ('Compras', 4280391411, 58778),
+          ('Aluguel', 4283215696, 58152),
+          ('Telefone', 4288423856 , 58530),
+          ('Contas', 4288585374 , 983299)
+        ''',
+        );
+
         await db.rawInsert('''
         INSERT INTO user (email, name, password, logged, theme)
         VALUES('admin', 'Admin', 'admin', 0, 0)
