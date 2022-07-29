@@ -281,7 +281,7 @@ class DatabaseHelper {
 
   Future<Map<String, List<Map<String, dynamic>>>> selectContainer() async {
     Map<String, List<Map<String, dynamic>>> map = {};
-    map['operation'] = await _database!.rawQuery('SELECT * FROM operation');
+    map['operation'] = await _database!.rawQuery('SELECT * FROM operation ORDER BY date DESC');
     map['category'] = await _database!.rawQuery('SELECT * FROM Category');
     return map;
   }
