@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../config.dart';
+import '../../../theme.dart';
 import '../../home/home_page.dart';
 import '../../../shared/utils/database_helper.dart';
 import 'package:lottie/lottie.dart';
@@ -20,6 +22,7 @@ class _SplashScreenLoginPageState extends State<SplashScreenLoginPage> {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) {
           if (logged) {
+            currentTheme.setTheme();
             return HomePage();
           } else {
             return const LoginPage();

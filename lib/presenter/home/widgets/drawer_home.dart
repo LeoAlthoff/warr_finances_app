@@ -6,7 +6,6 @@ import '../../../shared/utils/is_dark.dart';
 import '../../edit_user_register/edit_user_page.dart';
 import '../../login/widgets/login_page.dart';
 import '../home_page.dart';
-import '../test_page.dart';
 
 class DrawerHome extends StatelessWidget {
   final Function? callback;
@@ -180,17 +179,6 @@ class DrawerHome extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 7),
-          ListTile(
-            title: const Text('Teste Dev'),
-            leading: const Icon(Icons.settings),
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const TestPage(),
-                ),
-              );
-            },
-          ),
           const SizedBox(height: 7),
           const Divider(
             height: 1,

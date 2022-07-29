@@ -87,7 +87,6 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
           currentColor.value, iconList[indexIcon].codePoint);
 
       isSelected[indexIcon] = false;
-      // setState(() {});
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: ((context) => HomePage(currentPage: 1)),

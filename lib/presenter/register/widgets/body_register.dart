@@ -80,7 +80,6 @@ class _BodyRegisterState extends State<BodyRegister> {
       String name = operationName.text;
       double value = double.parse(price.text);
       int operation = getOperation();
-      // String date = formatDate(data.text);
       String date = data.text;
       int categoryId = await DatabaseHelper.instance.selectCategory(category);
       if (isEditing) {
