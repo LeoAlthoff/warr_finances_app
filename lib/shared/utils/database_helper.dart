@@ -56,10 +56,10 @@ class DatabaseHelper {
 
         await db.rawInsert('''
         INSERT INTO Operation (value, name, entry, date, categoryId)
-        VALUES(2500, 'Warren Tecnologia', 1, '01/07/2022', 1),
-        (2500, 'Ifood', 0, '22/06/2022', 2),
-        (620, 'Angeloni', 0, '18/06/2022', 3),
-        (15500, 'Professor Ailton', 1, '01/07/2022', 1)
+        VALUES(2500, 'Warren Tecnologia', 1, '2022-07-01', 1),
+        (2500, 'Ifood', 0, '2022-06-22', 2),
+        (620, 'Angeloni', 0, '2022-06-16', 3),
+        (15500, 'Professor Ailton', 1, '2022-07-01', 1)
         ''');
 
         await db.rawInsert('''
@@ -72,9 +72,10 @@ class DatabaseHelper {
 
   Future<List<Map<String, dynamic>>> queryForSummaryChart(
       String monthYear) async {
+    String temp = monthYear.replaceFirst('/', '-');
     List<Map<String, dynamic>> list = await _database!.rawQuery(
         "SELECT c.icon, c.name, c.color, SUM(o.value) FROM Category AS c INNER JOIN Operation AS o ON c.id = o.categoryId WHERE o.date LIKE ? AND o.entry=0 GROUP BY c.name",
-        ['%$monthYear%']);
+        ['%$temp%']);
     return list;
   }
 
@@ -216,10 +217,11 @@ class DatabaseHelper {
   }
 
   Future<Map<String, double>> queryOperation(String monthYear) async {
+    String temp = monthYear.replaceFirst('/', '-');
     List<Map<String, dynamic>> list = await _database!.query(
       'Operation',
       where: 'entry = ? AND date LIKE ? ',
-      whereArgs: [0, '%$monthYear%'],
+      whereArgs: [0, '%$temp%'],
       orderBy: "categoryId",
     );
 

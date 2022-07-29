@@ -2,6 +2,7 @@ import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../../../shared/utils/database_helper.dart';
+import '../../../shared/utils/dateFormater.dart';
 import '../../../shared/utils/is_dark.dart';
 import '../../../shared/widgets/input_text_container.dart';
 import '../../category/new_category_page.dart';
@@ -51,18 +52,6 @@ class _BodyRegisterState extends State<BodyRegister> {
     return -1;
   }
 
-  String formatDate(String date) {
-    List temp = date.split('-');
-    return temp.length == 3 ? ('${temp[2]}/${temp[1]}/${temp[0]}') : date;
-  }
-
-  String formatStringForDateTimeParse(String date) {
-    List temp = date.split('/');
-    return temp.length == 3
-        ? ('${temp[2]}-${temp[1]}-${temp[0]} 00:00:00.000')
-        : date;
-  }
-
   Future<void> setEdit() async {
     List list = await DatabaseHelper.instance.selectOperationById(widget.id!);
     operationName.text = list[0]['name'];
@@ -91,7 +80,8 @@ class _BodyRegisterState extends State<BodyRegister> {
       String name = operationName.text;
       double value = double.parse(price.text);
       int operation = getOperation();
-      String date = formatDate(data.text);
+      // String date = formatDate(data.text);
+      String date = data.text;
       int categoryId = await DatabaseHelper.instance.selectCategory(category);
       if (isEditing) {
         DatabaseHelper.instance.updateOperation(

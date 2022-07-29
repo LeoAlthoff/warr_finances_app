@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../shared/utils/database_helper.dart';
+import '../../../shared/utils/dateFormater.dart';
 import '../home_page.dart';
 import 'balance_container.dart';
 import 'main_container_home.dart';
@@ -221,7 +222,8 @@ class BodyHome extends StatelessWidget {
                       source: snapshot.data!['category']![
                           snapshot.data!['operation']![index]['categoryId'] -
                               1]['name'],
-                      time: snapshot.data!['operation']![index]['date'],
+                      time: formatDate(
+                          snapshot.data!['operation']![index]['date']),
                     ),
                   );
                 },
