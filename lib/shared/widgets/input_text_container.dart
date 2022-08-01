@@ -7,13 +7,19 @@ class TextInputContainer extends StatelessWidget {
   final String textValue;
   final TextEditingController? controller;
   final TextInputType type;
+  final bool autoFocus;
+  final FocusNode? nextFocus;
+  final FocusNode? focusNode;
   final bool numericFormatter;
 
   const TextInputContainer({
     Key? key,
     required this.textValue,
-    this.type = TextInputType.text,
     this.controller,
+    this.type = TextInputType.text,
+    this.autoFocus = false,
+    this.nextFocus,
+    this.focusNode,
     this.numericFormatter = false,
   }) : super(key: key);
 
@@ -33,6 +39,13 @@ class TextInputContainer extends StatelessWidget {
         borderRadius: BorderRadius.circular(5),
       ),
       child: TextField(
+        focusNode: focusNode,
+        autofocus: autoFocus,
+        onSubmitted: (value) {
+          if (nextFocus != null) {
+            nextFocus!.requestFocus();
+          }
+        },
         controller: controller,
         cursorColor: isDark(context) ? Colors.white38 : Colors.black38,
         inputFormatters: numericFormatter

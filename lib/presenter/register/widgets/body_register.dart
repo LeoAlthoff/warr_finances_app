@@ -30,6 +30,8 @@ class _BodyRegisterState extends State<BodyRegister> {
   bool isEditing = false;
   bool getEditValues = false;
 
+  final FocusNode focusPrice = FocusNode();
+
   TextEditingController data = TextEditingController();
 
   void cleanEntries() {
@@ -106,11 +108,13 @@ class _BodyRegisterState extends State<BodyRegister> {
       children: [
         const SizedBox(height: 5),
         TextInputContainer(
+          nextFocus: focusPrice,
           textValue: 'Nome',
           controller: operationName,
         ),
         const SizedBox(height: 10),
         TextInputContainer(
+          focusNode: focusPrice,
           textValue: 'Preço',
           controller: price,
           type: const TextInputType.numberWithOptions(),
