@@ -34,15 +34,14 @@ class DatabaseHelper {
         date TEXT NO NULL,
         categoryId INTERGER,
         FOREIGN KEY(categoryId) REFERENCES Category(id)
-         )''');
+        )''');
 
         await db.execute('''CREATE TABLE user
         (email TEXT PRIMARY KEY,
         name TEXT NOT NULL,
         password TEXT NOT NULL,
-        logged INTERGER NOT NULL,
-        theme INTERGER NOT NULL)
-        ''');
+        logged INTERGER NOT NULL
+        )''');
 
         await db.rawInsert(
           '''INSERT INTO Category(name, color, icon)
@@ -56,8 +55,8 @@ class DatabaseHelper {
         );
 
         await db.rawInsert('''
-        INSERT INTO user (email, name, password, logged, theme)
-        VALUES('admin', 'Admin', 'admin', 0, 0)
+        INSERT INTO user (email, name, password, logged)
+        VALUES('admin', 'Admin', 'admin', 0)
         ''');
       },
     );
@@ -125,7 +124,7 @@ class DatabaseHelper {
 
   void insertUser(String email, String name, String password) async {
     await _database!.rawInsert(
-      'INSERT INTO user(email, name, password, logged, theme) VALUES(?, ?, ?, 0, 0)',
+      'INSERT INTO user(email, name, password, logged, ) VALUES(?, ?, ?, 0)',
       [email, name, password],
     );
   }
@@ -181,27 +180,10 @@ class DatabaseHelper {
     }
   }
 
-  Future<bool> checkTheme() async {
-    var result =
-        await _database!.query('user', where: 'logged = ?', whereArgs: [1]);
-    if (result[0]['theme'] == 1) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   Future<List<Map<String, Object?>>> getLoggedIn() async {
     var result =
         await _database!.query('user', where: 'logged = ?', whereArgs: [1]);
     return result;
-  }
-
-  void changeTheme(int theme) async {
-    await _database!.rawUpdate(
-      'UPDATE user SET theme = ? WHERE logged = 1',
-      [theme],
-    );
   }
 
   void logOut() async {

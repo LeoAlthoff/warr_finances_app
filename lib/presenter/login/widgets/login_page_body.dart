@@ -21,6 +21,9 @@ class BodyLoginPage extends StatefulWidget {
 class _BodyLoginPageState extends State<BodyLoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final emailNode = FocusNode();
+  final passwordNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -60,12 +63,16 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
                 ],
               ),
               InputWidget(
+                autoFocus: false,
+                focusNode: emailNode,
                 controller: emailController,
                 icon: Icons.email,
                 isPassword: false,
                 labelTextInput: 'Email',
               ),
               InputWidget(
+                autoFocus: false,
+                focusNode: passwordNode,
                 controller: passwordController,
                 icon: Icons.lock,
                 isPassword: true,

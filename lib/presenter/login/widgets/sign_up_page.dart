@@ -4,7 +4,7 @@ import '../../../shared/utils/database_helper.dart';
 import 'input_widget_login_page.dart';
 
 class SignUpPage extends StatefulWidget {
-  SignUpPage({Key? key}) : super(key: key);
+  const SignUpPage({Key? key}) : super(key: key);
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
@@ -15,6 +15,10 @@ class _SignUpPageState extends State<SignUpPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final passwordController1 = TextEditingController();
+  final FocusNode nameNode = FocusNode();
+  final FocusNode emailNode = FocusNode();
+  final FocusNode passwordNode = FocusNode();
+  final FocusNode passwordConfirmationNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +44,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: 30,
               ),
               InputWidget(
+                autoFocus: true,
+                focusNode: nameNode,
                 controller: nameController,
                 icon: Icons.person,
                 isPassword: false,
@@ -49,6 +55,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: 15,
               ),
               InputWidget(
+                autoFocus: false,
+                focusNode: emailNode,
                 controller: emailController,
                 icon: Icons.email,
                 isPassword: false,
@@ -58,6 +66,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: 15,
               ),
               InputWidget(
+                autoFocus: false,
+                focusNode: passwordNode,
                 controller: passwordController,
                 icon: Icons.lock,
                 isPassword: true,
@@ -67,6 +77,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: 15,
               ),
               InputWidget(
+                autoFocus: false,
+                focusNode: passwordConfirmationNode,
                 controller: passwordController1,
                 icon: Icons.lock,
                 isPassword: true,
@@ -141,9 +153,9 @@ class _SignUpPageState extends State<SignUpPage> {
                       );
                     } else {
                       DatabaseHelper.instance.insertUser(
-                        emailController.text,
-                        nameController.text,
-                        passwordController.text,
+                        emailController.text.trim(),
+                        nameController.text.trim(),
+                        passwordController.text.trim(),
                       );
                       showDialog(
                         context: context,
@@ -157,6 +169,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                       const Color.fromRGBO(238, 46, 93, 1)),
                                 ),
                                 onPressed: () {
+                                  Navigator.of(context).pop();
                                   Navigator.of(context).pop();
                                 },
                                 child: const Text(
