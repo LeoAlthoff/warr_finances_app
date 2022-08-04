@@ -124,7 +124,7 @@ class DatabaseHelper {
 
   void insertUser(String email, String name, String password) async {
     await _database!.rawInsert(
-      'INSERT INTO user(email, name, password, logged, ) VALUES(?, ?, ?, 0)',
+      'INSERT INTO user(email, name, password, logged) VALUES(?, ?, ?, 0)',
       [email, name, password],
     );
   }
