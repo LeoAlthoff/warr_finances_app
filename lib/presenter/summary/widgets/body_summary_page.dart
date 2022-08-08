@@ -6,6 +6,7 @@ import 'package:pie_chart/pie_chart.dart';
 import '../../../shared/utils/database_helper.dart';
 import '../../../shared/utils/format_money.dart';
 import '../../../shared/utils/is_dark.dart';
+import '../../pdf/pdf_page.dart';
 import 'info_chart_summary.dart';
 
 class ItensSummaryPage extends StatefulWidget {
@@ -155,6 +156,12 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
             );
           },
         ),
+        ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const ShowPdf('Extrato')));
+            },
+            child: const Text('PDF')),
       ],
     );
   }

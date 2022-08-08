@@ -4,7 +4,7 @@ import '../../../shared/utils/database_helper.dart';
 import 'input_widget_login_page.dart';
 
 class SignUpPage extends StatefulWidget {
-  SignUpPage({Key? key}) : super(key: key);
+  const SignUpPage({Key? key}) : super(key: key);
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
