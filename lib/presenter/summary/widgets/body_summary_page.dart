@@ -156,12 +156,12 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
             );
           },
         ),
-        ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const ShowPdf('Extrato')));
-            },
-            child: const Text('PDF')),
+        // ElevatedButton(
+        //     onPressed: () {
+        //       Navigator.of(context).push(MaterialPageRoute(
+        //           builder: (context) => const ShowPdf('Extrato')));
+        //     },
+        //     child: const Text('PDF')),
       ],
     );
   }

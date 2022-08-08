@@ -115,7 +115,7 @@ class ShowPdf extends StatelessWidget {
                           mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                           children: [
                             pw.Text(
-                              'Operação: ${operations['operation']![test(index, i)]['name']}',
+                              '   ${operations['operation']![test(index, i)]['name']}',
                               style: pw.TextStyle(
                                 font: font,
                               ),
@@ -128,7 +128,7 @@ class ShowPdf extends StatelessWidget {
                                 horizontal: 30,
                               ),
                               child: pw.Text(
-                                'Valor: ${operations['operation']![test(index, i)]['entry'] == 1 ? '+' : '-'}'
+                                '${operations['operation']![test(index, i)]['entry'] == 1 ? ' ' : '-'}'
                                 'R\$ ${operations['operation']![test(index, i)]['value']}',
                                 style: pw.TextStyle(
                                   font: font,
@@ -136,7 +136,7 @@ class ShowPdf extends StatelessWidget {
                               ),
                             ),
                             pw.Text(
-                              'Data: ${formatDate(operations['operation']![test(index, i)]['date'])}',
+                              '${formatDate(operations['operation']![test(index, i)]['date'])}   ',
                               style: pw.TextStyle(
                                 font: font,
                               ),
