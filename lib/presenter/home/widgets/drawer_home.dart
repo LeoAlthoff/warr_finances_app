@@ -183,6 +183,15 @@ class DrawerHome extends StatelessWidget {
           const Divider(
             height: 1,
           ),
+          // ListTile(
+          //   title: const Text('Dark Theme'),
+          //   leading: const Icon(Icons.dark_mode),
+          //   onTap: () {
+          //     Navigator.of(context).push(MaterialPageRoute(
+          //       builder: (context) => const TestPage(),
+          //     ));
+          //   },
+          // ),
           ListTile(
             title: const Text('Dark Theme'),
             leading: const Icon(Icons.dark_mode),

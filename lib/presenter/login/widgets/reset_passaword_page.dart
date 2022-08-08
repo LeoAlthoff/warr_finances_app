@@ -70,6 +70,7 @@ class ResetPassawordPage extends StatelessWidget {
                   height: 50,
                 ),
                 InputWidget(
+                  autoFocus: false,
                   controller: emailController,
                   icon: Icons.email,
                   isPassword: false,

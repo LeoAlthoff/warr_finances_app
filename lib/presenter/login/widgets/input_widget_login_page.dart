@@ -5,6 +5,8 @@ class InputWidget extends StatelessWidget {
   final IconData icon;
   final TextEditingController controller;
   final bool isPassword;
+  final bool autoFocus;
+  final FocusNode? focusNode;
 
   const InputWidget({
     Key? key,
@@ -12,6 +14,8 @@ class InputWidget extends StatelessWidget {
     required this.icon,
     required this.controller,
     required this.isPassword,
+    required this.autoFocus,
+    this.focusNode,
   }) : super(key: key);
 
   @override
@@ -27,6 +31,8 @@ class InputWidget extends StatelessWidget {
         vertical: 10,
       ),
       child: TextField(
+        autofocus: autoFocus,
+        focusNode: focusNode,
         obscureText: isPassword,
         controller: controller,
         keyboardType: TextInputType.text,
