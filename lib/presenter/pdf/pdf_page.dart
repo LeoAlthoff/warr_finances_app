@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
@@ -16,6 +17,9 @@ class ShowPdf extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.pink,
+      ),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
@@ -26,7 +30,6 @@ class ShowPdf extends StatelessWidget {
             },
           ),
           title: Text(title),
-          backgroundColor: Colors.pink,
         ),
         body: PdfPreview(
           build: (format) => _generatePdf(format),
@@ -39,15 +42,15 @@ class ShowPdf extends StatelessWidget {
     final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
     final font = await PdfGoogleFonts.nunitoExtraLight();
     final operations = await DatabaseHelper.instance.selectOperation();
+    final iconPng =
+        (await rootBundle.load('assets/images/icon.png')).buffer.asUint8List();
 
-    int pageSize = 22;
+    int pageSize = 20;
     int pages = operations['operation']!.length ~/ pageSize;
-    bool lastPage = false;
     int lastPageSize = operations['operation']!.length % pageSize;
 
     int isLastPage(int i) {
       if (i == pages) {
-        lastPage = true;
         return lastPageSize;
       }
       return pageSize;
@@ -68,10 +71,16 @@ class ShowPdf extends StatelessWidget {
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
                 children: [
                   pw.Row(
-                    mainAxisAlignment: pw.MainAxisAlignment.center,
+                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: [
-                      // pw.Image(AssetImage(Image.asset()  as pw.ImageProvider) as pw.ImageProvider),
+                      pw.Image(
+                        pw.MemoryImage(iconPng),
+                        fit: pw.BoxFit.cover,
+                        height: 50,
+                        width: 50,
+                      ),
                       pw.Column(
+                        crossAxisAlignment: pw.CrossAxisAlignment.end,
                         children: [
                           pw.Text(
                             'Warr finances',
