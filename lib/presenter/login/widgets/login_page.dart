@@ -31,7 +31,7 @@ void navigateToResetPassword(BuildContext context) {
 
 void navigateToSignUpPage(BuildContext context) {
   Navigator.of(context)
-      .push(MaterialPageRoute(builder: (context) => SignUpPage()));
+      .push(MaterialPageRoute(builder: (context) => const SignUpPage()));
 }
 
 void navigateBackToHomeScreen(BuildContext context) {
