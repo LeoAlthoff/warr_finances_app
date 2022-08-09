@@ -32,7 +32,7 @@ class ShowPdf extends StatelessWidget {
           title: Text(title),
         ),
         body: PdfPreview(
-          pdfFileName: 'extrato',
+          pdfFileName: 'extrato.pdf',
           canChangePageFormat: false,
           initialPageFormat: PdfPageFormat(
             PdfPageFormat.a4.width,
@@ -48,7 +48,7 @@ class ShowPdf extends StatelessWidget {
   Future<Uint8List> _generatePdf(PdfPageFormat format) async {
     final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
     final font = await PdfGoogleFonts.nunitoExtraLight();
-    final operations = await DatabaseHelper.instance.selectOperation();
+    final operations = await DatabaseHelper.instance.selectContainer();
     final iconPng =
         (await rootBundle.load('assets/images/icon.png')).buffer.asUint8List();
 
