@@ -32,6 +32,13 @@ class ShowPdf extends StatelessWidget {
           title: Text(title),
         ),
         body: PdfPreview(
+          pdfFileName: 'extrato',
+          canChangePageFormat: false,
+          initialPageFormat: PdfPageFormat(
+            PdfPageFormat.a4.width,
+            PdfPageFormat.a4.height,
+            marginAll: 0,
+          ),
           build: (format) => _generatePdf(format),
         ),
       ),
@@ -45,7 +52,7 @@ class ShowPdf extends StatelessWidget {
     final iconPng =
         (await rootBundle.load('assets/images/icon.png')).buffer.asUint8List();
 
-    int pageSize = 20;
+    int pageSize = 25;
     int pages = operations['operation']!.length ~/ pageSize;
     int lastPageSize = operations['operation']!.length % pageSize;
 
@@ -66,7 +73,7 @@ class ShowPdf extends StatelessWidget {
           pageFormat: format,
           build: (context) {
             return pw.Padding(
-              padding: const pw.EdgeInsets.symmetric(horizontal: 16),
+              padding: const pw.EdgeInsets.all(16),
               child: pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
                 children: [
