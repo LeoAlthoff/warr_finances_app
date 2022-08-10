@@ -6,7 +6,6 @@ import '../../../shared/utils/dateFormater.dart';
 import '../../../shared/utils/is_dark.dart';
 import '../../../shared/widgets/input_text_container.dart';
 import '../../category/new_category_page.dart';
-import '../../home/home_page.dart';
 import 'toggle_buttons_register.dart';
 
 class BodyRegister extends StatefulWidget {
@@ -262,11 +261,7 @@ class _BodyRegisterState extends State<BodyRegister> {
                 onPressed: () {
                   save();
                   if (isEditing) {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => HomePage(currentPage: 0),
-                      ),
-                    );
+                    Navigator.of(context).pop();
                   }
                 },
                 child: Container(
@@ -320,11 +315,7 @@ class _BodyRegisterState extends State<BodyRegister> {
               ),
               onPressed: () {
                 isEditing = false;
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => HomePage(currentPage: 0),
-                  ),
-                );
+                Navigator.of(context).pop();
               },
               child: const Text(
                 'Sim',

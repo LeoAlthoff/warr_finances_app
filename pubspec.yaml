@@ -28,7 +28,10 @@ dependencies:
   pdf: ^3.8.2
   printing: ^5.9.2
   shared_preferences: ^2.0.15
-  flutter_signin_button: ^2.0.0
+  flutter_signin_button: ^2.0.0  
+  firebase_core: ^1.20.0
+  firebase_auth: ^3.6.2
+  google_sign_in: ^5.4.1
 
 dev_dependencies:
   flutter_test:

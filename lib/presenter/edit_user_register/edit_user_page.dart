@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../home/home_page.dart';
 
 import '../../shared/utils/constants.dart';
 import '../../shared/utils/database_helper.dart';
@@ -71,11 +70,7 @@ class _EditUserPageState extends State<EditUserPage> {
                       password: passwordController.text,
                       emailPast: widget.email,
                     );
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => HomePage(
-                        currentPage: 0,
-                      ),
-                    ));
+                    Navigator.of(context).pop();
 
                     alertDialog(
                         context, 'Cadastro', 'Cadastro realizado com sucesso!');

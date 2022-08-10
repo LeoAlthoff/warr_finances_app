@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../../shared/utils/database_helper.dart';
+import '../../home/home_page.dart';
 import 'input_widget_login_page.dart';
 import 'login_page.dart';
 
@@ -17,6 +19,9 @@ class BodyLoginPage extends StatefulWidget {
   @override
   State<BodyLoginPage> createState() => _BodyLoginPageState();
 }
+
+final FirebaseAuth auth = FirebaseAuth.instance;
+final GoogleSignIn googleSignIn = GoogleSignIn();
 
 class _BodyLoginPageState extends State<BodyLoginPage> {
   final emailController = TextEditingController();
@@ -78,54 +83,36 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
                 isPassword: true,
                 labelTextInput: 'Senha',
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      navigateToResetPassword(context);
-                    },
-                    child: const Text(
-                      'Esqueceu a senha?',
-                      style: TextStyle(color: Colors.white, fontSize: 10),
-                    ),
-                  ),
-                ],
+              TextButton(
+                onPressed: () {
+                  navigateToResetPassword(context);
+                },
+                child: const Text(
+                  'Esqueceu a senha?',
+                  style: TextStyle(color: Colors.white, fontSize: 12),
+                ),
               ),
               const SizedBox(height: 5),
               SignInButton(
                 Buttons.Email,
                 onPressed: () async {
-                  bool result = await DatabaseHelper.instance.validateUser(
-                    emailController.text,
-                    passwordController.text,
-                  );
-                  if (result) {
-                    nagigateToHomeScreen(context);
-                  } else {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: const Text('Login incorreto!'),
-                          actions: [
-                            TextButton(
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                    const Color.fromRGBO(238, 46, 93, 1)),
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text(
-                                'Ok',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            )
-                          ],
-                        );
-                      },
-                    );
+                  // /*
+                  try {
+                    String email = emailController.text.trim();
+                    String password = passwordController.text.trim();
+                    UserCredential result =
+                        await auth.signInWithEmailAndPassword(
+                            email: email, password: password);
+                    User? user = result.user;
+                    print(user);
+                    nagigateToHomeScreen(context, user!);
+                  } on FirebaseAuthException catch (e) {
+                    if (e.code == 'user-not-found') {
+                      print('No user found for that email');
+                    } else if (e.code == 'wrong-password') {
+                      print('Wrong password');
+                    }
+                    print(e);
                   }
                 },
                 text: 'Entrar com E-mail',
@@ -133,12 +120,19 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
               SignInButton(
                 Buttons.Google,
                 text: 'Entrar com Google',
-                onPressed: () {},
-              ),
-              SignInButton(
-                Buttons.Facebook,
-                onPressed: () {},
-                text: 'Entrar com Facebook',
+                onPressed: () async {
+                  User? user = await signInWithGoogle();
+                  if (user != null) {
+                    print(user);
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(
+                          user: user,
+                        ),
+                      ),
+                    );
+                  }
+                },
               ),
               const SizedBox(height: 10),
               TextButton(
@@ -156,4 +150,21 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
       ),
     );
   }
+}
+
+Future<User?> signInWithGoogle() async {
+  final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+
+  final GoogleSignInAuthentication? googleAuth =
+      await googleUser?.authentication;
+
+  if (googleAuth != null) {
+    final OAuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+    final userCredentials = await auth.signInWithCredential(credential);
+    return userCredentials.user;
+  }
+  return null;
 }

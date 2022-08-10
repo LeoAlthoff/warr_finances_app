@@ -1,18 +1,21 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../config.dart';
 import '../../../shared/utils/database_helper.dart';
 import '../../../shared/utils/is_dark.dart';
-import '../../edit_user_register/edit_user_page.dart';
 import '../../login/widgets/login_page.dart';
 import '../../pdf/pdf_page.dart';
 import '../home_page.dart';
 
 class DrawerHome extends StatelessWidget {
+  User user;
   final Function? callback;
 
   DrawerHome({
     Key? key,
+    required this.user,
     required this.callback,
   }) : super(key: key);
 
@@ -47,48 +50,23 @@ class DrawerHome extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 10),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: FutureBuilder(
-                          future: DatabaseHelper.instance.getLoggedIn(),
-                          builder: (context,
-                              AsyncSnapshot<List<Map<String, Object?>>>
-                                  snapshot) {
-                            if (!snapshot.hasData) {
-                              return const CircularProgressIndicator();
-                            }
-                            return Text(
-                              snapshot.data![0]['name'].toString(),
-                              textAlign: TextAlign.left,
-                              style: const TextStyle(
-                                fontSize: 20,
-                                color: Colors.white,
-                              ),
-                            );
-                          },
+                      Text(
+                        user.displayName.toString(),
+                        textAlign: TextAlign.left,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 10),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: FutureBuilder(
-                      future: DatabaseHelper.instance.getLoggedIn(),
-                      builder: (context,
-                          AsyncSnapshot<List<Map<String, Object?>>> snapshot) {
-                        if (!snapshot.hasData) {
-                          return const CircularProgressIndicator();
-                        }
-                        return Text(
-                          snapshot.data![0]['email'].toString(),
-                          textAlign: TextAlign.left,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                          ),
-                        );
-                      },
+                  Text(
+                    user.email.toString(),
+                    textAlign: TextAlign.left,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -107,27 +85,27 @@ class DrawerHome extends StatelessWidget {
               ),
             ),
           ),
-          FutureBuilder(
-            future: DatabaseHelper.instance.getLoggedIn(),
-            builder:
-                (context, AsyncSnapshot<List<Map<String, Object?>>> snapshot) {
-              if (!snapshot.hasData) {
-                return const CircularProgressIndicator();
-              }
-              return ListTile(
-                title: const Text('Alterar dados cadastrais'),
-                leading: const Icon(Icons.settings),
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => EditUserPage(
-                          email: snapshot.data![0]['email'].toString()),
-                    ),
-                  );
-                },
-              );
-            },
-          ),
+          // FutureBuilder(
+          //   future: DatabaseHelper.instance.getLoggedIn(),
+          //   builder:
+          //       (context, AsyncSnapshot<List<Map<String, Object?>>> snapshot) {
+          //     if (!snapshot.hasData) {
+          //       return const CircularProgressIndicator();
+          //     }
+          //     return ListTile(
+          //       title: const Text('Alterar dados cadastrais'),
+          //       leading: const Icon(Icons.settings),
+          //       onTap: () {
+          //         Navigator.of(context).push(
+          //           MaterialPageRoute(
+          //             builder: (context) => EditUserPage(
+          //                 email: snapshot.data![0]['email'].toString()),
+          //           ),
+          //         );
+          //       },
+          //     );
+          //   },
+          // ), // TODO
           ListTile(
             title: const Text('Apagar todas as operações'),
             leading: const Icon(Icons.delete_forever),
@@ -164,7 +142,10 @@ class DrawerHome extends StatelessWidget {
                         await Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (context) {
-                              return HomePage(currentPage: 0);
+                              return HomePage(
+                                currentPage: 0,
+                                user: user,
+                              );
                             },
                           ),
                         );
@@ -206,6 +187,7 @@ class DrawerHome extends StatelessWidget {
             title: const Text('Sair da conta'),
             leading: const Icon(Icons.arrow_back),
             onTap: () {
+              signOut();
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                   builder: (context) => const LoginPage(),
@@ -218,4 +200,9 @@ class DrawerHome extends StatelessWidget {
       ),
     );
   }
+}
+
+signOut() {
+  FirebaseAuth.instance.signOut();
+  GoogleSignIn().signOut();
 }

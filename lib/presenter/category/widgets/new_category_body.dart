@@ -5,7 +5,6 @@ import '../../../shared/utils/constants.dart';
 import '../../../shared/utils/database_helper.dart';
 import '../../../shared/utils/get_color_bytheme.dart';
 import '../../../shared/widgets/input_text_container.dart';
-import '../../home/home_page.dart';
 
 class NewCategoryBody extends StatefulWidget {
   const NewCategoryBody({Key? key}) : super(key: key);
@@ -87,11 +86,7 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
           currentColor.value, iconList[indexIcon].codePoint);
 
       isSelected[indexIcon] = false;
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: ((context) => HomePage(currentPage: 1)),
-        ),
-      );
+      Navigator.of(context).pop();
     }
   }
 

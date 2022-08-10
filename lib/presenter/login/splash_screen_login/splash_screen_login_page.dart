@@ -1,7 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../../shared/utils/database_helper.dart';
 import '../../home/home_page.dart';
 import '../widgets/login_page.dart';
 
@@ -15,18 +15,24 @@ class SplashScreenLoginPage extends StatefulWidget {
 class _SplashScreenLoginPageState extends State<SplashScreenLoginPage> {
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 2)).then((value) async {
-      bool logged = await DatabaseHelper.instance.checkLoggedIn();
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) {
-          if (logged) {
-            return HomePage();
-          } else {
-            return const LoginPage();
-          }
-        }),
-      );
-    });
+    Future.delayed(const Duration(seconds: 2)).then(
+      (value) async {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) {
+              if (FirebaseAuth.instance.currentUser != null) {
+                User user = FirebaseAuth.instance.currentUser!;
+                return HomePage(
+                  user: user,
+                );
+              } else {
+                return const LoginPage();
+              }
+            },
+          ),
+        );
+      },
+    );
 
     super.initState();
   }

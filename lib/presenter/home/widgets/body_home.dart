@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../shared/utils/database_helper.dart';
@@ -7,9 +8,8 @@ import 'balance_container.dart';
 import 'main_container_home.dart';
 
 class BodyHome extends StatelessWidget {
-  const BodyHome({
-    Key? key,
-  }) : super(key: key);
+  User user;
+  BodyHome({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -112,6 +112,7 @@ class BodyHome extends StatelessWidget {
                                   Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
                                       builder: (context) => HomePage(
+                                        user: user,
                                         currentPage: 1,
                                         id: snapshot.data!['operation']![index]
                                             ['id'],
@@ -148,15 +149,8 @@ class BodyHome extends StatelessWidget {
                                               ),
                                             ),
                                             onPressed: () {
-                                              Navigator.of(context)
-                                                  .pushReplacement(
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      HomePage(
-                                                    currentPage: 0,
-                                                  ),
-                                                ),
-                                              );
+                                              Navigator.of(context).pop();
+                                              Navigator.of(context).pop();
                                             },
                                             child: const Text(
                                               'Não',
@@ -177,15 +171,7 @@ class BodyHome extends StatelessWidget {
                                                   .deleteOperation(snapshot
                                                           .data!['operation']![
                                                       index]['id']);
-                                              Navigator.of(context)
-                                                  .pushReplacement(
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      HomePage(
-                                                    currentPage: 0,
-                                                  ),
-                                                ),
-                                              );
+                                              Navigator.of(context).pop();
                                             },
                                             child: const Text(
                                               'Sim',
