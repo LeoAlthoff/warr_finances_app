@@ -92,6 +92,7 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
                   style: TextStyle(color: Colors.white, fontSize: 12),
                 ),
               ),
+              
               const SizedBox(height: 5),
               SignInButton(
                 Buttons.Email,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../shared/utils/constants.dart';
-import '../../shared/utils/database_helper.dart';
 import '../../shared/utils/is_dark.dart';
 import '../../shared/widgets/input_text_container.dart';
 
@@ -64,12 +63,7 @@ class _EditUserPageState extends State<EditUserPage> {
               TextButton(
                 onPressed: () {
                   if (checkFormValidator()) {
-                    DatabaseHelper.instance.updateUser(
-                      email: emailController.text,
-                      name: nameController.text,
-                      password: passwordController.text,
-                      emailPast: widget.email,
-                    );
+                    //TODOUPDATE USER
                     Navigator.of(context).pop();
 
                     alertDialog(
@@ -107,12 +101,13 @@ class _EditUserPageState extends State<EditUserPage> {
   }
 
   void setInfo() async {
-    List<Map<String, dynamic>> list =
-        await DatabaseHelper.instance.getUserInfo(widget.email);
-    nameController.text = list[0]['name'];
-    emailController.text = list[0]['email'];
-    passwordController.text = list[0]['password'];
-    confirmPasswordController.text = list[0]['password'];
+    //TODO GET INFO from use
+    // List<Map<String, dynamic>> list =
+    //     await DatabaseHelper.instance.getUserInfo(widget.email);
+    // nameController.text = list[0]['name'];
+    // emailController.text = list[0]['email'];
+    // passwordController.text = list[0]['password'];
+    // confirmPasswordController.text = list[0]['password'];
   }
 
   bool checkFormValidator() {

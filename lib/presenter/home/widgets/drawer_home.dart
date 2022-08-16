@@ -187,13 +187,12 @@ class DrawerHome extends StatelessWidget {
             title: const Text('Sair da conta'),
             leading: const Icon(Icons.arrow_back),
             onTap: () {
-              signOut();
+              logOutFromAccount();
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                   builder: (context) => const LoginPage(),
                 ),
               );
-              DatabaseHelper.instance.logOut();
             },
           ),
         ],
@@ -202,7 +201,7 @@ class DrawerHome extends StatelessWidget {
   }
 }
 
-signOut() {
+logOutFromAccount() {
   FirebaseAuth.instance.signOut();
   GoogleSignIn().signOut();
 }

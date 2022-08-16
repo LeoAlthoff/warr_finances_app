@@ -55,8 +55,7 @@ class TextInputContainer extends StatelessWidget {
           labelText: textValue,
           labelStyle: TextStyle(color: Theme.of(context).hintColor),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-                color: isDark(context) ? Colors.white38 : Colors.black38),
+            borderSide: BorderSide(color: isDark(context) ? Colors.white38 : Colors.black38),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
