@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'login_page_body.dart';
@@ -23,8 +24,8 @@ class _SignUpPageState extends State<SignUpPage> {
 
   _register(String email, String password, String displayName) async {
     try {
-      UserCredential result = await auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      UserCredential result =
+          await auth.createUserWithEmailAndPassword(email: email, password: password);
       User user = result.user!;
       await user.updateDisplayName(displayName);
       print(user);
@@ -54,8 +55,52 @@ class _SignUpPageState extends State<SignUpPage> {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password is too weak');
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('A senha é muito fraca!'),
+            actions: [
+              TextButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                    const Color.fromRGBO(238, 46, 93, 1),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  'Ok',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        );
       } else if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Já existe uma conta com este e-mail!'),
+            actions: [
+              TextButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                    const Color.fromRGBO(238, 46, 93, 1),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  'Ok',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        );
       }
     } catch (e) {
       print(e);
@@ -173,8 +218,31 @@ class _SignUpPageState extends State<SignUpPage> {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            title: const Text(
-                                'Nenhum dos campos pode estar vazio!'),
+                            title: const Text('Nenhum dos campos pode estar vazio!'),
+                            actions: [
+                              TextButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      const Color.fromRGBO(238, 46, 93, 1)),
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text(
+                                  'Ok',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              )
+                            ],
+                          );
+                        },
+                      );
+                    } else if (!EmailValidator.validate(emailController.text.trim())) {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text('E-mail inválido!'),
                             actions: [
                               TextButton(
                                 style: ButtonStyle(
