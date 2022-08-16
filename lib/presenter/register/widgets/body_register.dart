@@ -80,29 +80,20 @@ class _BodyRegisterState extends State<BodyRegister> {
       showDialogInvalidInfo('Você não pode deixar nenhum campo em branco.');
     } else {
       String name = operationName.text;
-      double value = 0;
-      bool validPrice = true;
-      try {
-        value = double.parse(price.text);
-      } catch (e) {
-        showDialogInvalidInfo(
-            'A formatação deve ser inserida apenas com digítos e ponto para separar as casas decimais');
-        validPrice = false;
+      double value = double.parse(price.text);
+
+      int operation = getOperation();
+      String date = data.text;
+      int categoryId = await DatabaseHelper.instance.selectCategory(category);
+      if (isEditing) {
+        DatabaseHelper.instance.updateOperation(
+            name, value, operation, date, categoryId, widget.id!);
+        isEditing = false;
+      } else {
+        DatabaseHelper.instance
+            .insertOperation(value, name, operation, date, categoryId);
       }
-      if (validPrice) {
-        int operation = getOperation();
-        String date = data.text;
-        int categoryId = await DatabaseHelper.instance.selectCategory(category);
-        if (isEditing) {
-          DatabaseHelper.instance.updateOperation(
-              name, value, operation, date, categoryId, widget.id!);
-          isEditing = false;
-        } else {
-          DatabaseHelper.instance
-              .insertOperation(value, name, operation, date, categoryId);
-        }
-        showDialogSuccessfulRegister();
-      }
+      showDialogSuccessfulRegister();
     }
   }
 
