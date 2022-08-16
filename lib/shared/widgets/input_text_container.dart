@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../utils/is_dark.dart';
 
@@ -49,13 +50,17 @@ class TextInputContainer extends StatelessWidget {
         cursorColor: isDark(context) ? Colors.white38 : Colors.black38,
         validator: (value) =>
             int.parse(value!).isNaN ? 'Valor ínvalido!' : null,
+        inputFormatters: numericFormatter
+            ? [FilteringTextInputFormatter.allow(RegExp(r'[0-9]+\.?[0-9]*$'))]
+            : [],
         keyboardType:
             numericFormatter ? TextInputType.number : TextInputType.name,
         decoration: InputDecoration(
           labelText: textValue,
           labelStyle: TextStyle(color: Theme.of(context).hintColor),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: isDark(context) ? Colors.white38 : Colors.black38),
+            borderSide: BorderSide(
+                color: isDark(context) ? Colors.white38 : Colors.black38),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
