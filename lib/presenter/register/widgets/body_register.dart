@@ -9,9 +9,9 @@ import '../../category/new_category_page.dart';
 import 'toggle_buttons_register.dart';
 
 class BodyRegister extends StatefulWidget {
-  final int? id;
+  int? id;
 
-  const BodyRegister({Key? key, this.id}) : super(key: key);
+  BodyRegister({Key? key, this.id}) : super(key: key);
 
   @override
   State<BodyRegister> createState() => _BodyRegisterState();
@@ -245,7 +245,7 @@ class _BodyRegisterState extends State<BodyRegister> {
               TextButton(
                 onPressed: () {
                   if (isEditing) {
-                    showAlertDialogCancelEdit(context);
+                    Navigator.of(context).pop();
                   } else {
                     cleanEntries();
                     setState(() {});
@@ -324,8 +324,10 @@ class _BodyRegisterState extends State<BodyRegister> {
                     const Color.fromRGBO(238, 46, 93, 1)),
               ),
               onPressed: () {
-                isEditing = false;
                 Navigator.of(context).pop();
+                isEditing = false;
+                widget.id = null;
+                setState(() {});
               },
               child: const Text(
                 'Sim',
