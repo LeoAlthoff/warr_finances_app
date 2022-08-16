@@ -76,22 +76,32 @@ class _BodyRegisterState extends State<BodyRegister> {
         price.text == '' ||
         getOperation() == -1 ||
         data.text == '') {
-      showDialogInvalidInfo();
+      showDialogInvalidInfo('Você não pode deixar nenhum campo em branco.');
     } else {
       String name = operationName.text;
-      double value = double.parse(price.text);
-      int operation = getOperation();
-      String date = data.text;
-      int categoryId = await DatabaseHelper.instance.selectCategory(category);
-      if (isEditing) {
-        DatabaseHelper.instance.updateOperation(
-            name, value, operation, date, categoryId, widget.id!);
-        isEditing = false;
-      } else {
-        DatabaseHelper.instance
-            .insertOperation(value, name, operation, date, categoryId);
+      double value = 0;
+      bool validPrice = true;
+      try {
+        value = double.parse(price.text);
+      } catch (e) {
+        showDialogInvalidInfo(
+            'A formatação deve ser inserida apenas com digítos e ponto para separar as casas decimais');
+        validPrice = false;
       }
-      showDialogSuccessfulRegister();
+      if (validPrice) {
+        int operation = getOperation();
+        String date = data.text;
+        int categoryId = await DatabaseHelper.instance.selectCategory(category);
+        if (isEditing) {
+          DatabaseHelper.instance.updateOperation(
+              name, value, operation, date, categoryId, widget.id!);
+          isEditing = false;
+        } else {
+          DatabaseHelper.instance
+              .insertOperation(value, name, operation, date, categoryId);
+        }
+        showDialogSuccessfulRegister();
+      }
     }
   }
 
@@ -354,13 +364,13 @@ class _BodyRegisterState extends State<BodyRegister> {
     );
   }
 
-  Future<dynamic> showDialogInvalidInfo() {
+  Future<dynamic> showDialogInvalidInfo(String msg) {
     return showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
           title: const Text('Informações inválidas!'),
-          content: const Text('Você não pode deixar nenhum campo em branco.'),
+          content: Text(msg),
           actions: [
             TextButton(
                 style: ButtonStyle(
