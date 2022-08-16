@@ -32,6 +32,13 @@ class ShowPdf extends StatelessWidget {
           title: Text(title),
         ),
         body: PdfPreview(
+          pdfFileName: 'extrato.pdf',
+          canChangePageFormat: false,
+          initialPageFormat: PdfPageFormat(
+            PdfPageFormat.a4.width,
+            PdfPageFormat.a4.height,
+            marginAll: 0,
+          ),
           build: (format) => _generatePdf(format),
         ),
       ),
@@ -41,11 +48,11 @@ class ShowPdf extends StatelessWidget {
   Future<Uint8List> _generatePdf(PdfPageFormat format) async {
     final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
     final font = await PdfGoogleFonts.nunitoExtraLight();
-    final operations = await DatabaseHelper.instance.selectOperation();
+    final operations = await DatabaseHelper.instance.selectContainer();
     final iconPng =
         (await rootBundle.load('assets/images/icon.png')).buffer.asUint8List();
 
-    int pageSize = 20;
+    int pageSize = 35;
     int pages = operations['operation']!.length ~/ pageSize;
     int lastPageSize = operations['operation']!.length % pageSize;
 
@@ -66,7 +73,7 @@ class ShowPdf extends StatelessWidget {
           pageFormat: format,
           build: (context) {
             return pw.Padding(
-              padding: const pw.EdgeInsets.symmetric(horizontal: 16),
+              padding: const pw.EdgeInsets.all(32),
               child: pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
                 children: [
@@ -101,50 +108,66 @@ class ShowPdf extends StatelessWidget {
                       )
                     ],
                   ),
-                  pw.SizedBox(height: 20),
-                  pw.ListView.builder(
-                    itemCount: isLastPage(i),
-                    itemBuilder: (context, int index) {
-                      return pw.Container(
-                        decoration: pw.BoxDecoration(
-                          color: PdfColors.pink100,
-                          border: pw.Border.all(),
-                        ),
-                        margin: const pw.EdgeInsets.symmetric(vertical: 5),
-                        child: pw.Row(
-                          mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                          children: [
-                            pw.Text(
-                              '   ${operations['operation']![test(index, i)]['name']}',
-                              style: pw.TextStyle(
-                                font: font,
-                              ),
-                            ),
-                            pw.Container(
-                              decoration: pw.BoxDecoration(
-                                border: pw.Border.all(),
-                              ),
-                              padding: const pw.EdgeInsets.symmetric(
-                                horizontal: 30,
-                              ),
+                  pw.SizedBox(height: 30),
+                  pw.Container(
+                    padding: const pw.EdgeInsets.all(16),
+                    decoration: pw.BoxDecoration(
+                      border: pw.Border.all(color: PdfColors.black, width: 1),
+                    ),
+                    child: pw.Row(
+                      mainAxisAlignment: pw.MainAxisAlignment.spaceAround,
+                      children: [
+                        pw.ListView.builder(
+                          itemCount: isLastPage(i),
+                          itemBuilder: (context, int index) {
+                            return pw.Container(
+                              color: index % 2 == 0
+                                  ? PdfColors.pink100
+                                  : PdfColors.white,
                               child: pw.Text(
-                                '${operations['operation']![test(index, i)]['entry'] == 1 ? ' ' : '-'}'
-                                'R\$ ${operations['operation']![test(index, i)]['value']}',
+                                '   ${operations['operation']![test(index, i)]['name']}   ',
                                 style: pw.TextStyle(
                                   font: font,
                                 ),
                               ),
-                            ),
-                            pw.Text(
-                              '${formatDate(operations['operation']![test(index, i)]['date'])}   ',
-                              style: pw.TextStyle(
-                                font: font,
-                              ),
-                            ),
-                          ],
+                            );
+                          },
                         ),
-                      );
-                    },
+                        pw.ListView.builder(
+                          itemCount: isLastPage(i),
+                          itemBuilder: (context, int index) {
+                            return pw.Container(
+                              color: index % 2 == 0
+                                  ? PdfColors.pink100
+                                  : PdfColors.white,
+                              child: pw.Text(
+                                '   ${operations['operation']![test(index, i)]['entry'] == 1 ? ' ' : '-'}'
+                                'R\$ ${operations['operation']![test(index, i)]['value']}   ',
+                                style: pw.TextStyle(
+                                  font: font,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        pw.ListView.builder(
+                          itemCount: isLastPage(i),
+                          itemBuilder: (context, int index) {
+                            return pw.Container(
+                              color: index % 2 == 0
+                                  ? PdfColors.pink100
+                                  : PdfColors.white,
+                              child: pw.Text(
+                                '   ${formatDate(operations['operation']![test(index, i)]['date'])}   ',
+                                style: pw.TextStyle(
+                                  font: font,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

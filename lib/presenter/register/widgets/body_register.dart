@@ -9,9 +9,9 @@ import '../../category/new_category_page.dart';
 import 'toggle_buttons_register.dart';
 
 class BodyRegister extends StatefulWidget {
-  int? id;
+  final int? id;
 
-  BodyRegister({Key? key, this.id}) : super(key: key);
+  const BodyRegister({Key? key, this.id}) : super(key: key);
 
   @override
   State<BodyRegister> createState() => _BodyRegisterState();
