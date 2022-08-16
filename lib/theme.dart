@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/shared/utils/shared_preferences.dart';
+import 'shared/utils/shared_preferences.dart';
 
 class MyTheme with ChangeNotifier {
   static bool isDark = false;

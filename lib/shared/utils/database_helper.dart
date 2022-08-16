@@ -36,13 +36,6 @@ class DatabaseHelper {
         FOREIGN KEY(categoryId) REFERENCES Category(id)
         )''');
 
-        await db.execute('''CREATE TABLE user
-        (email TEXT PRIMARY KEY,
-        name TEXT NOT NULL,
-        password TEXT NOT NULL,
-        logged INTERGER NOT NULL
-        )''');
-
         await db.rawInsert(
           '''INSERT INTO Category(name, color, icon)
          VALUES('Salário', 4294198070, 57522),
@@ -53,11 +46,6 @@ class DatabaseHelper {
           ('Contas', 4288585374 , 983299)
         ''',
         );
-
-        await db.rawInsert('''
-        INSERT INTO user (email, name, password, logged)
-        VALUES('admin', 'Admin', 'admin', 0)
-        ''');
       },
     );
   }
@@ -122,72 +110,12 @@ class DatabaseHelper {
     );
   }
 
-  void insertUser(String email, String name, String password) async {
-    await _database!.rawInsert(
-      'INSERT INTO user(email, name, password, logged) VALUES(?, ?, ?, 0)',
-      [email, name, password],
-    );
-  }
-
   void insertOperation(
       double value, String name, int entry, String date, int categoryId) async {
     await _database!.rawInsert(
       'INSERT INTO Operation(value, name, entry, date, categoryId) VALUES(?, ?, ?, ?, ?)',
       [value, name, entry, date, categoryId],
     );
-  }
-
-  Future<List<Map<String, Object?>>> getUserInfo(String email) async {
-    return await _database!
-        .rawQuery('SELECT * FROM user WHERE email = ?', [email]);
-  }
-
-  void updateUser(
-      {required String email,
-      required String name,
-      required String password,
-      required String emailPast}) {
-    _database!.rawUpdate(
-        'UPDATE user SET email = ?, name = ?, password = ?, logged = 1 WHERE email = ?',
-        [email, name, password, emailPast]);
-  }
-
-  Future<bool> validateUser(String email, String password) async {
-    var result = await _database!.rawQuery(
-      'SELECT * FROM user WHERE email=? AND password=?',
-      [email, password],
-    );
-    if (result.isNotEmpty &&
-        result[0]['email'] == email &&
-        result[0]['password'] == password) {
-      await _database!.rawUpdate(
-        'UPDATE user SET logged = 1 WHERE email = ? AND password =?',
-        [email, password],
-      );
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  Future<bool> checkLoggedIn() async {
-    var result =
-        await _database!.query('user', where: 'logged = ?', whereArgs: [1]);
-    if (result.isNotEmpty) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  Future<List<Map<String, Object?>>> getLoggedIn() async {
-    var result =
-        await _database!.query('user', where: 'logged = ?', whereArgs: [1]);
-    return result;
-  }
-
-  void logOut() async {
-    await _database!.rawUpdate('UPDATE user SET logged = 0');
   }
 
   Future<List<Map<String, dynamic>>> queryCategory() async {

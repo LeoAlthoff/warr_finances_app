@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "677311451550",
+    "project_id": "warr-finances",
+    "storage_bucket": "warr-finances.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:677311451550:android:7b3cbf1875a2746770c68f",
+        "android_client_info": {
+          "package_name": "br.com.warr_finances_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "677311451550-g6kbb5fpfsoimicepeg9hp6rje5oudj7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAiSMU53k8nZC2qS-ZqNGMPo9HYR3co9k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "677311451550-g6kbb5fpfsoimicepeg9hp6rje5oudj7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

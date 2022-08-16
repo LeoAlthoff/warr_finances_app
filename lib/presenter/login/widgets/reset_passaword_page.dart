@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'input_widget_login_page.dart';
@@ -50,10 +51,7 @@ class ResetPassawordPage extends StatelessWidget {
                 ),
                 const Text(
                   'Recupere sua senha',
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
                 ),
                 const SizedBox(
                   height: 25,
@@ -62,7 +60,7 @@ class ResetPassawordPage extends StatelessWidget {
                   padding: EdgeInsets.all(10.0),
                   child: Text(
                     textAlign: TextAlign.center,
-                    'Informe seu endereço de email associado a sua conta, para enviarmos as instruções de redefinir a senha',
+                    'Informe seu endereço de email associado a sua conta, para enviarmos a redefinição de senha',
                     style: TextStyle(fontSize: 15, color: Colors.white),
                   ),
                 ),
@@ -83,7 +81,44 @@ class ResetPassawordPage extends StatelessWidget {
                   width: 200,
                   height: 30,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      bool result = await resetPassword(emailController.text.trim());
+                      if (result) {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: const Text("E-mail enviado!"),
+                            actions: [
+                              MaterialButton(
+                                color: const Color.fromRGBO(238, 46, 93, 1),
+                                child: const Text("OK"),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pop();
+                                },
+                              )
+                            ],
+                          ),
+                        );
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: const Text("E-mail não cadastrado, tente novamente."),
+                            actions: [
+                              MaterialButton(
+                                color: const Color.fromRGBO(238, 46, 93, 1),
+                                child: const Text("OK"),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pop();
+                                },
+                              )
+                            ],
+                          ),
+                        );
+                      }
+                    },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
                         const Color.fromARGB(255, 247, 170, 189),
@@ -106,5 +141,14 @@ class ResetPassawordPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<bool> resetPassword(String email) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      return true;
+    } on FirebaseAuthException {
+      return false;
+    }
   }
 }

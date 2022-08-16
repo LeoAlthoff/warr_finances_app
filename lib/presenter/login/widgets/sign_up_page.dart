@@ -1,6 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'login_page_body.dart';
 
-import '../../../shared/utils/database_helper.dart';
 import 'input_widget_login_page.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -19,6 +20,47 @@ class _SignUpPageState extends State<SignUpPage> {
   final FocusNode emailNode = FocusNode();
   final FocusNode passwordNode = FocusNode();
   final FocusNode passwordConfirmationNode = FocusNode();
+
+  _register(String email, String password, String displayName) async {
+    try {
+      UserCredential result = await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      User user = result.user!;
+      await user.updateDisplayName(displayName);
+      print(user);
+      Navigator.of(context).pop();
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Cadastro realizado com sucesso!'),
+          actions: [
+            TextButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                  const Color.fromRGBO(238, 46, 93, 1),
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text(
+                'Ok',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        ),
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password is too weak');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +91,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 controller: nameController,
                 icon: Icons.person,
                 isPassword: false,
-                labelTextInput: 'Primeiro Nome',
+                labelTextInput: 'Apelido',
               ),
               const SizedBox(
                 height: 15,
@@ -152,38 +194,11 @@ class _SignUpPageState extends State<SignUpPage> {
                         },
                       );
                     } else {
-                      DatabaseHelper.instance.insertUser(
+                      _register(
                         emailController.text.trim(),
-                        nameController.text.trim(),
                         passwordController.text.trim(),
+                        nameController.text.trim(),
                       );
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: const Text('Dados cadastrados com sucesso!'),
-                            actions: [
-                              TextButton(
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      const Color.fromRGBO(238, 46, 93, 1)),
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text(
-                                  'Ok',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              )
-                            ],
-                          );
-                        },
-                      );
-                      emailController.clear();
-                      nameController.clear();
-                      passwordController.clear();
                     }
                   },
                   style: ButtonStyle(

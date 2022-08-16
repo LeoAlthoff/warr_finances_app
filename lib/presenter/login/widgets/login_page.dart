@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../home/home_page.dart';
@@ -19,9 +20,11 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-void nagigateToHomeScreen(BuildContext context) {
-  Navigator.of(context)
-      .pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
+void nagigateToHomeScreen(BuildContext context, User user) {
+  Navigator.of(context).pushReplacement(MaterialPageRoute(
+      builder: (context) => HomePage(
+            user: user,
+          )));
 }
 
 void navigateToResetPassword(BuildContext context) {

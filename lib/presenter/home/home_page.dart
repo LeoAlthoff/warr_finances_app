@@ -1,6 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../shared/utils/database_helper.dart';
 import '../../shared/utils/is_dark.dart';
 import '../register/register_page.dart';
 import '../summary/summary_page.dart';
@@ -9,11 +9,17 @@ import 'widgets/drawer_home.dart';
 
 // ignore: must_be_immutable
 class HomePage extends StatefulWidget {
+  User user;
   int? id;
   int currentPage;
   final Function? callback;
 
-  HomePage({Key? key, this.currentPage = 0, this.id, this.callback})
+  HomePage(
+      {Key? key,
+      this.currentPage = 0,
+      this.id,
+      required this.user,
+      this.callback})
       : super(key: key);
 
   @override
@@ -42,9 +48,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<String> getTitleAppBar() async {
-    var logged = await DatabaseHelper.instance.getLoggedIn();
+    // var logged = await DatabaseHelper.instance.getLoggedIn();
 
-    String name = logged[0]['name'].toString();
+    // String name = logged[0]['name'].toString();//TODO
 
     switch (widget.currentPage) {
       case 1:
@@ -52,14 +58,16 @@ class _HomePageState extends State<HomePage> {
       case 2:
         return 'Resumo por categoria';
       default:
-        return 'Olá, $name';
+        return 'Olá, ${widget.user.displayName}';
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final screens = [
-      const BodyHome(),
+      BodyHome(
+        user: widget.user,
+      ),
       RegistrationPage(
         id: widget.id,
       ),
@@ -81,7 +89,10 @@ class _HomePageState extends State<HomePage> {
         ),
         centerTitle: true,
       ),
-      drawer: DrawerHome(callback: callback),
+      drawer: DrawerHome(
+        callback: callback,
+        user: widget.user,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: widget.currentPage,
         type: BottomNavigationBarType.fixed,
