@@ -31,7 +31,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   void callback() {
-    setState(() {});
+    setState(() {
+      widget.id = null;
+    });
   }
 
   setCurrentPage(index) {
@@ -65,6 +67,7 @@ class _HomePageState extends State<HomePage> {
         callback: callback,
       ),
       RegistrationPage(
+        user: widget.user,
         id: widget.id,
       ),
       const Summary(),

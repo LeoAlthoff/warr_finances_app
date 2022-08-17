@@ -1,5 +1,7 @@
 import 'package:date_time_picker/date_time_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_teste_app/presenter/home/home_page.dart';
 
 import '../../../shared/utils/database_helper.dart';
 import '../../../shared/utils/dateFormater.dart';
@@ -9,10 +11,11 @@ import '../../category/new_category_page.dart';
 import 'toggle_buttons_register.dart';
 
 class BodyRegister extends StatefulWidget {
+  User user;
   final Function? callback;
   final int? id;
 
-  const BodyRegister({Key? key, this.id, this.callback}) : super(key: key);
+  BodyRegister({Key? key, this.id, required this.user, this.callback}) : super(key: key);
 
   @override
   State<BodyRegister> createState() => _BodyRegisterState();
@@ -76,28 +79,19 @@ class _BodyRegisterState extends State<BodyRegister> {
       showDialogInvalidInfo('Você não pode deixar nenhum campo em branco.');
     } else {
       String name = operationName.text;
-      double value = 0;
-      bool validPrice = true;
-      try {
-        value = double.parse(price.text);
-      } catch (e) {
-        showDialogInvalidInfo(
-            'A formatação deve ser inserida apenas com digítos e ponto para separar as casas decimais');
-        validPrice = false;
+      double value = double.parse(price.text);
+      int operation = getOperation();
+      String date = data.text;
+      int categoryId = await DatabaseHelper.instance.selectCategory(category);
+
+      if (isEditing) {
+        DatabaseHelper.instance
+            .updateOperation(name, value, operation, date, categoryId, widget.id!);
+        isEditing = false;
+      } else {
+        DatabaseHelper.instance.insertOperation(value, name, operation, date, categoryId);
       }
-      if (validPrice) {
-        int operation = getOperation();
-        String date = data.text;
-        int categoryId = await DatabaseHelper.instance.selectCategory(category);
-        if (isEditing) {
-          DatabaseHelper.instance
-              .updateOperation(name, value, operation, date, categoryId, widget.id!);
-          isEditing = false;
-        } else {
-          DatabaseHelper.instance.insertOperation(value, name, operation, date, categoryId);
-        }
-        showDialogSuccessfulRegister();
-      }
+      showDialogSuccessfulRegister();
     }
   }
 
@@ -264,12 +258,6 @@ class _BodyRegisterState extends State<BodyRegister> {
                 onPressed: () async {
                   await save();
                   widget.callback;
-                  cleanEntries();
-                  if (isEditing) {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).pop();
-                  }
-                  cleanEntries();
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -319,10 +307,12 @@ class _BodyRegisterState extends State<BodyRegister> {
               ),
               onPressed: () {
                 isEditing = false;
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
                 widget.callback;
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => HomePage(currentPage: 1, user: widget.user),
+                  ),
+                );
               },
               child: const Text(
                 'Sim',
@@ -344,16 +334,22 @@ class _BodyRegisterState extends State<BodyRegister> {
           content: const Text('Cadastro realizado com sucesso!'),
           actions: [
             TextButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(const Color.fromRGBO(238, 46, 93, 1)),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text(
-                  'Ok',
-                  style: TextStyle(color: Colors.white),
-                ))
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(const Color.fromRGBO(238, 46, 93, 1)),
+              ),
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => HomePage(currentPage: 1, user: widget.user),
+                  ),
+                );
+                cleanEntries();
+              },
+              child: const Text(
+                'Ok',
+                style: TextStyle(color: Colors.white),
+              ),
+            )
           ],
         );
       },
