@@ -1,7 +1,7 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../../home/home_page.dart';
+import 'package:flutter_teste_app/presenter/home/home_page.dart';
 
 import '../../../shared/utils/database_helper.dart';
 import '../../../shared/utils/dateFormater.dart';
@@ -189,7 +189,9 @@ class _BodyRegisterState extends State<BodyRegister> {
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: ((context) => NewCategoryPage(user: widget.user)),
+                builder: ((context) => NewCategoryPage(
+                      user: widget.user,
+                    )),
               ),
             );
           },
@@ -358,7 +360,6 @@ class _BodyRegisterState extends State<BodyRegister> {
                         HomePage(currentPage: 1, user: widget.user),
                   ),
                 );
-                cleanEntries();
               },
               child: const Text(
                 'Ok',
