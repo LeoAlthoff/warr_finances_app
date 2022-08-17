@@ -9,7 +9,8 @@ import 'main_container_home.dart';
 
 class BodyHome extends StatelessWidget {
   User user;
-  BodyHome({Key? key, required this.user}) : super(key: key);
+  Function? callback;
+  BodyHome({Key? key, this.callback, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +63,7 @@ class BodyHome extends StatelessWidget {
           ),
           FutureBuilder<Map<String, List<Map<String, dynamic>>>>(
             future: DatabaseHelper.instance.selectContainer(),
-            builder: ((context,
-                AsyncSnapshot<Map<String, List<Map<String, dynamic>>>>
-                    snapshot) {
+            builder: ((context, AsyncSnapshot<Map<String, List<Map<String, dynamic>>>> snapshot) {
               if (!snapshot.hasData) {
                 return const Center(child: CircularProgressIndicator());
               }
@@ -109,13 +108,13 @@ class BodyHome extends StatelessWidget {
                                   ),
                                 ),
                                 onPressed: () {
-                                  Navigator.of(context).pushReplacement(
+                                  Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) => HomePage(
                                         user: user,
                                         currentPage: 1,
-                                        id: snapshot.data!['operation']![index]
-                                            ['id'],
+                                        id: snapshot.data!['operation']![index]['id'],
+                                        callback: callback,
                                       ),
                                     ),
                                   );
@@ -137,15 +136,12 @@ class BodyHome extends StatelessWidget {
                                     builder: (context) {
                                       return AlertDialog(
                                         title: const Text('Você tem certeza'),
-                                        content: const Text(
-                                            'Deseja deletar esta operação?'),
+                                        content: const Text('Deseja deletar esta operação?'),
                                         actions: [
                                           TextButton(
                                             style: ButtonStyle(
-                                              backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                const Color.fromRGBO(
-                                                    238, 46, 93, 1),
+                                              backgroundColor: MaterialStateProperty.all(
+                                                const Color.fromRGBO(238, 46, 93, 1),
                                               ),
                                             ),
                                             onPressed: () {
@@ -154,29 +150,23 @@ class BodyHome extends StatelessWidget {
                                             },
                                             child: const Text(
                                               'Não',
-                                              style: TextStyle(
-                                                  color: Colors.white),
+                                              style: TextStyle(color: Colors.white),
                                             ),
                                           ),
                                           TextButton(
                                             style: ButtonStyle(
-                                              backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                const Color.fromRGBO(
-                                                    238, 46, 93, 1),
+                                              backgroundColor: MaterialStateProperty.all(
+                                                const Color.fromRGBO(238, 46, 93, 1),
                                               ),
                                             ),
                                             onPressed: () {
-                                              DatabaseHelper.instance
-                                                  .deleteOperation(snapshot
-                                                          .data!['operation']![
-                                                      index]['id']);
+                                              DatabaseHelper.instance.deleteOperation(
+                                                  snapshot.data!['operation']![index]['id']);
                                               Navigator.of(context).pop();
                                             },
                                             child: const Text(
                                               'Sim',
-                                              style: TextStyle(
-                                                  color: Colors.white),
+                                              style: TextStyle(color: Colors.white),
                                             ),
                                           ),
                                         ],
@@ -195,21 +185,16 @@ class BodyHome extends StatelessWidget {
                       );
                     },
                     child: BalanceContainer(
-                      expense: snapshot.data!['operation']![index]['entry'] == 1
-                          ? false
-                          : true,
+                      expense: snapshot.data!['operation']![index]['entry'] == 1 ? false : true,
                       origin: snapshot.data!['operation']![index]['name'],
                       value: snapshot.data!['operation']![index]['value'],
                       icon: IconData(
-                          snapshot.data!['category']![snapshot
-                                  .data!['operation']![index]['categoryId'] -
-                              1]['icon'],
+                          snapshot.data!['category']![
+                              snapshot.data!['operation']![index]['categoryId'] - 1]['icon'],
                           fontFamily: 'MaterialIcons'),
                       source: snapshot.data!['category']![
-                          snapshot.data!['operation']![index]['categoryId'] -
-                              1]['name'],
-                      time: formatDate(
-                          snapshot.data!['operation']![index]['date']),
+                          snapshot.data!['operation']![index]['categoryId'] - 1]['name'],
+                      time: formatDate(snapshot.data!['operation']![index]['date']),
                     ),
                   );
                 },
