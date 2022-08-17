@@ -320,6 +320,8 @@ class _BodyRegisterState extends State<BodyRegister> {
               onPressed: () {
                 isEditing = false;
                 Navigator.of(context).pop();
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
                 widget.callback;
               },
               child: const Text(
