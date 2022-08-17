@@ -20,7 +20,7 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-void nagigateToHomeScreen(BuildContext context, User user) {
+void navigateToHomeScreen(BuildContext context, User user) {
   Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (context) => HomePage(
             user: user,

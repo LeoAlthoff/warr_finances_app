@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
@@ -5,9 +6,14 @@ import '../../../shared/utils/constants.dart';
 import '../../../shared/utils/database_helper.dart';
 import '../../../shared/utils/get_color_bytheme.dart';
 import '../../../shared/widgets/input_text_container.dart';
+import '../../home/home_page.dart';
 
 class NewCategoryBody extends StatefulWidget {
-  const NewCategoryBody({Key? key}) : super(key: key);
+  final User user;
+  const NewCategoryBody({
+    Key? key,
+    required this.user,
+  }) : super(key: key);
 
   @override
   State<NewCategoryBody> createState() => _NewCategoryBodyState();
@@ -86,7 +92,12 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
           currentColor.value, iconList[indexIcon].codePoint);
 
       isSelected[indexIcon] = false;
-      Navigator.of(context).pop();
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => HomePage(currentPage: 1, user: widget.user),
+        ),
+      );
+      // Navigator.of(context).pop();
     }
   }
 

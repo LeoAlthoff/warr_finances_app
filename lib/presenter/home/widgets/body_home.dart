@@ -9,7 +9,7 @@ import 'main_container_home.dart';
 
 class BodyHome extends StatelessWidget {
   User user;
-  Function? callback;
+  final Function? callback;
   BodyHome({Key? key, this.callback, required this.user}) : super(key: key);
 
   @override
@@ -113,7 +113,8 @@ class BodyHome extends StatelessWidget {
                                       builder: (context) => HomePage(
                                         user: user,
                                         currentPage: 1,
-                                        id: snapshot.data!['operation']![index]['id'],
+                                        id: snapshot.data!['operation']![index]
+                                            ['id'],
                                         callback: callback,
                                       ),
                                     ),
@@ -159,10 +160,22 @@ class BodyHome extends StatelessWidget {
                                                 const Color.fromRGBO(238, 46, 93, 1),
                                               ),
                                             ),
-                                            onPressed: () {
-                                              DatabaseHelper.instance.deleteOperation(
-                                                  snapshot.data!['operation']![index]['id']);
-                                              Navigator.of(context).pop();
+                                            onPressed: () async {
+                                              await DatabaseHelper.instance
+                                                  .deleteOperation(snapshot
+                                                          .data!['operation']![
+                                                      index]['id']);
+                                              Navigator.of(context)
+                                                  .pushReplacement(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      HomePage(
+                                                          currentPage: 0,
+                                                          user: user),
+                                                ),
+                                              );
+
+                                              callback;
                                             },
                                             child: const Text(
                                               'Sim',

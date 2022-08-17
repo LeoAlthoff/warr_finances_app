@@ -1,7 +1,7 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/presenter/home/home_page.dart';
+import '../../home/home_page.dart';
 
 import '../../../shared/utils/database_helper.dart';
 import '../../../shared/utils/dateFormater.dart';
@@ -15,7 +15,8 @@ class BodyRegister extends StatefulWidget {
   final Function? callback;
   final int? id;
 
-  BodyRegister({Key? key, this.id, required this.user, this.callback}) : super(key: key);
+  BodyRegister({Key? key, this.id, required this.user, this.callback})
+      : super(key: key);
 
   @override
   State<BodyRegister> createState() => _BodyRegisterState();
@@ -63,7 +64,8 @@ class _BodyRegisterState extends State<BodyRegister> {
     price.text = list[0]['value'].toString();
     data.text = formatStringForDateTimeParse(list[0]['date']);
     categorySelected = true;
-    category = await DatabaseHelper.instance.getCategoryName(list[0]['categoryId']);
+    category =
+        await DatabaseHelper.instance.getCategoryName(list[0]['categoryId']);
     if (list[0]['entry'] == 1) {
       isSelected[0] = true;
       isSelected[1] = false;
@@ -75,7 +77,10 @@ class _BodyRegisterState extends State<BodyRegister> {
   }
 
   Future<void> save() async {
-    if (operationName.text == '' || price.text == '' || getOperation() == -1 || data.text == '') {
+    if (operationName.text == '' ||
+        price.text == '' ||
+        getOperation() == -1 ||
+        data.text == '') {
       showDialogInvalidInfo('Você não pode deixar nenhum campo em branco.');
     } else {
       String name = operationName.text;
@@ -85,11 +90,12 @@ class _BodyRegisterState extends State<BodyRegister> {
       int categoryId = await DatabaseHelper.instance.selectCategory(category);
 
       if (isEditing) {
-        DatabaseHelper.instance
-            .updateOperation(name, value, operation, date, categoryId, widget.id!);
+        DatabaseHelper.instance.updateOperation(
+            name, value, operation, date, categoryId, widget.id!);
         isEditing = false;
       } else {
-        DatabaseHelper.instance.insertOperation(value, name, operation, date, categoryId);
+        DatabaseHelper.instance
+            .insertOperation(value, name, operation, date, categoryId);
       }
       showDialogSuccessfulRegister();
     }
@@ -154,7 +160,9 @@ class _BodyRegisterState extends State<BodyRegister> {
               }
               return DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
-                hint: categorySelected ? null : const Text('Selecione uma categoria!'),
+                hint: categorySelected
+                    ? null
+                    : const Text('Selecione uma categoria!'),
                 value: categorySelected ? category : null,
                 items: snapshot.data!
                     .map<DropdownMenuItem<String>>(
@@ -181,7 +189,7 @@ class _BodyRegisterState extends State<BodyRegister> {
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: ((context) => const NewCategoryPage()),
+                builder: ((context) => NewCategoryPage(user: widget.user)),
               ),
             );
           },
@@ -244,7 +252,8 @@ class _BodyRegisterState extends State<BodyRegister> {
                       color: Colors.white60,
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(color: Colors.grey.shade400)),
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
                   child: Text(
                     isEditing ? 'Cancelar' : 'Limpar',
                     style: const TextStyle(
@@ -264,7 +273,8 @@ class _BodyRegisterState extends State<BodyRegister> {
                     color: const Color.fromRGBO(238, 46, 93, 1),
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                   child: Text(
                     isEditing ? 'Atualizar' : 'Enviar',
                     style: const TextStyle(
@@ -291,7 +301,8 @@ class _BodyRegisterState extends State<BodyRegister> {
           actions: [
             TextButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(const Color.fromRGBO(238, 46, 93, 1)),
+                backgroundColor: MaterialStateProperty.all(
+                    const Color.fromRGBO(238, 46, 93, 1)),
               ),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -303,14 +314,16 @@ class _BodyRegisterState extends State<BodyRegister> {
             ),
             TextButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(const Color.fromRGBO(238, 46, 93, 1)),
+                backgroundColor: MaterialStateProperty.all(
+                    const Color.fromRGBO(238, 46, 93, 1)),
               ),
               onPressed: () {
                 isEditing = false;
                 widget.callback;
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
-                    builder: (context) => HomePage(currentPage: 1, user: widget.user),
+                    builder: (context) =>
+                        HomePage(currentPage: 1, user: widget.user),
                   ),
                 );
               },
@@ -335,12 +348,14 @@ class _BodyRegisterState extends State<BodyRegister> {
           actions: [
             TextButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(const Color.fromRGBO(238, 46, 93, 1)),
+                backgroundColor: MaterialStateProperty.all(
+                    const Color.fromRGBO(238, 46, 93, 1)),
               ),
               onPressed: () {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
-                    builder: (context) => HomePage(currentPage: 1, user: widget.user),
+                    builder: (context) =>
+                        HomePage(currentPage: 1, user: widget.user),
                   ),
                 );
                 cleanEntries();
@@ -366,7 +381,8 @@ class _BodyRegisterState extends State<BodyRegister> {
           actions: [
             TextButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(const Color.fromRGBO(238, 46, 93, 1)),
+                  backgroundColor: MaterialStateProperty.all(
+                      const Color.fromRGBO(238, 46, 93, 1)),
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();

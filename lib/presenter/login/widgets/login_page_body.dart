@@ -101,7 +101,7 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
                     UserCredential result =
                         await auth.signInWithEmailAndPassword(email: email, password: password);
                     User? user = result.user;
-                    nagigateToHomeScreen(context, user!);
+                    navigateToHomeScreen(context, user!);
                   } on FirebaseAuthException catch (e) {
                     if (e.code == 'user-not-found') {
                       showDialog(

@@ -1,11 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'widgets/new_category_body.dart';
 
-
-
 class NewCategoryPage extends StatelessWidget {
-  const NewCategoryPage({Key? key}) : super(key: key);
+  final User user;
+  const NewCategoryPage({
+    Key? key,
+    required this.user,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +18,7 @@ class NewCategoryPage extends StatelessWidget {
         centerTitle: true,
         title: const Text('Criar nova categoria'),
       ),
-      body: const NewCategoryBody(),
+      body: NewCategoryBody(user: user),
     );
   }
 }
