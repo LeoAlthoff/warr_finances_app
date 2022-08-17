@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter_teste_app/shared/models/category_model.dart';
+import 'category_model.dart';
 
 class OperationModel {
   String id;
