@@ -8,7 +8,6 @@ import '../../../shared/utils/dateFormater.dart';
 import '../../../shared/utils/is_dark.dart';
 import '../../../shared/widgets/input_text_container.dart';
 import '../../category/new_category_page.dart';
-import '../../home/home_page.dart';
 import 'toggle_buttons_register.dart';
 
 class BodyRegister extends StatefulWidget {
@@ -16,7 +15,8 @@ class BodyRegister extends StatefulWidget {
   final Function? callback;
   final int? id;
 
-  BodyRegister({Key? key, this.id, required this.user, this.callback}) : super(key: key);
+  BodyRegister({Key? key, this.id, required this.user, this.callback})
+      : super(key: key);
 
   @override
   State<BodyRegister> createState() => _BodyRegisterState();
@@ -64,7 +64,8 @@ class _BodyRegisterState extends State<BodyRegister> {
     price.text = list[0]['value'].toString();
     data.text = formatStringForDateTimeParse(list[0]['date']);
     categorySelected = true;
-    category = await DatabaseHelper.instance.getCategoryName(list[0]['categoryId']);
+    category =
+        await DatabaseHelper.instance.getCategoryName(list[0]['categoryId']);
     if (list[0]['entry'] == 1) {
       isSelected[0] = true;
       isSelected[1] = false;
@@ -159,7 +160,9 @@ class _BodyRegisterState extends State<BodyRegister> {
               }
               return DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
-                hint: categorySelected ? null : const Text('Selecione uma categoria!'),
+                hint: categorySelected
+                    ? null
+                    : const Text('Selecione uma categoria!'),
                 value: categorySelected ? category : null,
                 items: snapshot.data!
                     .map<DropdownMenuItem<String>>(
@@ -186,7 +189,7 @@ class _BodyRegisterState extends State<BodyRegister> {
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: ((context) => const NewCategoryPage()),
+                builder: ((context) => NewCategoryPage(user: widget.user)),
               ),
             );
           },
@@ -249,7 +252,8 @@ class _BodyRegisterState extends State<BodyRegister> {
                       color: Colors.white60,
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(color: Colors.grey.shade400)),
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
                   child: Text(
                     isEditing ? 'Cancelar' : 'Limpar',
                     style: const TextStyle(
@@ -269,7 +273,8 @@ class _BodyRegisterState extends State<BodyRegister> {
                     color: const Color.fromRGBO(238, 46, 93, 1),
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                   child: Text(
                     isEditing ? 'Atualizar' : 'Enviar',
                     style: const TextStyle(
@@ -296,7 +301,8 @@ class _BodyRegisterState extends State<BodyRegister> {
           actions: [
             TextButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(const Color.fromRGBO(238, 46, 93, 1)),
+                backgroundColor: MaterialStateProperty.all(
+                    const Color.fromRGBO(238, 46, 93, 1)),
               ),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -308,7 +314,8 @@ class _BodyRegisterState extends State<BodyRegister> {
             ),
             TextButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(const Color.fromRGBO(238, 46, 93, 1)),
+                backgroundColor: MaterialStateProperty.all(
+                    const Color.fromRGBO(238, 46, 93, 1)),
               ),
               onPressed: () {
                 isEditing = false;
@@ -374,7 +381,8 @@ class _BodyRegisterState extends State<BodyRegister> {
           actions: [
             TextButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(const Color.fromRGBO(238, 46, 93, 1)),
+                  backgroundColor: MaterialStateProperty.all(
+                      const Color.fromRGBO(238, 46, 93, 1)),
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
