@@ -14,12 +14,7 @@ class HomePage extends StatefulWidget {
   int currentPage;
   final Function? callback;
 
-  HomePage(
-      {Key? key,
-      this.currentPage = 0,
-      this.id,
-      required this.user,
-      this.callback})
+  HomePage({Key? key, this.currentPage = 0, this.id, required this.user, this.callback})
       : super(key: key);
 
   @override
@@ -36,7 +31,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   void callback() {
-    setState(() {});
+    setState(() {
+      widget.id = null;
+    });
   }
 
   setCurrentPage(index) {
@@ -67,8 +64,10 @@ class _HomePageState extends State<HomePage> {
     final screens = [
       BodyHome(
         user: widget.user,
+        callback: callback,
       ),
       RegistrationPage(
+        user: widget.user,
         id: widget.id,
       ),
       const Summary(),

@@ -1,23 +1,21 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'widgets/body_register.dart';
 
-class RegistrationPage extends StatefulWidget {
+class RegistrationPage extends StatelessWidget {
+  User user;
   int? id;
-  RegistrationPage({Key? key, this.id}) : super(key: key);
+  RegistrationPage({Key? key, required this.user, this.id}) : super(key: key);
 
-  @override
-  State<RegistrationPage> createState() => _RegistrationPageState();
-}
-
-class _RegistrationPageState extends State<RegistrationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: BodyRegister(
-          id: widget.id,
+          id: id,
+          user: user,
         ),
       ),
     );

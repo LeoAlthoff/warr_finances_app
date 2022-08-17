@@ -9,7 +9,8 @@ import 'main_container_home.dart';
 
 class BodyHome extends StatelessWidget {
   User user;
-  BodyHome({Key? key, required this.user}) : super(key: key);
+  final Function? callback;
+  BodyHome({Key? key, this.callback, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -109,13 +110,14 @@ class BodyHome extends StatelessWidget {
                                   ),
                                 ),
                                 onPressed: () {
-                                  Navigator.of(context).pushReplacement(
+                                  Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) => HomePage(
                                         user: user,
                                         currentPage: 1,
                                         id: snapshot.data!['operation']![index]
                                             ['id'],
+                                        callback: callback,
                                       ),
                                     ),
                                   );
@@ -166,12 +168,22 @@ class BodyHome extends StatelessWidget {
                                                     238, 46, 93, 1),
                                               ),
                                             ),
-                                            onPressed: () {
-                                              DatabaseHelper.instance
+                                            onPressed: () async {
+                                              await DatabaseHelper.instance
                                                   .deleteOperation(snapshot
                                                           .data!['operation']![
                                                       index]['id']);
-                                              Navigator.of(context).pop();
+                                              Navigator.of(context)
+                                                  .pushReplacement(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      HomePage(
+                                                          currentPage: 0,
+                                                          user: user),
+                                                ),
+                                              );
+
+                                              callback;
                                             },
                                             child: const Text(
                                               'Sim',

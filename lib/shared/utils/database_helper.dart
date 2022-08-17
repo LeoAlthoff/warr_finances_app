@@ -242,7 +242,7 @@ class DatabaseHelper {
     );
   }
 
-  void deleteOperation(int id) async {
+  Future<void> deleteOperation(int id) async {
     await _database!.rawDelete(
       'DELETE FROM operation WHERE id = ?',
       ['$id'],

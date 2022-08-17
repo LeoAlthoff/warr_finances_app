@@ -49,10 +49,8 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
                 children: const [
                   Text(
                     'Warr Finances',
-                    style: TextStyle(
-                        fontSize: 30,
-                        color: Colors.white,
-                        fontStyle: FontStyle.italic),
+                    style:
+                        TextStyle(fontSize: 30, color: Colors.white, fontStyle: FontStyle.italic),
                   ),
                   SizedBox(height: 50),
                   Text(
@@ -92,7 +90,6 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
                   style: TextStyle(color: Colors.white, fontSize: 12),
                 ),
               ),
-              
               const SizedBox(height: 5),
               SignInButton(
                 Buttons.Email,
@@ -102,18 +99,84 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
                     String email = emailController.text.trim();
                     String password = passwordController.text.trim();
                     UserCredential result =
-                        await auth.signInWithEmailAndPassword(
-                            email: email, password: password);
+                        await auth.signInWithEmailAndPassword(email: email, password: password);
                     User? user = result.user;
-                    print(user);
-                    nagigateToHomeScreen(context, user!);
+                    navigateToHomeScreen(context, user!);
                   } on FirebaseAuthException catch (e) {
                     if (e.code == 'user-not-found') {
-                      print('No user found for that email');
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text('Usuário inexistente!'),
+                            actions: [
+                              TextButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      const Color.fromRGBO(238, 46, 93, 1)),
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text(
+                                  'Ok',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              )
+                            ],
+                          );
+                        },
+                      );
                     } else if (e.code == 'wrong-password') {
-                      print('Wrong password');
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text('Senha Incorreta!'),
+                            actions: [
+                              TextButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      const Color.fromRGBO(238, 46, 93, 1)),
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text(
+                                  'Ok',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              )
+                            ],
+                          );
+                        },
+                      );
+                    } else if (e.code == 'invalid-email') {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text('E-mail inválido!'),
+                            actions: [
+                              TextButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      const Color.fromRGBO(238, 46, 93, 1)),
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text(
+                                  'Ok',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              )
+                            ],
+                          );
+                        },
+                      );
                     }
-                    print(e);
+                    print(e.code);
                   }
                 },
                 text: 'Entrar com E-mail',
@@ -156,8 +219,7 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
 Future<User?> signInWithGoogle() async {
   final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
-  final GoogleSignInAuthentication? googleAuth =
-      await googleUser?.authentication;
+  final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
 
   if (googleAuth != null) {
     final OAuthCredential credential = GoogleAuthProvider.credential(

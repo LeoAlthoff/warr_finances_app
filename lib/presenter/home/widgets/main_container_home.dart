@@ -50,7 +50,7 @@ class MainContainerHome extends StatelessWidget {
         horizontal: 10,
         vertical: 10,
       ),
-      width: MediaQuery.of(context).size.width - 40,
+      width: MediaQuery.of(context).size.width - 90,
       decoration: BoxDecoration(
         color: index == 3
             ? isDark(context)

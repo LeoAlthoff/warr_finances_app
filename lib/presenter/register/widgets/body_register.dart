@@ -1,4 +1,5 @@
 import 'package:date_time_picker/date_time_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../shared/utils/database_helper.dart';
@@ -6,12 +7,16 @@ import '../../../shared/utils/dateFormater.dart';
 import '../../../shared/utils/is_dark.dart';
 import '../../../shared/widgets/input_text_container.dart';
 import '../../category/new_category_page.dart';
+import '../../home/home_page.dart';
 import 'toggle_buttons_register.dart';
 
 class BodyRegister extends StatefulWidget {
-  int? id;
+  User user;
+  final Function? callback;
+  final int? id;
 
-  BodyRegister({Key? key, this.id}) : super(key: key);
+  BodyRegister({Key? key, this.id, required this.user, this.callback})
+      : super(key: key);
 
   @override
   State<BodyRegister> createState() => _BodyRegisterState();
@@ -71,7 +76,7 @@ class _BodyRegisterState extends State<BodyRegister> {
     setState(() {});
   }
 
-  void save() async {
+  Future<void> save() async {
     if (operationName.text == '' ||
         price.text == '' ||
         getOperation() == -1 ||
@@ -80,10 +85,10 @@ class _BodyRegisterState extends State<BodyRegister> {
     } else {
       String name = operationName.text;
       double value = double.parse(price.text);
-
       int operation = getOperation();
       String date = data.text;
       int categoryId = await DatabaseHelper.instance.selectCategory(category);
+
       if (isEditing) {
         DatabaseHelper.instance.updateOperation(
             name, value, operation, date, categoryId, widget.id!);
@@ -236,7 +241,7 @@ class _BodyRegisterState extends State<BodyRegister> {
               TextButton(
                 onPressed: () {
                   if (isEditing) {
-                    Navigator.of(context).pop();
+                    showAlertDialogCancelEdit(context);
                   } else {
                     cleanEntries();
                     setState(() {});
@@ -259,11 +264,9 @@ class _BodyRegisterState extends State<BodyRegister> {
                 ),
               ),
               TextButton(
-                onPressed: () {
-                  save();
-                  if (isEditing) {
-                    Navigator.of(context).pop();
-                  }
+                onPressed: () async {
+                  await save();
+                  widget.callback;
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -315,10 +318,14 @@ class _BodyRegisterState extends State<BodyRegister> {
                     const Color.fromRGBO(238, 46, 93, 1)),
               ),
               onPressed: () {
-                Navigator.of(context).pop();
                 isEditing = false;
-                widget.id = null;
-                setState(() {});
+                widget.callback;
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        HomePage(currentPage: 1, user: widget.user),
+                  ),
+                );
               },
               child: const Text(
                 'Sim',
@@ -340,17 +347,24 @@ class _BodyRegisterState extends State<BodyRegister> {
           content: const Text('Cadastro realizado com sucesso!'),
           actions: [
             TextButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                      const Color.fromRGBO(238, 46, 93, 1)),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text(
-                  'Ok',
-                  style: TextStyle(color: Colors.white),
-                ))
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                    const Color.fromRGBO(238, 46, 93, 1)),
+              ),
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        HomePage(currentPage: 1, user: widget.user),
+                  ),
+                );
+                cleanEntries();
+              },
+              child: const Text(
+                'Ok',
+                style: TextStyle(color: Colors.white),
+              ),
+            )
           ],
         );
       },
