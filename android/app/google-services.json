@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "677311451550",
+    "firebase_url": "https://warr-finances-default-rtdb.firebaseio.com",
     "project_id": "warr-finances",
     "storage_bucket": "warr-finances.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "677311451550-4js8sj7757dvk8hsjvs8nqcbkd033pf4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.warr_finances_app",
+            "certificate_hash": "1922a6213beb80295ee78a2bc6d65eff8173781b"
+          }
+        },
         {
           "client_id": "677311451550-g6kbb5fpfsoimicepeg9hp6rje5oudj7.apps.googleusercontent.com",
           "client_type": 3
