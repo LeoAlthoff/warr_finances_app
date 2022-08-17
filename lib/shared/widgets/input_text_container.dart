@@ -51,7 +51,9 @@ class TextInputContainer extends StatelessWidget {
         validator: (value) =>
             int.parse(value!).isNaN ? 'Valor ínvalido!' : null,
         inputFormatters: numericFormatter
-            ? [FilteringTextInputFormatter.allow(RegExp(r'[0-9]+\.?[0-9]*$'))]
+            ? [
+                FilteringTextInputFormatter.allow(RegExp(r'[0-9]+\.?[0-9]*$')),
+              ]
             : [],
         keyboardType:
             numericFormatter ? TextInputType.number : TextInputType.name,
@@ -60,7 +62,8 @@ class TextInputContainer extends StatelessWidget {
           labelStyle: TextStyle(color: Theme.of(context).hintColor),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
-                color: isDark(context) ? Colors.white38 : Colors.black38),
+              color: isDark(context) ? Colors.white38 : Colors.black38,
+            ),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
