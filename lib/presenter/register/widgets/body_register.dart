@@ -1,7 +1,6 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../../home/home_page.dart';
 
 import '../../../shared/utils/database_helper.dart';
 import '../../../shared/utils/date_formater.dart';
@@ -100,6 +99,7 @@ class _BodyRegisterState extends State<BodyRegister> {
         DatabaseHelper.instance
             .insertOperation(value, name, operation, date, categoryId);
       }
+      if (!mounted) return;
       showDialogSuccessfulRegister(context, widget.user, cleanEntries);
     }
   }
