@@ -4,18 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_teste_app/presenter/home/home_page.dart';
 
 import '../../../shared/utils/database_helper.dart';
-import '../../../shared/utils/dateFormater.dart';
+import '../../../shared/utils/date_formater.dart';
 import '../../../shared/utils/is_dark.dart';
 import '../../../shared/widgets/input_text_container.dart';
 import '../../category/new_category_page.dart';
 import 'toggle_buttons_register.dart';
 
 class BodyRegister extends StatefulWidget {
-  User user;
+  final User user;
   final Function? callback;
   final int? id;
 
-  BodyRegister({Key? key, this.id, required this.user, this.callback})
+  const BodyRegister({Key? key, this.id, required this.user, this.callback})
       : super(key: key);
 
   @override

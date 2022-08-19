@@ -7,7 +7,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
 import '../../shared/utils/database_helper.dart';
-import '../../shared/utils/dateFormater.dart';
+import '../../shared/utils/date_formater.dart';
 
 class ShowPdf extends StatelessWidget {
   const ShowPdf(this.title, {Key? key}) : super(key: key);

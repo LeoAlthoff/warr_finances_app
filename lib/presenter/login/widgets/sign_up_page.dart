@@ -24,11 +24,11 @@ class _SignUpPageState extends State<SignUpPage> {
 
   _register(String email, String password, String displayName) async {
     try {
-      UserCredential result =
-          await auth.createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential result = await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
       User user = result.user!;
       await user.updateDisplayName(displayName);
-      print(user);
+      if (!mounted) return;
       Navigator.of(context).pop();
       showDialog(
         context: context,
@@ -54,7 +54,6 @@ class _SignUpPageState extends State<SignUpPage> {
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password is too weak');
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -78,7 +77,6 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
         );
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -102,8 +100,6 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
         );
       }
-    } catch (e) {
-      print(e);
     }
   }
 
@@ -218,7 +214,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            title: const Text('Nenhum dos campos pode estar vazio!'),
+                            title: const Text(
+                                'Nenhum dos campos pode estar vazio!'),
                             actions: [
                               TextButton(
                                 style: ButtonStyle(
@@ -237,7 +234,8 @@ class _SignUpPageState extends State<SignUpPage> {
                           );
                         },
                       );
-                    } else if (!EmailValidator.validate(emailController.text.trim())) {
+                    } else if (!EmailValidator.validate(
+                        emailController.text.trim())) {
                       showDialog(
                         context: context,
                         builder: (context) {

@@ -14,7 +14,12 @@ class HomePage extends StatefulWidget {
   int currentPage;
   final Function? callback;
 
-  HomePage({Key? key, this.currentPage = 0, this.id, required this.user, this.callback})
+  HomePage(
+      {Key? key,
+      this.currentPage = 0,
+      this.id,
+      required this.user,
+      this.callback})
       : super(key: key);
 
   @override
@@ -45,10 +50,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<String> getTitleAppBar() async {
-    // var logged = await DatabaseHelper.instance.getLoggedIn();
-
-    // String name = logged[0]['name'].toString();//TODO
-
     switch (widget.currentPage) {
       case 1:
         return 'Cadastro';

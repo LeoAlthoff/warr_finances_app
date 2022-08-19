@@ -10,16 +10,14 @@ import '../../pdf/pdf_page.dart';
 import '../home_page.dart';
 
 class DrawerHome extends StatelessWidget {
-  User user;
+  final User user;
   final Function? callback;
 
-  DrawerHome({
+  const DrawerHome({
     Key? key,
     required this.user,
     required this.callback,
   }) : super(key: key);
-
-  String? email;
 
   @override
   Widget build(BuildContext context) {
@@ -85,27 +83,6 @@ class DrawerHome extends StatelessWidget {
               ),
             ),
           ),
-          // FutureBuilder(
-          //   future: DatabaseHelper.instance.getLoggedIn(),
-          //   builder:
-          //       (context, AsyncSnapshot<List<Map<String, Object?>>> snapshot) {
-          //     if (!snapshot.hasData) {
-          //       return const CircularProgressIndicator();
-          //     }
-          //     return ListTile(
-          //       title: const Text('Alterar dados cadastrais'),
-          //       leading: const Icon(Icons.settings),
-          //       onTap: () {
-          //         Navigator.of(context).push(
-          //           MaterialPageRoute(
-          //             builder: (context) => EditUserPage(
-          //                 email: snapshot.data![0]['email'].toString()),
-          //           ),
-          //         );
-          //       },
-          //     );
-          //   },
-          // ), // TODO
           ListTile(
             title: const Text('Apagar todas as operações'),
             leading: const Icon(Icons.delete_forever),

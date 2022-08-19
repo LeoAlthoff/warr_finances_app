@@ -20,11 +20,6 @@ class _EditUserPageState extends State<EditUserPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
-  @override
-  void initState() {
-    setInfo();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,16 +93,6 @@ class _EditUserPageState extends State<EditUserPage> {
         ),
       ),
     );
-  }
-
-  void setInfo() async {
-    //TODO GET INFO from use
-    // List<Map<String, dynamic>> list =
-    //     await DatabaseHelper.instance.getUserInfo(widget.email);
-    // nameController.text = list[0]['name'];
-    // emailController.text = list[0]['email'];
-    // passwordController.text = list[0]['password'];
-    // confirmPasswordController.text = list[0]['password'];
   }
 
   bool checkFormValidator() {

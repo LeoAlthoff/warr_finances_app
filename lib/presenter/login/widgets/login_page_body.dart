@@ -49,8 +49,10 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
                 children: const [
                   Text(
                     'Warr Finances',
-                    style:
-                        TextStyle(fontSize: 30, color: Colors.white, fontStyle: FontStyle.italic),
+                    style: TextStyle(
+                        fontSize: 30,
+                        color: Colors.white,
+                        fontStyle: FontStyle.italic),
                   ),
                   SizedBox(height: 50),
                   Text(
@@ -99,8 +101,10 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
                     String email = emailController.text.trim();
                     String password = passwordController.text.trim();
                     UserCredential result =
-                        await auth.signInWithEmailAndPassword(email: email, password: password);
+                        await auth.signInWithEmailAndPassword(
+                            email: email, password: password);
                     User? user = result.user;
+                    if (!mounted) return;
                     navigateToHomeScreen(context, user!);
                   } on FirebaseAuthException catch (e) {
                     if (e.code == 'user-not-found') {
@@ -176,7 +180,6 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
                         },
                       );
                     }
-                    print(e.code);
                   }
                 },
                 text: 'Entrar com E-mail',
@@ -187,7 +190,7 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
                 onPressed: () async {
                   User? user = await signInWithGoogle();
                   if (user != null) {
-                    print(user);
+                    if (!mounted) return;
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (context) => HomePage(
@@ -219,7 +222,8 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
 Future<User?> signInWithGoogle() async {
   final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
-  final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+  final GoogleSignInAuthentication? googleAuth =
+      await googleUser?.authentication;
 
   if (googleAuth != null) {
     final OAuthCredential credential = GoogleAuthProvider.credential(

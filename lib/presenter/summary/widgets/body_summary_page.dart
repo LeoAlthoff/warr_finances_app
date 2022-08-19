@@ -8,6 +8,7 @@ import '../../../shared/utils/format_money.dart';
 import '../../../shared/utils/is_dark.dart';
 import 'info_chart_summary.dart';
 
+// ignore: must_be_immutable
 class ItensSummaryPage extends StatefulWidget {
   late DateTime dateRaw;
 
