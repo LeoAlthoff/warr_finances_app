@@ -1,13 +1,16 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/presenter/home/home_page.dart';
+import '../../home/home_page.dart';
 
 import '../../../shared/utils/database_helper.dart';
 import '../../../shared/utils/date_formater.dart';
 import '../../../shared/utils/is_dark.dart';
 import '../../../shared/widgets/input_text_container.dart';
 import '../../category/new_category_page.dart';
+import '../utils/show_dialog_cancel_edit.dart';
+import '../utils/show_dialog_successful.dart';
+import 'dialog_invalid_info.dart';
 import 'toggle_buttons_register.dart';
 
 class BodyRegister extends StatefulWidget {
@@ -97,7 +100,7 @@ class _BodyRegisterState extends State<BodyRegister> {
         DatabaseHelper.instance
             .insertOperation(value, name, operation, date, categoryId);
       }
-      showDialogSuccessfulRegister();
+      showDialogSuccessfulRegister(context, widget.user, cleanEntries);
     }
   }
 
@@ -243,7 +246,8 @@ class _BodyRegisterState extends State<BodyRegister> {
               TextButton(
                 onPressed: () {
                   if (isEditing) {
-                    showAlertDialogCancelEdit(context);
+                    showAlertDialogCancelEdit(
+                        context, isEditing, widget.callback, widget.user);
                   } else {
                     cleanEntries();
                     setState(() {});
@@ -293,107 +297,11 @@ class _BodyRegisterState extends State<BodyRegister> {
     );
   }
 
-  Future<dynamic> showAlertDialogCancelEdit(BuildContext context) {
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Cancelar'),
-          content: const Text('Deseja cancelar a edição?'),
-          actions: [
-            TextButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
-                    const Color.fromRGBO(238, 46, 93, 1)),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text(
-                'Não',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            TextButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
-                    const Color.fromRGBO(238, 46, 93, 1)),
-              ),
-              onPressed: () {
-                isEditing = false;
-                widget.callback;
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        HomePage(currentPage: 1, user: widget.user),
-                  ),
-                );
-              },
-              child: const Text(
-                'Sim',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<dynamic> showDialogSuccessfulRegister() {
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Cadastro'),
-          content: const Text('Cadastro realizado com sucesso!'),
-          actions: [
-            TextButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
-                    const Color.fromRGBO(238, 46, 93, 1)),
-              ),
-              onPressed: () {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        HomePage(currentPage: 1, user: widget.user),
-                  ),
-                );
-              },
-              child: const Text(
-                'Ok',
-                style: TextStyle(color: Colors.white),
-              ),
-            )
-          ],
-        );
-      },
-    );
-  }
-
   Future<dynamic> showDialogInvalidInfo(String msg) {
     return showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: const Text('Informações inválidas!'),
-          content: Text(msg),
-          actions: [
-            TextButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                      const Color.fromRGBO(238, 46, 93, 1)),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text(
-                  'Ok',
-                  style: TextStyle(color: Colors.white),
-                ))
-          ],
-        );
+        return DialogInvalidInfo(msg: msg);
       },
     );
   }
