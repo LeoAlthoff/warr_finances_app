@@ -36,12 +36,12 @@ class _DateTimePickerContainerState extends State<DateTimePickerContainer> {
       ),
       child: TextButton(
         onPressed: () async {
-          widget.data.text = await _selectDate(context);
+          widget.data.text = (await _selectDate(context)).toString();
           setState(() {});
         },
         child: Text(
-          widget.data.text.length > 18
-              ? formatStringForDateTimeParse(widget.data.text)
+          widget.data.text != 'Selecione uma data'
+              ? formatDate(widget.data.text)
               : widget.data.text,
           style: TextStyle(
             fontSize: 16,
@@ -57,7 +57,7 @@ class _DateTimePickerContainerState extends State<DateTimePickerContainer> {
     );
   }
 
-  Future<String> _selectDate(BuildContext context) async {
+  Future<DateTime> _selectDate(BuildContext context) async {
     DateTime selectedDate = DateTime.now();
     final selected = await showDatePicker(
       context: context,
@@ -72,7 +72,7 @@ class _DateTimePickerContainerState extends State<DateTimePickerContainer> {
                   ? const Color.fromARGB(214, 238, 46, 94)
                   : const Color.fromRGBO(
                       238, 46, 93, 1), // header background color
-              onPrimary: Colors.white,// header text color
+              onPrimary: Colors.white, // header text color
               onSurface: isDark(context)
                   ? Colors.white
                   : Colors.black, // body text color
@@ -94,6 +94,6 @@ class _DateTimePickerContainerState extends State<DateTimePickerContainer> {
         selectedDate = selected;
       });
     }
-    return formatDate(selectedDate.toString());
+    return selectedDate;
   }
 }

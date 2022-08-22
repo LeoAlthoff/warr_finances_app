@@ -24,9 +24,9 @@ class BodyRegister extends StatefulWidget {
 class _BodyRegisterState extends State<BodyRegister> {
   final List<bool> isSelected = [false, false];
 
-  final TextEditingController operationName = TextEditingController();
+  final TextEditingController operationNameController = TextEditingController();
 
-  final TextEditingController price = TextEditingController();
+  final TextEditingController priceController = TextEditingController();
 
   String category = '';
   bool categorySelected = false;
@@ -48,23 +48,18 @@ class _BodyRegisterState extends State<BodyRegister> {
         TextInputContainer(
           nextFocus: focusPrice,
           textValue: 'Nome',
-          controller: operationName,
+          controller: operationNameController,
         ),
         const SizedBox(height: 10),
         TextInputContainer(
           focusNode: focusPrice,
           textValue: 'Preço',
-          controller: price,
+          controller: priceController,
           type: const TextInputType.numberWithOptions(),
           numericFormatter: true,
         ),
         const SizedBox(height: 15),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ToggleButtonsRegister(isSelected: isSelected),
-          ],
-        ),
+        ToggleButtonsRegister(isSelected: isSelected),
         const SizedBox(height: 15),
         Container(
           width: MediaQuery.of(context).size.width,
@@ -208,8 +203,8 @@ class _BodyRegisterState extends State<BodyRegister> {
     isSelected[1] = false;
     category = '';
     categorySelected = false;
-    operationName.clear();
-    price.clear();
+    operationNameController.clear();
+    priceController.clear();
     data.clear();
     data.text = 'Selecione uma data';
     setState(() {});
@@ -234,8 +229,8 @@ class _BodyRegisterState extends State<BodyRegister> {
 
   Future<void> setEdit() async {
     List list = await DatabaseHelper.instance.selectOperationById(widget.id!);
-    operationName.text = list[0]['name'];
-    price.text = list[0]['value'].toString();
+    operationNameController.text = list[0]['name'];
+    priceController.text = list[0]['value'].toString();
     data.text = formatDateTimeForString(list[0]['date']);
     categorySelected = true;
     category =
@@ -260,10 +255,10 @@ class _BodyRegisterState extends State<BodyRegister> {
   }
 
   void saveInputOperation() async {
-    String name = operationName.text;
-    double value = double.parse(price.text);
+    String name = operationNameController.text;
+    double value = double.parse(priceController.text);
     int operation = getOperation();
-    String date = data.text;
+    String date = formatStringForDateTimeParse(data.text);
     int categoryId = await DatabaseHelper.instance.selectCategory(category);
 
     if (isEditing) {
@@ -288,10 +283,10 @@ class _BodyRegisterState extends State<BodyRegister> {
   }
 
   bool checkInputValidator() {
-    if (operationName.text == '') {
+    if (operationNameController.text == '') {
       return true;
     }
-    if (price.text == '') {
+    if (priceController.text == '') {
       return true;
     }
     if (getOperation() == -1) {
