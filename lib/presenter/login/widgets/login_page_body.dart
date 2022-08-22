@@ -103,9 +103,7 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
                     UserCredential result =
                         await auth.signInWithEmailAndPassword(
                             email: email, password: password);
-                    User? user = result.user;
-                    if (!mounted) return;
-                    navigateToHomeScreen(context, user!);
+                    navigateToHomeScreen(context);
                   } on FirebaseAuthException catch (e) {
                     if (e.code == 'user-not-found') {
                       showDialog(
@@ -190,12 +188,9 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
                 onPressed: () async {
                   User? user = await signInWithGoogle();
                   if (user != null) {
-                    if (!mounted) return;
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => HomePage(
-                          user: user,
-                        ),
+                        builder: (context) => HomePage(),
                       ),
                     );
                   }

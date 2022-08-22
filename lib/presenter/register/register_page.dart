@@ -1,13 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'widgets/body_register.dart';
 
 class RegistrationPage extends StatelessWidget {
-  final User user;
   final int? id;
-  const RegistrationPage({Key? key, required this.user, this.id})
-      : super(key: key);
+  const RegistrationPage({Key? key, this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +13,6 @@ class RegistrationPage extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         child: BodyRegister(
           id: id,
-          user: user,
         ),
       ),
     );

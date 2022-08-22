@@ -9,17 +9,11 @@ import 'widgets/drawer_home.dart';
 
 // ignore: must_be_immutable
 class HomePage extends StatefulWidget {
-  User user;
   int? id;
   int currentPage;
   final Function? callback;
 
-  HomePage(
-      {Key? key,
-      this.currentPage = 0,
-      this.id,
-      required this.user,
-      this.callback})
+  HomePage({Key? key, this.currentPage = 0, this.id, this.callback})
       : super(key: key);
 
   @override
@@ -27,6 +21,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  User user = FirebaseAuth.instance.currentUser!;
   late PageController pageController;
 
   @override
@@ -56,7 +51,7 @@ class _HomePageState extends State<HomePage> {
       case 2:
         return 'Resumo por categoria';
       default:
-        return 'Olá, ${widget.user.displayName}';
+        return 'Olá, ${FirebaseAuth.instance.currentUser!.displayName}';
     }
   }
 
@@ -64,11 +59,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final screens = [
       BodyHome(
-        user: widget.user,
         callback: callback,
       ),
       RegistrationPage(
-        user: widget.user,
         id: widget.id,
       ),
       const Summary(),
@@ -91,7 +84,6 @@ class _HomePageState extends State<HomePage> {
       ),
       drawer: DrawerHome(
         callback: callback,
-        user: widget.user,
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: widget.currentPage,

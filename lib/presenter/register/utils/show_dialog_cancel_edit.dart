@@ -1,10 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../home/home_page.dart';
 
 Future<dynamic> showAlertDialogCancelEdit(
-    BuildContext context, bool isEditing, Function? callback, User user) {
+    BuildContext context, bool isEditing, Function? callback) {
   return showDialog(
     context: context,
     builder: (context) {
@@ -35,7 +34,7 @@ Future<dynamic> showAlertDialogCancelEdit(
               callback;
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                  builder: (context) => HomePage(currentPage: 1, user: user),
+                  builder: (context) => HomePage(currentPage: 1),
                 ),
               );
             },

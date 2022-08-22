@@ -1,5 +1,4 @@
 import 'package:date_time_picker/date_time_picker.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../shared/utils/database_helper.dart';
@@ -13,12 +12,10 @@ import 'dialog_invalid_info.dart';
 import 'toggle_buttons_register.dart';
 
 class BodyRegister extends StatefulWidget {
-  final User user;
   final Function? callback;
   final int? id;
 
-  const BodyRegister({Key? key, this.id, required this.user, this.callback})
-      : super(key: key);
+  const BodyRegister({Key? key, this.id, this.callback}) : super(key: key);
 
   @override
   State<BodyRegister> createState() => _BodyRegisterState();
@@ -100,7 +97,7 @@ class _BodyRegisterState extends State<BodyRegister> {
             .insertOperation(value, name, operation, date, categoryId);
       }
       if (!mounted) return;
-      showDialogSuccessfulRegister(context, widget.user, cleanEntries);
+      showDialogSuccessfulRegister(context, cleanEntries);
     }
   }
 
@@ -192,9 +189,7 @@ class _BodyRegisterState extends State<BodyRegister> {
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: ((context) => NewCategoryPage(
-                      user: widget.user,
-                    )),
+                builder: ((context) => const NewCategoryPage()),
               ),
             );
           },
@@ -247,7 +242,7 @@ class _BodyRegisterState extends State<BodyRegister> {
                 onPressed: () {
                   if (isEditing) {
                     showAlertDialogCancelEdit(
-                        context, isEditing, widget.callback, widget.user);
+                        context, isEditing, widget.callback);
                   } else {
                     cleanEntries();
                     setState(() {});
