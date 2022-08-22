@@ -1,4 +1,3 @@
-import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../../../shared/utils/database_helper.dart';
@@ -8,6 +7,7 @@ import '../../../shared/widgets/input_text_container.dart';
 import '../../category/new_category_page.dart';
 import '../utils/show_dialog_cancel_edit.dart';
 import '../utils/show_dialog_successful.dart';
+import 'date_time_picker_container.dart';
 import 'dialog_invalid_info.dart';
 import 'toggle_buttons_register.dart';
 
@@ -24,9 +24,9 @@ class BodyRegister extends StatefulWidget {
 class _BodyRegisterState extends State<BodyRegister> {
   final List<bool> isSelected = [false, false];
 
-  final TextEditingController operationName = TextEditingController();
+  final TextEditingController operationNameController = TextEditingController();
 
-  final TextEditingController price = TextEditingController();
+  final TextEditingController priceController = TextEditingController();
 
   String category = '';
   bool categorySelected = false;
@@ -35,15 +35,12 @@ class _BodyRegisterState extends State<BodyRegister> {
 
   final FocusNode focusPrice = FocusNode();
 
-  TextEditingController data = TextEditingController();
+  TextEditingController data =
+      TextEditingController(text: 'Selecione uma data');
 
   @override
   Widget build(BuildContext context) {
-    if (widget.id != null && !getEditValues) {
-      getEditValues = true;
-      isEditing = true;
-      setEdit();
-    }
+    checkEditing();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -51,23 +48,18 @@ class _BodyRegisterState extends State<BodyRegister> {
         TextInputContainer(
           nextFocus: focusPrice,
           textValue: 'Nome',
-          controller: operationName,
+          controller: operationNameController,
         ),
         const SizedBox(height: 10),
         TextInputContainer(
           focusNode: focusPrice,
           textValue: 'Preço',
-          controller: price,
+          controller: priceController,
           type: const TextInputType.numberWithOptions(),
           numericFormatter: true,
         ),
         const SizedBox(height: 15),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ToggleButtonsRegister(isSelected: isSelected),
-          ],
-        ),
+        ToggleButtonsRegister(isSelected: isSelected),
         const SizedBox(height: 15),
         Container(
           width: MediaQuery.of(context).size.width,
@@ -98,7 +90,7 @@ class _BodyRegisterState extends State<BodyRegister> {
                 child: DropdownButton<String>(
                   hint: categorySelected
                       ? null
-                      : const Text('Selecione uma categoria!'),
+                      : const Text('Selecione uma categoria'),
                   value: categorySelected ? category : null,
                   items: snapshot.data!
                       .map<DropdownMenuItem<String>>(
@@ -140,36 +132,7 @@ class _BodyRegisterState extends State<BodyRegister> {
           ),
         ),
         const SizedBox(height: 15),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          margin: const EdgeInsets.symmetric(
-            horizontal: 30,
-            vertical: 5,
-          ),
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            border: Border.all(
-              color: isDark(context) ? Colors.white38 : Colors.black38,
-            ),
-          ),
-          child: DateTimePicker(
-            decoration: const InputDecoration(
-              hintText: 'Data',
-              border: InputBorder.none,
-              focusedBorder: InputBorder.none,
-              enabledBorder: InputBorder.none,
-              errorBorder: InputBorder.none,
-              disabledBorder: InputBorder.none,
-            ),
-            controller: data,
-            firstDate: DateTime(2000),
-            lastDate: DateTime(2100),
-            locale: const Locale('pt', 'BR'),
-          ),
-        ),
+        DateTimePickerContainer(data: data),
         const SizedBox(height: 15),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -240,9 +203,10 @@ class _BodyRegisterState extends State<BodyRegister> {
     isSelected[1] = false;
     category = '';
     categorySelected = false;
-    operationName.clear();
-    price.clear();
+    operationNameController.clear();
+    priceController.clear();
     data.clear();
+    data.text = 'Selecione uma data';
     setState(() {});
   }
 
@@ -255,11 +219,19 @@ class _BodyRegisterState extends State<BodyRegister> {
     return -1;
   }
 
+  void checkEditing() {
+    if (widget.id != null && !getEditValues) {
+      getEditValues = true;
+      isEditing = true;
+      setEdit();
+    }
+  }
+
   Future<void> setEdit() async {
     List list = await DatabaseHelper.instance.selectOperationById(widget.id!);
-    operationName.text = list[0]['name'];
-    price.text = list[0]['value'].toString();
-    data.text = formatStringForDateTimeParse(list[0]['date']);
+    operationNameController.text = list[0]['name'];
+    priceController.text = list[0]['value'].toString();
+    data.text = formatDateTimeForString(list[0]['date']);
     categorySelected = true;
     category =
         await DatabaseHelper.instance.getCategoryName(list[0]['categoryId']);
@@ -283,10 +255,10 @@ class _BodyRegisterState extends State<BodyRegister> {
   }
 
   void saveInputOperation() async {
-    String name = operationName.text;
-    double value = double.parse(price.text);
+    String name = operationNameController.text;
+    double value = double.parse(priceController.text);
     int operation = getOperation();
-    String date = data.text;
+    String date = formatStringForDateTimeParse(data.text);
     int categoryId = await DatabaseHelper.instance.selectCategory(category);
 
     if (isEditing) {
@@ -311,10 +283,10 @@ class _BodyRegisterState extends State<BodyRegister> {
   }
 
   bool checkInputValidator() {
-    if (operationName.text == '') {
+    if (operationNameController.text == '') {
       return true;
     }
-    if (price.text == '') {
+    if (priceController.text == '') {
       return true;
     }
     if (getOperation() == -1) {
