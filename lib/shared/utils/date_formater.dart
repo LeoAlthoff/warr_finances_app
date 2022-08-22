@@ -7,3 +7,8 @@ String formatDate(String date) {
 String formatStringForDateTimeParse(String date) {
   return ('$date 00:00:00.000');
 }
+
+String formatDateTimeForString(String date) {
+  List temp = date.split(' ');
+  return temp[0];
+}

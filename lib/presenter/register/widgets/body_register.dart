@@ -1,4 +1,3 @@
-import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../../../shared/utils/database_helper.dart';
@@ -36,7 +35,8 @@ class _BodyRegisterState extends State<BodyRegister> {
 
   final FocusNode focusPrice = FocusNode();
 
-  TextEditingController data = TextEditingController();
+  TextEditingController data =
+      TextEditingController(text: 'Selecione uma data');
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +95,7 @@ class _BodyRegisterState extends State<BodyRegister> {
                 child: DropdownButton<String>(
                   hint: categorySelected
                       ? null
-                      : const Text('Selecione uma categoria!'),
+                      : const Text('Selecione uma categoria'),
                   value: categorySelected ? category : null,
                   items: snapshot.data!
                       .map<DropdownMenuItem<String>>(
@@ -211,6 +211,7 @@ class _BodyRegisterState extends State<BodyRegister> {
     operationName.clear();
     price.clear();
     data.clear();
+    data.text = 'Selecione uma data';
     setState(() {});
   }
 
@@ -235,7 +236,7 @@ class _BodyRegisterState extends State<BodyRegister> {
     List list = await DatabaseHelper.instance.selectOperationById(widget.id!);
     operationName.text = list[0]['name'];
     price.text = list[0]['value'].toString();
-    data.text = formatStringForDateTimeParse(list[0]['date']);
+    data.text = formatDateTimeForString(list[0]['date']);
     categorySelected = true;
     category =
         await DatabaseHelper.instance.getCategoryName(list[0]['categoryId']);
