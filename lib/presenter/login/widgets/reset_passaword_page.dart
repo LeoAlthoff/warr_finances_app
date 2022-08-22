@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'input_widget_login_page.dart';
-import 'login_page.dart';
 
 class ResetPassawordPage extends StatelessWidget {
   ResetPassawordPage({Key? key}) : super(key: key);
@@ -24,7 +23,7 @@ class ResetPassawordPage extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: () {
-                        navigateBackToHomeScreen(context);
+                        Navigator.of(context).pop();
                       },
                       icon: const Icon(
                         Icons.arrow_back,
@@ -51,7 +50,10 @@ class ResetPassawordPage extends StatelessWidget {
                 ),
                 const Text(
                   'Recupere sua senha',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 ),
                 const SizedBox(
                   height: 25,
@@ -82,7 +84,8 @@ class ResetPassawordPage extends StatelessWidget {
                   height: 30,
                   child: ElevatedButton(
                     onPressed: () async {
-                      bool result = await resetPassword(emailController.text.trim());
+                      bool result =
+                          await resetPassword(emailController.text.trim());
                       if (result) {
                         showDialog(
                           context: context,
@@ -104,7 +107,8 @@ class ResetPassawordPage extends StatelessWidget {
                         showDialog(
                           context: context,
                           builder: (context) => AlertDialog(
-                            title: const Text("E-mail não cadastrado, tente novamente."),
+                            title: const Text(
+                                "E-mail não cadastrado, tente novamente."),
                             actions: [
                               MaterialButton(
                                 color: const Color.fromRGBO(238, 46, 93, 1),

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../home/home_page.dart';
 import 'login_page_body.dart';
-import 'reset_passaword_page.dart';
-import 'sign_up_page.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -17,24 +14,4 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
-}
-
-void navigateToHomeScreen(BuildContext context) {
-  Navigator.of(context)
-      .pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
-}
-
-void navigateToResetPassword(BuildContext context) {
-  Navigator.of(context)
-      .push(MaterialPageRoute(builder: (context) => ResetPassawordPage()));
-}
-
-void navigateToSignUpPage(BuildContext context) {
-  Navigator.of(context)
-      .push(MaterialPageRoute(builder: (context) => const SignUpPage()));
-}
-
-void navigateBackToHomeScreen(BuildContext context) {
-  Navigator.of(context)
-      .push(MaterialPageRoute(builder: (context) => const LoginPage()));
 }

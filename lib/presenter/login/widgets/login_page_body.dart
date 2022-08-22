@@ -2,12 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
+import 'package:flutter_teste_app/presenter/login/widgets/reset_passaword_page.dart';
+import 'package:flutter_teste_app/presenter/login/widgets/sign_up_page.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../home/home_page.dart';
 import 'input_widget_login_page.dart';
-import 'login_page.dart';
 
 class BodyLoginPage extends StatefulWidget {
   BodyLoginPage({
@@ -85,7 +86,11 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
               ),
               TextButton(
                 onPressed: () {
-                  navigateToResetPassword(context);
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => ResetPassawordPage(),
+                    ),
+                  );
                 },
                 child: const Text(
                   'Esqueceu a senha?',
@@ -96,14 +101,19 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
               SignInButton(
                 Buttons.Email,
                 onPressed: () async {
-                  // /*
                   try {
                     String email = emailController.text.trim();
                     String password = passwordController.text.trim();
-                    UserCredential result =
-                        await auth.signInWithEmailAndPassword(
-                            email: email, password: password);
-                    navigateToHomeScreen(context);
+                    await auth.signInWithEmailAndPassword(
+                      email: email,
+                      password: password,
+                    );
+                    if (!mounted) return;
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(),
+                      ),
+                    );
                   } on FirebaseAuthException catch (e) {
                     if (e.code == 'user-not-found') {
                       showDialog(
@@ -188,6 +198,7 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
                 onPressed: () async {
                   User? user = await signInWithGoogle();
                   if (user != null) {
+                    if (!mounted) return;
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (context) => HomePage(),
@@ -199,7 +210,11 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
               const SizedBox(height: 10),
               TextButton(
                 onPressed: () {
-                  navigateToSignUpPage(context);
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const SignUpPage(),
+                    ),
+                  );
                 },
                 child: const Text(
                   'Cadastre-se',

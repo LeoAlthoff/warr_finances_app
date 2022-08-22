@@ -22,87 +22,6 @@ class _SignUpPageState extends State<SignUpPage> {
   final FocusNode passwordNode = FocusNode();
   final FocusNode passwordConfirmationNode = FocusNode();
 
-  _register(String email, String password, String displayName) async {
-    try {
-      UserCredential result = await auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      User user = result.user!;
-      await user.updateDisplayName(displayName);
-      if (!mounted) return;
-      Navigator.of(context).pop();
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Cadastro realizado com sucesso!'),
-          actions: [
-            TextButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
-                  const Color.fromRGBO(238, 46, 93, 1),
-                ),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text(
-                'Ok',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ],
-        ),
-      );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('A senha é muito fraca!'),
-            actions: [
-              TextButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                    const Color.fromRGBO(238, 46, 93, 1),
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text(
-                  'Ok',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ],
-          ),
-        );
-      } else if (e.code == 'email-already-in-use') {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('Já existe uma conta com este e-mail!'),
-            actions: [
-              TextButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                    const Color.fromRGBO(238, 46, 93, 1),
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text(
-                  'Ok',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ],
-          ),
-        );
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -131,25 +50,21 @@ class _SignUpPageState extends State<SignUpPage> {
                 focusNode: nameNode,
                 controller: nameController,
                 icon: Icons.person,
-                isPassword: false,
                 labelTextInput: 'Apelido',
               ),
               const SizedBox(
                 height: 15,
               ),
               InputWidget(
-                autoFocus: false,
                 focusNode: emailNode,
                 controller: emailController,
                 icon: Icons.email,
-                isPassword: false,
                 labelTextInput: 'Email',
               ),
               const SizedBox(
                 height: 15,
               ),
               InputWidget(
-                autoFocus: false,
                 focusNode: passwordNode,
                 controller: passwordController,
                 icon: Icons.lock,
@@ -160,7 +75,6 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: 15,
               ),
               InputWidget(
-                autoFocus: false,
                 focusNode: passwordConfirmationNode,
                 controller: passwordController1,
                 icon: Icons.lock,
@@ -283,5 +197,86 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
       ),
     );
+  }
+
+  _register(String email, String password, String displayName) async {
+    try {
+      UserCredential result = await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      User user = result.user!;
+      await user.updateDisplayName(displayName);
+      if (!mounted) return;
+      Navigator.of(context).pop();
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Cadastro realizado com sucesso!'),
+          actions: [
+            TextButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                  const Color.fromRGBO(238, 46, 93, 1),
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text(
+                'Ok',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        ),
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('A senha é muito fraca!'),
+            actions: [
+              TextButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                    const Color.fromRGBO(238, 46, 93, 1),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  'Ok',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        );
+      } else if (e.code == 'email-already-in-use') {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Já existe uma conta com este e-mail!'),
+            actions: [
+              TextButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                    const Color.fromRGBO(238, 46, 93, 1),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  'Ok',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        );
+      }
+    }
   }
 }

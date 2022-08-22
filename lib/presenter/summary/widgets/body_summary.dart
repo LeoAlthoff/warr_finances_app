@@ -8,24 +8,21 @@ import '../../../shared/utils/format_money.dart';
 import '../../../shared/utils/is_dark.dart';
 import 'info_chart_summary.dart';
 
-// ignore: must_be_immutable
-class ItensSummaryPage extends StatefulWidget {
-  late DateTime dateRaw;
-
-  ItensSummaryPage({
+class BodySummary extends StatefulWidget {
+  const BodySummary({
     Key? key,
-    required this.dateRaw,
   }) : super(key: key);
 
   @override
-  State<ItensSummaryPage> createState() => _ItensSummaryPageState();
+  State<BodySummary> createState() => _BodySummaryState();
 }
 
-class _ItensSummaryPageState extends State<ItensSummaryPage> {
+class _BodySummaryState extends State<BodySummary> {
+  DateTime dateRaw = DateTime.now();
   @override
   Widget build(BuildContext context) {
-    String dateFormated = DateFormat("yyyy/MM").format(widget.dateRaw);
-    String dateShow = DateFormat("MM/yyyy").format(widget.dateRaw);
+    String dateFormated = DateFormat("yyyy/MM").format(dateRaw);
+    String dateShow = DateFormat("MM/yyyy").format(dateRaw);
 
     return Column(
       children: [
@@ -39,12 +36,12 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
             children: [
               TextButton(
                 onPressed: () {
-                  widget.dateRaw = DateTime(
-                    widget.dateRaw.year,
-                    widget.dateRaw.month - 1,
-                    widget.dateRaw.day,
+                  dateRaw = DateTime(
+                    dateRaw.year,
+                    dateRaw.month - 1,
+                    dateRaw.day,
                   );
-                  dateFormated = DateFormat("yyyy/MM").format(widget.dateRaw);
+                  dateFormated = DateFormat("yyyy/MM").format(dateRaw);
                   setState(() {});
                 },
                 child: Icon(
@@ -63,12 +60,12 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
               ),
               TextButton(
                 onPressed: () {
-                  widget.dateRaw = DateTime(
-                    widget.dateRaw.year,
-                    widget.dateRaw.month + 1,
-                    widget.dateRaw.day,
+                  dateRaw = DateTime(
+                    dateRaw.year,
+                    dateRaw.month + 1,
+                    dateRaw.day,
                   );
-                  dateFormated = DateFormat("yyyy/MM").format(widget.dateRaw);
+                  dateFormated = DateFormat("yyyy/MM").format(dateRaw);
                   setState(() {});
                 },
                 child: Icon(
@@ -83,33 +80,35 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
           ),
         ),
         FutureBuilder(
-          future: Future.wait([
-            DatabaseHelper.instance.queryOperation(dateFormated),
-            DatabaseHelper.instance.getColorsCategory(dateFormated)
-          ]),
+          future: Future.wait(
+            [
+              DatabaseHelper.instance.queryOperation(dateFormated),
+              DatabaseHelper.instance.getColorsCategory(dateFormated)
+            ],
+          ),
           builder: ((context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (!snapshot.hasData) {
               return const CircularProgressIndicator();
             }
             if (snapshot.data![0].isEmpty) {
               return const Center(
-                  child: Center(
-                child: Text(
-                  'Nenhuma saída cadastrada neste mês.',
-                  style: TextStyle(fontSize: 18),
+                child: Center(
+                  child: Text(
+                    'Nenhuma saída cadastrada neste mês.',
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
-              ));
+              );
             }
             return PieChart(
               dataMap: snapshot.data![0],
               colorList: snapshot.data![1],
               chartRadius: MediaQuery.of(context).size.width / 2,
-              chartValuesOptions: ChartValuesOptions(
-                showChartValuesOutside: true,
+              chartValuesOptions: const ChartValuesOptions(
                 showChartValuesInPercentage: true,
                 showChartValueBackground: false,
                 chartValueStyle: TextStyle(
-                  color: isDark(context) ? Colors.white : Colors.black,
+                  color: Colors.black,
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
                 ),
@@ -133,7 +132,6 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
               return Center(
                   child: Lottie.asset('assets/lottie/not_found.json'));
             }
-
             return ListView.builder(
               physics: const BouncingScrollPhysics(),
               shrinkWrap: true,
@@ -156,12 +154,6 @@ class _ItensSummaryPageState extends State<ItensSummaryPage> {
             );
           },
         ),
-        // ElevatedButton(
-        //     onPressed: () {
-        //       Navigator.of(context).push(MaterialPageRoute(
-        //           builder: (context) => const ShowPdf('Extrato')));
-        //     },
-        //     child: const Text('PDF')),
       ],
     );
   }

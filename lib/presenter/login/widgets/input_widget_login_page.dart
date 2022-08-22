@@ -13,8 +13,8 @@ class InputWidget extends StatelessWidget {
     required this.labelTextInput,
     required this.icon,
     required this.controller,
-    required this.isPassword,
-    required this.autoFocus,
+    this.isPassword = false,
+    this.autoFocus = false,
     this.focusNode,
   }) : super(key: key);
 

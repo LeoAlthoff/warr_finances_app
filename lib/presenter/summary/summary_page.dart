@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import 'widgets/body_summary_page.dart';
+import 'widgets/body_summary.dart';
 
 class Summary extends StatelessWidget {
   const Summary({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: ItensSummaryPage(dateRaw: DateTime.now()),
+        physics: BouncingScrollPhysics(),
+        child: BodySummary(),
       ),
     );
   }
