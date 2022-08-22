@@ -63,7 +63,7 @@ class ShowPdf extends StatelessWidget {
       return pageSize;
     }
 
-    int test(int index, int i) {
+    int getIndex(int index, int i) {
       return index + (i * (pageSize));
     }
 
@@ -125,7 +125,7 @@ class ShowPdf extends StatelessWidget {
                                   ? PdfColors.pink100
                                   : PdfColors.white,
                               child: pw.Text(
-                                '   ${operations['operation']![test(index, i)]['name']}   ',
+                                '   ${operations['operation']![getIndex(index, i)]['name']}   ',
                                 style: pw.TextStyle(
                                   font: font,
                                 ),
@@ -141,8 +141,8 @@ class ShowPdf extends StatelessWidget {
                                   ? PdfColors.pink100
                                   : PdfColors.white,
                               child: pw.Text(
-                                '   ${operations['operation']![test(index, i)]['entry'] == 1 ? ' ' : '-'}'
-                                'R\$ ${operations['operation']![test(index, i)]['value']}   ',
+                                '   ${operations['operation']![getIndex(index, i)]['entry'] == 1 ? ' ' : '-'}'
+                                'R\$ ${operations['operation']![getIndex(index, i)]['value']}   ',
                                 style: pw.TextStyle(
                                   font: font,
                                 ),
@@ -158,7 +158,7 @@ class ShowPdf extends StatelessWidget {
                                   ? PdfColors.pink100
                                   : PdfColors.white,
                               child: pw.Text(
-                                '   ${formatDate(operations['operation']![test(index, i)]['date'])}   ',
+                                '   ${formatDate(operations['operation']![getIndex(index, i)]['date'])}   ',
                                 style: pw.TextStyle(
                                   font: font,
                                 ),

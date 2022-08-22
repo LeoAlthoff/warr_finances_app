@@ -60,7 +60,6 @@ class _EditUserPageState extends State<EditUserPage> {
                   if (checkFormValidator()) {
                     //TODOUPDATE USER
                     Navigator.of(context).pop();
-
                     alertDialog(
                         context, 'Cadastro', 'Cadastro realizado com sucesso!');
                   } else {

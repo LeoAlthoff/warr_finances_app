@@ -37,70 +37,6 @@ class _BodyRegisterState extends State<BodyRegister> {
 
   TextEditingController data = TextEditingController();
 
-  void cleanEntries() {
-    isSelected[0] = false;
-    isSelected[1] = false;
-    category = '';
-    categorySelected = false;
-    operationName.clear();
-    price.clear();
-    data.clear();
-    setState(() {});
-  }
-
-  int getOperation() {
-    if (isSelected[0]) {
-      return 1;
-    } else if (isSelected[1]) {
-      return 0;
-    }
-    return -1;
-  }
-
-  Future<void> setEdit() async {
-    List list = await DatabaseHelper.instance.selectOperationById(widget.id!);
-    operationName.text = list[0]['name'];
-    price.text = list[0]['value'].toString();
-    data.text = formatStringForDateTimeParse(list[0]['date']);
-    categorySelected = true;
-    category =
-        await DatabaseHelper.instance.getCategoryName(list[0]['categoryId']);
-    if (list[0]['entry'] == 1) {
-      isSelected[0] = true;
-      isSelected[1] = false;
-    } else {
-      isSelected[0] = false;
-      isSelected[1] = true;
-    }
-    setState(() {});
-  }
-
-  Future<void> save() async {
-    if (operationName.text == '' ||
-        price.text == '' ||
-        getOperation() == -1 ||
-        data.text == '') {
-      showDialogInvalidInfo('Você não pode deixar nenhum campo em branco.');
-    } else {
-      String name = operationName.text;
-      double value = double.parse(price.text);
-      int operation = getOperation();
-      String date = data.text;
-      int categoryId = await DatabaseHelper.instance.selectCategory(category);
-
-      if (isEditing) {
-        DatabaseHelper.instance.updateOperation(
-            name, value, operation, date, categoryId, widget.id!);
-        isEditing = false;
-      } else {
-        DatabaseHelper.instance
-            .insertOperation(value, name, operation, date, categoryId);
-      }
-      if (!mounted) return;
-      showDialogSuccessfulRegister(context, cleanEntries);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     if (widget.id != null && !getEditValues) {
@@ -159,28 +95,30 @@ class _BodyRegisterState extends State<BodyRegister> {
                 return const CircularProgressIndicator();
               }
               return DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                hint: categorySelected
-                    ? null
-                    : const Text('Selecione uma categoria!'),
-                value: categorySelected ? category : null,
-                items: snapshot.data!
-                    .map<DropdownMenuItem<String>>(
-                      (Map<String, dynamic> value) => DropdownMenuItem<String>(
-                        value: value['name'],
-                        child: Text(
-                          value['name'],
+                child: DropdownButton<String>(
+                  hint: categorySelected
+                      ? null
+                      : const Text('Selecione uma categoria!'),
+                  value: categorySelected ? category : null,
+                  items: snapshot.data!
+                      .map<DropdownMenuItem<String>>(
+                        (Map<String, dynamic> value) =>
+                            DropdownMenuItem<String>(
+                          value: value['name'],
+                          child: Text(
+                            value['name'],
+                          ),
                         ),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    categorySelected = true;
-                    category = newValue!;
-                  });
-                },
-              ));
+                      )
+                      .toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      categorySelected = true;
+                      category = newValue!;
+                    });
+                  },
+                ),
+              );
             },
           ),
         ),
@@ -250,11 +188,14 @@ class _BodyRegisterState extends State<BodyRegister> {
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                      color: Colors.white60,
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.all(color: Colors.grey.shade400)),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                    color: Colors.white60,
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(color: Colors.grey.shade400),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 40,
+                    vertical: 20,
+                  ),
                   child: Text(
                     isEditing ? 'Cancelar' : 'Limpar',
                     style: const TextStyle(
@@ -266,7 +207,7 @@ class _BodyRegisterState extends State<BodyRegister> {
               ),
               TextButton(
                 onPressed: () async {
-                  await save();
+                  save();
                   widget.callback;
                 },
                 child: Container(
@@ -274,8 +215,10 @@ class _BodyRegisterState extends State<BodyRegister> {
                     color: const Color.fromRGBO(238, 46, 93, 1),
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 50,
+                    vertical: 20,
+                  ),
                   child: Text(
                     isEditing ? 'Atualizar' : 'Enviar',
                     style: const TextStyle(
@@ -290,6 +233,97 @@ class _BodyRegisterState extends State<BodyRegister> {
         ),
       ],
     );
+  }
+
+  void cleanEntries() {
+    isSelected[0] = false;
+    isSelected[1] = false;
+    category = '';
+    categorySelected = false;
+    operationName.clear();
+    price.clear();
+    data.clear();
+    setState(() {});
+  }
+
+  int getOperation() {
+    if (isSelected[0]) {
+      return 1;
+    } else if (isSelected[1]) {
+      return 0;
+    }
+    return -1;
+  }
+
+  Future<void> setEdit() async {
+    List list = await DatabaseHelper.instance.selectOperationById(widget.id!);
+    operationName.text = list[0]['name'];
+    price.text = list[0]['value'].toString();
+    data.text = formatStringForDateTimeParse(list[0]['date']);
+    categorySelected = true;
+    category =
+        await DatabaseHelper.instance.getCategoryName(list[0]['categoryId']);
+    if (list[0]['entry'] == 1) {
+      isSelected[0] = true;
+      isSelected[1] = false;
+    } else {
+      isSelected[0] = false;
+      isSelected[1] = true;
+    }
+    setState(() {});
+  }
+
+  void save() {
+    if (checkInputValidator()) {
+      showDialogInvalidInfo('Você não pode deixar nenhum campo em branco.');
+    } else {
+      saveInputOperation();
+      showDialogSuccessfulRegister(context, cleanEntries);
+    }
+  }
+
+  void saveInputOperation() async {
+    String name = operationName.text;
+    double value = double.parse(price.text);
+    int operation = getOperation();
+    String date = data.text;
+    int categoryId = await DatabaseHelper.instance.selectCategory(category);
+
+    if (isEditing) {
+      DatabaseHelper.instance.updateOperation(
+        name,
+        value,
+        operation,
+        date,
+        categoryId,
+        widget.id!,
+      );
+      isEditing = false;
+    } else {
+      DatabaseHelper.instance.insertOperation(
+        value,
+        name,
+        operation,
+        date,
+        categoryId,
+      );
+    }
+  }
+
+  bool checkInputValidator() {
+    if (operationName.text == '') {
+      return true;
+    }
+    if (price.text == '') {
+      return true;
+    }
+    if (getOperation() == -1) {
+      return true;
+    }
+    if (data.text == '') {
+      return true;
+    }
+    return false;
   }
 
   Future<dynamic> showDialogInvalidInfo(String msg) {
