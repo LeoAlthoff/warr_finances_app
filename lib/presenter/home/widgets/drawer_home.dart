@@ -10,17 +10,16 @@ import '../../pdf/pdf_page.dart';
 import '../home_page.dart';
 
 class DrawerHome extends StatelessWidget {
-  final User user;
   final Function? callback;
 
   const DrawerHome({
     Key? key,
-    required this.user,
     required this.callback,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    User user = FirebaseAuth.instance.currentUser!;
     return Drawer(
       child: ListView(
         children: [
@@ -121,7 +120,6 @@ class DrawerHome extends StatelessWidget {
                             builder: (context) {
                               return HomePage(
                                 currentPage: 0,
-                                user: user,
                               );
                             },
                           ),

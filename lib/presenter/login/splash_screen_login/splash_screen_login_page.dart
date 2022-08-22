@@ -21,10 +21,7 @@ class _SplashScreenLoginPageState extends State<SplashScreenLoginPage> {
           MaterialPageRoute(
             builder: (context) {
               if (FirebaseAuth.instance.currentUser != null) {
-                User user = FirebaseAuth.instance.currentUser!;
-                return HomePage(
-                  user: user,
-                );
+                return HomePage();
               } else {
                 return const LoginPage();
               }

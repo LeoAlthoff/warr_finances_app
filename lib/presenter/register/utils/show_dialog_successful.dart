@@ -1,10 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../home/home_page.dart';
 
 Future<dynamic> showDialogSuccessfulRegister(
-    BuildContext context, User user, Function function) {
+    BuildContext context, Function function) {
   return showDialog(
     context: context,
     builder: (context) {
@@ -20,7 +19,7 @@ Future<dynamic> showDialogSuccessfulRegister(
             onPressed: () {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                  builder: (context) => HomePage(currentPage: 1, user: user),
+                  builder: (context) => HomePage(currentPage: 1),
                 ),
               );
               function();

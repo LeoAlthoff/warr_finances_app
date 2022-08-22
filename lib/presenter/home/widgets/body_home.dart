@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../shared/utils/database_helper.dart';
@@ -8,10 +7,11 @@ import 'balance_container.dart';
 import 'main_container_home.dart';
 
 class BodyHome extends StatefulWidget {
-  final User user;
   final Function? callback;
-  const BodyHome({Key? key, this.callback, required this.user})
-      : super(key: key);
+  const BodyHome({
+    Key? key,
+    this.callback,
+  }) : super(key: key);
 
   @override
   State<BodyHome> createState() => _BodyHomeState();
@@ -119,7 +119,6 @@ class _BodyHomeState extends State<BodyHome> {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) => HomePage(
-                                        user: widget.user,
                                         currentPage: 1,
                                         id: snapshot.data!['operation']![index]
                                             ['id'],
@@ -184,9 +183,7 @@ class _BodyHomeState extends State<BodyHome> {
                                                   .pushReplacement(
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                      HomePage(
-                                                          currentPage: 0,
-                                                          user: widget.user),
+                                                      HomePage(currentPage: 0),
                                                 ),
                                               );
 

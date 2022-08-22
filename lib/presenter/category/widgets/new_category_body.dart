@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
@@ -9,10 +8,8 @@ import '../../../shared/widgets/input_text_container.dart';
 import '../../home/home_page.dart';
 
 class NewCategoryBody extends StatefulWidget {
-  final User user;
   const NewCategoryBody({
     Key? key,
-    required this.user,
   }) : super(key: key);
 
   @override
@@ -94,10 +91,11 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
       isSelected[indexIcon] = false;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => HomePage(currentPage: 1, user: widget.user),
+          builder: (context) => HomePage(
+            currentPage: 1,
+          ),
         ),
       );
-      // Navigator.of(context).pop();
     }
   }
 

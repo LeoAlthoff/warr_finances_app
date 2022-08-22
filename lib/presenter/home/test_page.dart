@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../shared/utils/database_helper.dart';
 
-// ignore: must_be_immutable
 class TestPage extends StatelessWidget {
   const TestPage({Key? key}) : super(key: key);
 
