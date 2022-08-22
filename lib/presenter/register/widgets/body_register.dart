@@ -1,4 +1,3 @@
-import 'package:date_time_picker/date_time_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +8,7 @@ import '../../../shared/widgets/input_text_container.dart';
 import '../../category/new_category_page.dart';
 import '../utils/show_dialog_cancel_edit.dart';
 import '../utils/show_dialog_successful.dart';
+import 'date_time_picker_container.dart';
 import 'dialog_invalid_info.dart';
 import 'toggle_buttons_register.dart';
 
@@ -42,11 +42,7 @@ class _BodyRegisterState extends State<BodyRegister> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.id != null && !getEditValues) {
-      getEditValues = true;
-      isEditing = true;
-      setEdit();
-    }
+    checkEditing();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -145,36 +141,7 @@ class _BodyRegisterState extends State<BodyRegister> {
           ),
         ),
         const SizedBox(height: 15),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          margin: const EdgeInsets.symmetric(
-            horizontal: 30,
-            vertical: 5,
-          ),
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            border: Border.all(
-              color: isDark(context) ? Colors.white38 : Colors.black38,
-            ),
-          ),
-          child: DateTimePicker(
-            decoration: const InputDecoration(
-              hintText: 'Data',
-              border: InputBorder.none,
-              focusedBorder: InputBorder.none,
-              enabledBorder: InputBorder.none,
-              errorBorder: InputBorder.none,
-              disabledBorder: InputBorder.none,
-            ),
-            controller: data,
-            firstDate: DateTime(2000),
-            lastDate: DateTime(2100),
-            locale: const Locale('pt', 'BR'),
-          ),
-        ),
+        DateTimePickerContainer(data: data),
         const SizedBox(height: 15),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -262,6 +229,14 @@ class _BodyRegisterState extends State<BodyRegister> {
       return 0;
     }
     return -1;
+  }
+
+  void checkEditing() {
+    if (widget.id != null && !getEditValues) {
+      getEditValues = true;
+      isEditing = true;
+      setEdit();
+    }
   }
 
   Future<void> setEdit() async {
