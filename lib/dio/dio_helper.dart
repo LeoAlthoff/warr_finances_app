@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
-import '../shared/models/category_model.dart';
-import '../shared/models/operation_model.dart';
+
+import 'model/category_model.dart';
+import 'model/operation_model.dart';
 import 'model/user_dto.dart';
 import 'model/user_model.dart';
 

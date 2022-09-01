@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_teste_app/dio/dio_helper.dart';
 
+import '../../../dio/model/operation_model.dart';
 import '../../../shared/utils/date_formater.dart';
 import '../home_page.dart';
 import 'balance_container.dart';
@@ -17,11 +19,11 @@ class FutureAllOperations extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Map<String, List<Map<String, dynamic>>>>(
+    return FutureBuilder<List<OperationModel>>(
       //TODO: Implement dio (API)
-      // future: DatabaseHelper.instance.selectContainer(),
+      future: DioHelper.getOperations(DateTime.now(), 1),
       builder: ((context,
-          AsyncSnapshot<Map<String, List<Map<String, dynamic>>>> snapshot) {
+          AsyncSnapshot snapshot) {
         if (!snapshot.hasData) {
           return const Center(child: CircularProgressIndicator());
         }
@@ -29,7 +31,7 @@ class FutureAllOperations extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           shrinkWrap: true,
           padding: const EdgeInsets.all(8),
-          itemCount: snapshot.data!['operation']!.length,
+          itemCount: snapshot.data!.length,
           itemBuilder: (BuildContext context, int index) {
             if (snapshot.data!['operation'] == null) {
               return const Center(
