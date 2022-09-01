@@ -32,10 +32,17 @@ class DioHelper {
     dio.post("http://localhost:5185/api/User", data: user.toMap());
   }
 
-  static Future<UserModel> Login(UserDto userDto) async {
+  static Future<UserModel> login(UserDto userDto) async {
     Dio dio = Dio();
     Response result = await dio.post("http://localhost:5185/api/Access/Login",
         data: userDto.toMap());
     return result.data;
   }
+
+    //TODO selectSum()
+    //TODO createtOperation()
+    //TODO updateOperation()
+    //TODO GetCategoryByID()
+    
+
 }

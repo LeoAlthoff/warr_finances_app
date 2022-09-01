@@ -80,9 +80,9 @@ class _BodySummaryState extends State<BodySummary> {
           ),
         ),
         FutureBuilder(
-          future: DioHelper.getOperations(dateRaw, 1),   
-              // DatabaseHelper.instance.queryOperation(dateFormated),
-              // DatabaseHelper.instance.getColorsCategory(dateFormated)
+          future: DioHelper.getOperations(dateRaw, 1),
+          // DatabaseHelper.instance.queryOperation(dateFormated),
+          // DatabaseHelper.instance.getColorsCategory(dateFormated)
           builder: ((context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (!snapshot.hasData) {
               return const CircularProgressIndicator();
@@ -121,15 +121,14 @@ class _BodySummaryState extends State<BodySummary> {
         ),
         FutureBuilder(
           //TODO: Implement dio (API)
-          future: DioHelper.getOperations(dateRaw, 1),  
-          // future: DatabaseHelper.instance.queryForSummaryChart(dateFormated),
+          future: DioHelper.getOperations(dateRaw, 1),
+
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (!snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
             }
             if (snapshot.data.isEmpty) {
-              return Center(
-                  child: Lottie.asset('assets/lottie/not_found.json'));
+              return Center(child: Lottie.asset('assets/lottie/not_found.json'));
             }
             return ListView.builder(
               physics: const BouncingScrollPhysics(),
@@ -143,8 +142,7 @@ class _BodySummaryState extends State<BodySummary> {
                   );
                 }
                 return InfoChartSummary(
-                  icon: IconData(snapshot.data[index]['icon'],
-                      fontFamily: 'MaterialIcons'),
+                  icon: IconData(snapshot.data[index]['icon'], fontFamily: 'MaterialIcons'),
                   category: snapshot.data[index]['name'],
                   value: getCurrency(snapshot.data[index]['SUM(o.value)']),
                   colorIcon: Color(snapshot.data[index]['color']),
@@ -160,7 +158,7 @@ class _BodySummaryState extends State<BodySummary> {
   //  double getCategorySum(Future<List<OperationModel>> getOperations ) {
 
   //   for (var i = 0; i < ; i++) {
-      
+
   //   }
   //   return getOperations.map();
   // }
