@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
-import 'package:flutter_teste_app/presenter/login/widgets/reset_passaword_page.dart';
-import 'package:flutter_teste_app/presenter/login/widgets/sign_up_page.dart';
+import 'reset_passaword_page.dart';
+import 'sign_up_page.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lottie/lottie.dart';
 
