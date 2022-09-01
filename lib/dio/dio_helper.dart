@@ -20,11 +20,11 @@ class DioHelper {
     return list;
   }
 
-  static Future<Map> selectSum(int tipyOperation, DateTime date, int id) async {
+  static Future<Map> selectSum(DateTime date, int id) async {
     double positivos = 0;
     double negativos = 0;
     double sum = 0;
-    List<OperationModel> list = await getOperations(tipyOperation, date, id);
+    List<OperationModel> list = await getOperations(2, date, id);
     for (var model in list) {
       if (model.entry == 1) {
         positivos += (model.value);
@@ -74,10 +74,9 @@ class DioHelper {
     dio.delete("http://zuplae.vps-kinghost.net:8085/api/Operation/",
         data: operation.toMap());
   }
-    //TODO selectSum()
-    //TODO createtOperation()
-    //TODO updateOperation()
-    //TODO GetCategoryByID()
-    
+  //TODO selectSum()
+  //TODO createtOperation()
+  //TODO updateOperation()
+  //TODO GetCategoryByID()
 
 }
