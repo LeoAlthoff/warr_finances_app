@@ -1,5 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_teste_app/shared/utils/shared_preferences.dart';
 
 import '../../../shared/utils/is_dark.dart';
 import '../home_page.dart';
@@ -13,13 +13,14 @@ class AppBarHome extends StatelessWidget implements PreferredSizeWidget {
   final HomePage widget;
 
   Future<String> getTitleAppBar() async {
+    String? userName = SharedPreferencesHelper.prefs!.getString("UserName");
     switch (widget.currentPage) {
       case 1:
         return 'Cadastro';
       case 2:
         return 'Resumo por categoria';
       default:
-        return 'Olá, ${FirebaseAuth.instance.currentUser!.displayName}';
+        return 'Olá, $userName';
     }
   }
 

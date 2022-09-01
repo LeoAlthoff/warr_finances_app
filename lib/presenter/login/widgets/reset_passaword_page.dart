@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'input_widget_login_page.dart';
@@ -84,9 +83,11 @@ class ResetPassawordPage extends StatelessWidget {
                   height: 30,
                   child: ElevatedButton(
                     onPressed: () async {
-                      bool result =
-                          await resetPassword(emailController.text.trim());
-                      if (result) {
+                      //TODO adicionar reset
+                      // bool result =
+                      //     await resetPassword(emailController.text.trim());
+                      if (true) {
+                        //TODO adicionar result
                         showDialog(
                           context: context,
                           builder: (context) => AlertDialog(
@@ -147,12 +148,7 @@ class ResetPassawordPage extends StatelessWidget {
     );
   }
 
-  Future<bool> resetPassword(String email) async {
-    try {
-      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-      return true;
-    } on FirebaseAuthException {
-      return false;
-    }
-  }
+//   Future<bool> resetPassword(String email) async {//TODO fazer reset
+//   }
+// }
 }

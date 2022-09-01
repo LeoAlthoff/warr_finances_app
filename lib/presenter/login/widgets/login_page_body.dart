@@ -1,10 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
+import 'package:flutter_teste_app/dio/dio_helper.dart';
+import 'package:flutter_teste_app/dio/model/user_dto.dart';
+import 'package:flutter_teste_app/dio/model/user_model.dart';
+import '../../../shared/utils/shared_preferences.dart';
 import 'reset_passaword_page.dart';
 import 'sign_up_page.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../home/home_page.dart';
@@ -20,9 +22,6 @@ class BodyLoginPage extends StatefulWidget {
   @override
   State<BodyLoginPage> createState() => _BodyLoginPageState();
 }
-
-final FirebaseAuth auth = FirebaseAuth.instance;
-final GoogleSignIn googleSignIn = GoogleSignIn();
 
 class _BodyLoginPageState extends State<BodyLoginPage> {
   final emailController = TextEditingController();
@@ -101,104 +100,23 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
               SignInButton(
                 Buttons.Email,
                 onPressed: () async {
-                  try {
-                    String email = emailController.text.trim();
-                    String password = passwordController.text.trim();
-                    await auth.signInWithEmailAndPassword(
-                      email: email,
-                      password: password,
+                  UserDto user = UserDto(
+                    email: emailController.text,
+                    password: passwordController.text,
+                  );
+                  UserModel finalUser = await DioHelper.Login(user);
+
+                  if (finalUser == null) {
+                    //TODO fazer alert dialog
+                  } else {
+                    SharedPreferencesHelper.prefs!.setString(
+                      "UserName",
+                      finalUser.name,
                     );
-                    if (!mounted) return;
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => HomePage(),
-                      ),
+                    SharedPreferencesHelper.prefs!.setString(
+                      "UserEmail",
+                      finalUser.email,
                     );
-                  } on FirebaseAuthException catch (e) {
-                    if (e.code == 'user-not-found') {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: const Text('Usuário inexistente!'),
-                            actions: [
-                              TextButton(
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      const Color.fromRGBO(238, 46, 93, 1)),
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text(
-                                  'Ok',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              )
-                            ],
-                          );
-                        },
-                      );
-                    } else if (e.code == 'wrong-password') {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: const Text('Senha Incorreta!'),
-                            actions: [
-                              TextButton(
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      const Color.fromRGBO(238, 46, 93, 1)),
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text(
-                                  'Ok',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              )
-                            ],
-                          );
-                        },
-                      );
-                    } else if (e.code == 'invalid-email') {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: const Text('E-mail inválido!'),
-                            actions: [
-                              TextButton(
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      const Color.fromRGBO(238, 46, 93, 1)),
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text(
-                                  'Ok',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              )
-                            ],
-                          );
-                        },
-                      );
-                    }
-                  }
-                },
-                text: 'Entrar com E-mail',
-              ),
-              SignInButton(
-                Buttons.Google,
-                text: 'Entrar com Google',
-                onPressed: () async {
-                  User? user = await signInWithGoogle();
-                  if (user != null) {
-                    if (!mounted) return;
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (context) => HomePage(),
@@ -206,6 +124,7 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
                     );
                   }
                 },
+                text: 'Entrar com E-mail',
               ),
               const SizedBox(height: 10),
               TextButton(
@@ -227,21 +146,4 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
       ),
     );
   }
-}
-
-Future<User?> signInWithGoogle() async {
-  final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-
-  final GoogleSignInAuthentication? googleAuth =
-      await googleUser?.authentication;
-
-  if (googleAuth != null) {
-    final OAuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-    final userCredentials = await auth.signInWithCredential(credential);
-    return userCredentials.user;
-  }
-  return null;
 }

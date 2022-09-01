@@ -31,10 +31,22 @@ class DioHelper {
     dio.post("http://localhost:5185/api/User", data: user.toMap());
   }
 
+  static Future updateUser(UserDto user) async {
+    Dio dio = Dio();
+    dio.put("path"); //TODO fazer update user2
+  }
+
   static Future<UserModel> Login(UserDto userDto) async {
     Dio dio = Dio();
-    Response result = await dio.post("http://localhost:5185/api/Access/Login",
+    Response result = await dio.post(
+        "http://zuplae.vps-kinghost.net:8085/api/Access/Login",
         data: userDto.toMap());
-    return result.data;
+    UserModel user = UserModel.fromMap(result.data);
+    return user;
+  }
+
+  static Future createOperation(OperationModel operation) async {
+    Dio dio = Dio();
+    await dio.post("http://localhost:5185/api/Operation", data: operation);
   }
 }

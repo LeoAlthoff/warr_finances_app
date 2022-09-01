@@ -1,9 +1,7 @@
 import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'input_widget_login_page.dart';
-import 'login_page_body.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -173,12 +171,12 @@ class _SignUpPageState extends State<SignUpPage> {
                           );
                         },
                       );
-                    } else {
-                      _register(
-                        emailController.text.trim(),
-                        passwordController.text.trim(),
-                        nameController.text.trim(),
-                      );
+                      // } else {//register
+                      //   _register(
+                      //     emailController.text.trim(),
+                      //     passwordController.text.trim(),
+                      //     nameController.text.trim(),
+                      //   );
                     }
                   },
                   style: ButtonStyle(
@@ -197,86 +195,5 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
       ),
     );
-  }
-
-  _register(String email, String password, String displayName) async {
-    try {
-      UserCredential result = await auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      User user = result.user!;
-      await user.updateDisplayName(displayName);
-      if (!mounted) return;
-      Navigator.of(context).pop();
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Cadastro realizado com sucesso!'),
-          actions: [
-            TextButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
-                  const Color.fromRGBO(238, 46, 93, 1),
-                ),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text(
-                'Ok',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ],
-        ),
-      );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('A senha é muito fraca!'),
-            actions: [
-              TextButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                    const Color.fromRGBO(238, 46, 93, 1),
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text(
-                  'Ok',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ],
-          ),
-        );
-      } else if (e.code == 'email-already-in-use') {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('Já existe uma conta com este e-mail!'),
-            actions: [
-              TextButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                    const Color.fromRGBO(238, 46, 93, 1),
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text(
-                  'Ok',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ],
-          ),
-        );
-      }
-    }
   }
 }
