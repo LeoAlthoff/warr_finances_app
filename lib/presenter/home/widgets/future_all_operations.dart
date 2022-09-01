@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../shared/utils/database_helper.dart';
 import '../../../shared/utils/date_formater.dart';
 import '../home_page.dart';
 import 'balance_container.dart';
@@ -19,7 +18,8 @@ class FutureAllOperations extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Map<String, List<Map<String, dynamic>>>>(
-      future: DatabaseHelper.instance.selectContainer(),
+      //TODO: Implement dio (API)
+      // future: DatabaseHelper.instance.selectContainer(),
       builder: ((context,
           AsyncSnapshot<Map<String, List<Map<String, dynamic>>>> snapshot) {
         if (!snapshot.hasData) {
@@ -120,10 +120,11 @@ class FutureAllOperations extends StatelessWidget {
                                         ),
                                       ),
                                       onPressed: () async {
-                                        await DatabaseHelper.instance
-                                            .deleteOperation(snapshot
-                                                    .data!['operation']![index]
-                                                ['id']);
+                                        //TODO: Implement dio (API)
+                                        // await DatabaseHelper.instance
+                                        //     .deleteOperation(snapshot
+                                        //             .data!['operation']![index]
+                                        //         ['id']);
                                         if (!mounted) return;
                                         Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(

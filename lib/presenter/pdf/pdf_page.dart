@@ -6,8 +6,6 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
-import '../../shared/utils/database_helper.dart';
-import '../../shared/utils/date_formater.dart';
 
 class ShowPdf extends StatelessWidget {
   const ShowPdf(this.title, {Key? key}) : super(key: key);
@@ -48,18 +46,21 @@ class ShowPdf extends StatelessWidget {
   Future<Uint8List> _generatePdf(PdfPageFormat format) async {
     final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
     final font = await PdfGoogleFonts.nunitoExtraLight();
-    final operations = await DatabaseHelper.instance.selectContainer();
+        //TODO: Implement dio (API)
+    // final operations = await DatabaseHelper.instance.selectContainer();
     final iconPng =
         (await rootBundle.load('assets/images/icon.png')).buffer.asUint8List();
 
     int pageSize = 35;
-    int pages = operations['operation']!.length ~/ pageSize;
-    int lastPageSize = operations['operation']!.length % pageSize;
+        //TODO: Implement dio (API)
+    // int pages = operations['operation']!.length ~/ pageSize;
+   // int lastPageSize = operations['operation']!.length % pageSize;
 
     int isLastPage(int i) {
-      if (i == pages) {
-        return lastPageSize;
-      }
+          //TODO: Implement dio (API)
+      // if (i == pages) {
+      //   return lastPageSize;
+      // }
       return pageSize;
     }
 
@@ -67,115 +68,115 @@ class ShowPdf extends StatelessWidget {
       return index + (i * (pageSize));
     }
 
-    for (int i = 0; i <= pages; i++) {
-      pdf.addPage(
-        pw.Page(
-          pageFormat: format,
-          build: (context) {
-            return pw.Padding(
-              padding: const pw.EdgeInsets.all(32),
-              child: pw.Column(
-                crossAxisAlignment: pw.CrossAxisAlignment.start,
-                children: [
-                  pw.Row(
-                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                    children: [
-                      pw.Image(
-                        pw.MemoryImage(iconPng),
-                        fit: pw.BoxFit.cover,
-                        height: 50,
-                        width: 50,
-                      ),
-                      pw.Column(
-                        crossAxisAlignment: pw.CrossAxisAlignment.end,
-                        children: [
-                          pw.Text(
-                            'Warr finances',
-                            style: pw.TextStyle(
-                              fontWeight: pw.FontWeight.bold,
-                              font: font,
-                              fontSize: 20,
-                            ),
-                          ),
-                          pw.Text(
-                            'Extrato',
-                            style: pw.TextStyle(
-                              font: font,
-                              fontSize: 15,
-                            ),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                  pw.SizedBox(height: 30),
-                  pw.Container(
-                    padding: const pw.EdgeInsets.all(16),
-                    decoration: pw.BoxDecoration(
-                      border: pw.Border.all(color: PdfColors.black, width: 1),
-                    ),
-                    child: pw.Row(
-                      mainAxisAlignment: pw.MainAxisAlignment.spaceAround,
-                      children: [
-                        pw.ListView.builder(
-                          itemCount: isLastPage(i),
-                          itemBuilder: (context, int index) {
-                            return pw.Container(
-                              color: index % 2 == 0
-                                  ? PdfColors.pink100
-                                  : PdfColors.white,
-                              child: pw.Text(
-                                '   ${operations['operation']![getIndex(index, i)]['name']}   ',
-                                style: pw.TextStyle(
-                                  font: font,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                        pw.ListView.builder(
-                          itemCount: isLastPage(i),
-                          itemBuilder: (context, int index) {
-                            return pw.Container(
-                              color: index % 2 == 0
-                                  ? PdfColors.pink100
-                                  : PdfColors.white,
-                              child: pw.Text(
-                                '   ${operations['operation']![getIndex(index, i)]['entry'] == 1 ? ' ' : '-'}'
-                                'R\$ ${operations['operation']![getIndex(index, i)]['value']}   ',
-                                style: pw.TextStyle(
-                                  font: font,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                        pw.ListView.builder(
-                          itemCount: isLastPage(i),
-                          itemBuilder: (context, int index) {
-                            return pw.Container(
-                              color: index % 2 == 0
-                                  ? PdfColors.pink100
-                                  : PdfColors.white,
-                              child: pw.Text(
-                                '   ${formatDate(operations['operation']![getIndex(index, i)]['date'])}   ',
-                                style: pw.TextStyle(
-                                  font: font,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
-      );
-    }
+    // for (int i = 0; i <= pages; i++) {
+    //   pdf.addPage(
+    //     pw.Page(
+    //       pageFormat: format,
+    //       build: (context) {
+    //         return pw.Padding(
+    //           padding: const pw.EdgeInsets.all(32),
+    //           child: pw.Column(
+    //             crossAxisAlignment: pw.CrossAxisAlignment.start,
+    //             children: [
+    //               pw.Row(
+    //                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+    //                 children: [
+    //                   pw.Image(
+    //                     pw.MemoryImage(iconPng),
+    //                     fit: pw.BoxFit.cover,
+    //                     height: 50,
+    //                     width: 50,
+    //                   ),
+    //                   pw.Column(
+    //                     crossAxisAlignment: pw.CrossAxisAlignment.end,
+    //                     children: [
+    //                       pw.Text(
+    //                         'Warr finances',
+    //                         style: pw.TextStyle(
+    //                           fontWeight: pw.FontWeight.bold,
+    //                           font: font,
+    //                           fontSize: 20,
+    //                         ),
+    //                       ),
+    //                       pw.Text(
+    //                         'Extrato',
+    //                         style: pw.TextStyle(
+    //                           font: font,
+    //                           fontSize: 15,
+    //                         ),
+    //                       )
+    //                     ],
+    //                   )
+    //                 ],
+    //               ),
+    //               pw.SizedBox(height: 30),
+    //               pw.Container(
+    //                 padding: const pw.EdgeInsets.all(16),
+    //                 decoration: pw.BoxDecoration(
+    //                   border: pw.Border.all(color: PdfColors.black, width: 1),
+    //                 ),
+    //                 child: pw.Row(
+    //                   mainAxisAlignment: pw.MainAxisAlignment.spaceAround,
+    //                   children: [
+    //                     pw.ListView.builder(
+    //                       itemCount: isLastPage(i),
+    //                       itemBuilder: (context, int index) {
+    //                         return pw.Container(
+    //                           color: index % 2 == 0
+    //                               ? PdfColors.pink100
+    //                               : PdfColors.white,
+    //                           child: pw.Text(
+    //                             '   ${operations['operation']![getIndex(index, i)]['name']}   ',
+    //                             style: pw.TextStyle(
+    //                               font: font,
+    //                             ),
+    //                           ),
+    //                         );
+    //                       },
+    //                     ),
+    //                     pw.ListView.builder(
+    //                       itemCount: isLastPage(i),
+    //                       itemBuilder: (context, int index) {
+    //                         return pw.Container(
+    //                           color: index % 2 == 0
+    //                               ? PdfColors.pink100
+    //                               : PdfColors.white,
+    //                           child: pw.Text(
+    //                             '   ${operations['operation']![getIndex(index, i)]['entry'] == 1 ? ' ' : '-'}'
+    //                             'R\$ ${operations['operation']![getIndex(index, i)]['value']}   ',
+    //                             style: pw.TextStyle(
+    //                               font: font,
+    //                             ),
+    //                           ),
+    //                         );
+    //                       },
+    //                     ),
+    //                     pw.ListView.builder(
+    //                       itemCount: isLastPage(i),
+    //                       itemBuilder: (context, int index) {
+    //                         return pw.Container(
+    //                           color: index % 2 == 0
+    //                               ? PdfColors.pink100
+    //                               : PdfColors.white,
+    //                           child: pw.Text(
+    //                             '   ${formatDate(operations['operation']![getIndex(index, i)]['date'])}   ',
+    //                             style: pw.TextStyle(
+    //                               font: font,
+    //                             ),
+    //                           ),
+    //                         );
+    //                       },
+    //                     ),
+    //                   ],
+    //                 ),
+    //               ),
+    //             ],
+    //           ),
+    //         );
+    //       },
+    //     ),
+    //   );
+    // }
     return pdf.save();
   }
 }

@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pie_chart/pie_chart.dart';
 
-import '../../../shared/utils/database_helper.dart';
 import '../../../shared/utils/format_money.dart';
 import '../../../shared/utils/is_dark.dart';
 import 'info_chart_summary.dart';
@@ -82,8 +81,9 @@ class _BodySummaryState extends State<BodySummary> {
         FutureBuilder(
           future: Future.wait(
             [
-              DatabaseHelper.instance.queryOperation(dateFormated),
-              DatabaseHelper.instance.getColorsCategory(dateFormated)
+              //TODO: Implement dio (API)
+              // DatabaseHelper.instance.queryOperation(dateFormated),
+              // DatabaseHelper.instance.getColorsCategory(dateFormated)
             ],
           ),
           builder: ((context, AsyncSnapshot<List<dynamic>> snapshot) {
@@ -123,7 +123,8 @@ class _BodySummaryState extends State<BodySummary> {
           height: 15,
         ),
         FutureBuilder(
-          future: DatabaseHelper.instance.queryForSummaryChart(dateFormated),
+          //TODO: Implement dio (API)
+          // future: DatabaseHelper.instance.queryForSummaryChart(dateFormated),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (!snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());

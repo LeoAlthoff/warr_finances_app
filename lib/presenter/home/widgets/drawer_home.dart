@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../config.dart';
-import '../../../shared/utils/database_helper.dart';
 import '../../../shared/utils/is_dark.dart';
 import '../../login/widgets/login_page.dart';
 import '../../pdf/pdf_page.dart';
@@ -112,7 +111,8 @@ class DrawerHome extends StatelessWidget {
                             const Color.fromRGBO(238, 46, 93, 1)),
                       ),
                       onPressed: () async {
-                        DatabaseHelper.instance.deleteAllOperations();
+                        //TODO: Implement dio (API)
+                        // DatabaseHelper.instance.deleteAllOperations();
                         callback;
                         Navigator.of(context).pop();
                         await Navigator.of(context).pushReplacement(

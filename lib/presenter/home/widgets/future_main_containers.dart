@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../shared/utils/database_helper.dart';
 import 'main_container_home.dart';
 
 class FutureMainContainers extends StatelessWidget {
@@ -11,7 +10,8 @@ class FutureMainContainers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: DatabaseHelper.instance.selectSum(),
+          //TODO: Implement dio (API)
+      //future: DatabaseHelper.instance.selectSum(),
       builder: ((context, AsyncSnapshot snapshot) {
         if (!snapshot.hasData) {
           return const Center(child: CircularProgressIndicator());
