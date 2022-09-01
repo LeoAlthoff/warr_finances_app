@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_teste_app/dio/model/category_model.dart';
 
 
+import '../../../dio/dio_helper.dart';
 import '../../../shared/utils/date_formater.dart';
 import '../../../shared/utils/is_dark.dart';
 import '../../../shared/widgets/input_text_container.dart';
@@ -77,12 +79,13 @@ class _BodyRegisterState extends State<BodyRegister> {
               color: isDark(context) ? Colors.white38 : Colors.black38,
             ),
           ),
-          child: FutureBuilder<List<Map<String, dynamic>>>(
+          child: FutureBuilder<List<CategoryModel>>(
                 //TODO: Implement dio (API)            
             // future: DatabaseHelper.instance.queryCategory(),
+            future: DioHelper.getAllCategories(1),
             builder: (
               context,
-              AsyncSnapshot<List<Map<String, dynamic>>> snapshot,
+              AsyncSnapshot<List<CategoryModel>> snapshot,
             ) {
               if (!snapshot.hasData || (category.isEmpty && categorySelected)) {
                 return const CircularProgressIndicator();
@@ -95,11 +98,11 @@ class _BodyRegisterState extends State<BodyRegister> {
                   value: categorySelected ? category : null,
                   items: snapshot.data!
                       .map<DropdownMenuItem<String>>(
-                        (Map<String, dynamic> value) =>
+                        (CategoryModel value) =>
                             DropdownMenuItem<String>(
-                          value: value['name'],
+                          value: value.name,
                           child: Text(
-                            value['name'],
+                            value.name,
                           ),
                         ),
                       )
@@ -229,6 +232,7 @@ class _BodyRegisterState extends State<BodyRegister> {
   }
 
   Future<void> setEdit() async {
+    //TODO: implement selectOperationById
     //TODO: Implement dio (API)
     // List list = await DatabaseHelper.instance.selectOperationById(widget.id!);
     // operationNameController.text = list[0]['name'];
