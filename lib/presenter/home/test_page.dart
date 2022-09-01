@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../shared/utils/database_helper.dart';
-
 class TestPage extends StatelessWidget {
   const TestPage({Key? key}) : super(key: key);
 
@@ -15,13 +13,15 @@ class TestPage extends StatelessWidget {
         children: [
           TextButton(
             onPressed: () async {
-              await DatabaseHelper.instance.queryCategoryForSummary('06/2022');
+              //TODO: Implement dio (API)
+             
             },
             child: const Text("insert Operation"),
           ),
           TextButton(
             onPressed: () {
-              DatabaseHelper.instance.selectOperation();
+                  //TODO: Implement dio (API)
+             
             },
             child: const Text("select Operation"),
           ),
@@ -31,31 +31,31 @@ class TestPage extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              DatabaseHelper.instance.deleteCategory(2);
+                  //TODO: Implement dio (API)
             },
             child: const Text("Delete Operation"),
           ),
           TextButton(
             onPressed: () {
-              DatabaseHelper.instance.queryCategory();
+                  //TODO: Implement dio (API)
             },
             child: const Text("query Category"),
           ),
           TextButton(
             onPressed: () {
-              DatabaseHelper.instance.deleteAllData();
+                  //TODO: Implement dio (API)
             },
             child: const Text("Delete Database"),
           ),
           TextButton(
             onPressed: () {
-              DatabaseHelper.instance.queryOperation("07/2022");
+                  //TODO: Implement dio (API)
             },
             child: const Text("Query Operation"),
           ),
           TextButton(
             onPressed: () {
-              DatabaseHelper.instance.queryForSummaryChart("06/2022");
+                  //TODO: Implement dio (API)
             },
             child: const Text("Teste"),
           ),

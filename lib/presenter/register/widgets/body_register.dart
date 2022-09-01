@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../shared/utils/database_helper.dart';
+
 import '../../../shared/utils/date_formater.dart';
 import '../../../shared/utils/is_dark.dart';
 import '../../../shared/widgets/input_text_container.dart';
@@ -78,7 +78,8 @@ class _BodyRegisterState extends State<BodyRegister> {
             ),
           ),
           child: FutureBuilder<List<Map<String, dynamic>>>(
-            future: DatabaseHelper.instance.queryCategory(),
+                //TODO: Implement dio (API)            
+            // future: DatabaseHelper.instance.queryCategory(),
             builder: (
               context,
               AsyncSnapshot<List<Map<String, dynamic>>> snapshot,
@@ -228,20 +229,22 @@ class _BodyRegisterState extends State<BodyRegister> {
   }
 
   Future<void> setEdit() async {
-    List list = await DatabaseHelper.instance.selectOperationById(widget.id!);
-    operationNameController.text = list[0]['name'];
-    priceController.text = list[0]['value'].toString();
-    data.text = formatDateTimeForString(list[0]['date']);
+    //TODO: Implement dio (API)
+    // List list = await DatabaseHelper.instance.selectOperationById(widget.id!);
+    // operationNameController.text = list[0]['name'];
+    // priceController.text = list[0]['value'].toString();
+    // data.text = formatDateTimeForString(list[0]['date']);
     categorySelected = true;
-    category =
-        await DatabaseHelper.instance.getCategoryName(list[0]['categoryId']);
-    if (list[0]['entry'] == 1) {
-      isSelected[0] = true;
-      isSelected[1] = false;
-    } else {
-      isSelected[0] = false;
-      isSelected[1] = true;
-    }
+    //TODO: Implement dio (API)
+    // category =
+    //     await DatabaseHelper.instance.getCategoryName(list[0]['categoryId']);
+    // if (list[0]['entry'] == 1) {
+    //   isSelected[0] = true;
+    //   isSelected[1] = false;
+    // } else {
+    //   isSelected[0] = false;
+    //   isSelected[1] = true;
+    // }
     setState(() {});
   }
 
@@ -259,26 +262,29 @@ class _BodyRegisterState extends State<BodyRegister> {
     double value = double.parse(priceController.text);
     int operation = getOperation();
     String date = formatStringForDateTimeParse(data.text);
-    int categoryId = await DatabaseHelper.instance.selectCategory(category);
+    //TODO: Implement dio (API)
+    //int categoryId = await DatabaseHelper.instance.selectCategory(category);
 
     if (isEditing) {
-      DatabaseHelper.instance.updateOperation(
-        name,
-        value,
-        operation,
-        date,
-        categoryId,
-        widget.id!,
-      );
+      //TODO: Implement dio (API)
+      // DatabaseHelper.instance.updateOperation(
+      //   name,
+      //   value,
+      //   operation,
+      //   date,
+      //   categoryId,
+      //   widget.id!,
+      // );
       isEditing = false;
     } else {
-      DatabaseHelper.instance.insertOperation(
-        value,
-        name,
-        operation,
-        date,
-        categoryId,
-      );
+      //TODO: Implement dio (API)
+      // DatabaseHelper.instance.insertOperation(
+      //   value,
+      //   name,
+      //   operation,
+      //   date,
+      //   categoryId,
+      // );
     }
   }
 
