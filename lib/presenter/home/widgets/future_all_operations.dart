@@ -20,10 +20,9 @@ class FutureAllOperations extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<OperationModel>>(
-      //TODO: Implement dio (API)
+      // TODO: Implement dio (API)
       future: DioHelper.getOperations(DateTime.now(), 1),
-      builder: ((context,
-          AsyncSnapshot snapshot) {
+      builder: ((context, AsyncSnapshot<List<OperationModel>> snapshot) {
         if (!snapshot.hasData) {
           return const Center(child: CircularProgressIndicator());
         }
@@ -33,7 +32,7 @@ class FutureAllOperations extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           itemCount: snapshot.data!.length,
           itemBuilder: (BuildContext context, int index) {
-            if (snapshot.data!['operation'] == null) {
+            if (snapshot.data == null) {
               return const Center(
                 child: Text('Nenhuma operação cadastrada'),
               );
@@ -72,7 +71,7 @@ class FutureAllOperations extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (context) => HomePage(
                                   currentPage: 1,
-                                  id: snapshot.data!['operation']![index]['id'],
+                                  id: int.parse(snapshot.data![index].id),
                                   callback: widget.callback,
                                 ),
                               ),
@@ -123,10 +122,7 @@ class FutureAllOperations extends StatelessWidget {
                                       ),
                                       onPressed: () async {
                                         //TODO: Implement dio (API)
-                                        // await DatabaseHelper.instance
-                                        //     .deleteOperation(snapshot
-                                        //             .data!['operation']![index]
-                                        //         ['id']);
+                                        DioHelper.deleteOperation(snapshot.data![index]);
                                         if (!mounted) return;
                                         Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
@@ -158,20 +154,13 @@ class FutureAllOperations extends StatelessWidget {
                 );
               },
               child: BalanceContainer(
-                expense: snapshot.data!['operation']![index]['entry'] == 1
-                    ? false
-                    : true,
-                origin: snapshot.data!['operation']![index]['name'],
-                value: snapshot.data!['operation']![index]['value'],
-                icon: IconData(
-                    snapshot.data!['category']![
-                        snapshot.data!['operation']![index]['categoryId'] -
-                            1]['icon'],
+                expense: snapshot.data![index].entry == true ? false : true,
+                origin: snapshot.data![index].name,
+                value: snapshot.data![index].value,
+                icon: IconData(snapshot.data![index].category.icon,
                     fontFamily: 'MaterialIcons'),
-                source: snapshot.data!['category']![
-                        snapshot.data!['operation']![index]['categoryId'] - 1]
-                    ['name'],
-                time: formatDate(snapshot.data!['operation']![index]['date']),
+                source: snapshot.data![index].category.name,
+                time: formatDate(snapshot.data![index].date.toString()),
               ),
             );
           },
