@@ -20,8 +20,7 @@ class FutureAllOperations extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<OperationModel>>(
-      // TODO: Implement dio (API)
-      future: DioHelper.getOperations(DateTime.now(), 1),
+      future: DioHelper.getOperations(2, DateTime.now(), 1),
       builder: ((context, AsyncSnapshot<List<OperationModel>> snapshot) {
         if (!snapshot.hasData) {
           return const Center(child: CircularProgressIndicator());
@@ -71,7 +70,7 @@ class FutureAllOperations extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (context) => HomePage(
                                   currentPage: 1,
-                                  id: int.parse(snapshot.data![index].id),
+                                  id: snapshot.data![index].id,
                                   callback: widget.callback,
                                 ),
                               ),
@@ -121,8 +120,8 @@ class FutureAllOperations extends StatelessWidget {
                                         ),
                                       ),
                                       onPressed: () async {
-                                        //TODO: Implement dio (API)
-                                        DioHelper.deleteOperation(snapshot.data![index]);
+                                        DioHelper.deleteOperation(
+                                            snapshot.data![index]);
                                         if (!mounted) return;
                                         Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(

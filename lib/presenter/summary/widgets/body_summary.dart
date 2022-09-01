@@ -80,9 +80,9 @@ class _BodySummaryState extends State<BodySummary> {
           ),
         ),
         FutureBuilder(
-          future: DioHelper.getOperations(dateRaw, 1),   
-              // DatabaseHelper.instance.queryOperation(dateFormated),
-              // DatabaseHelper.instance.getColorsCategory(dateFormated)
+          future: DioHelper.getOperations(2, dateRaw, 1),
+          // DatabaseHelper.instance.queryOperation(dateFormated),
+          // DatabaseHelper.instance.getColorsCategory(dateFormated)
           builder: ((context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (!snapshot.hasData) {
               return const CircularProgressIndicator();
@@ -121,7 +121,7 @@ class _BodySummaryState extends State<BodySummary> {
         ),
         FutureBuilder(
           //TODO: Implement dio (API)
-          future: DioHelper.getOperations(dateRaw, 1),  
+          future: DioHelper.getOperations(2, dateRaw, 1),
           // future: DatabaseHelper.instance.queryForSummaryChart(dateFormated),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (!snapshot.hasData) {
@@ -160,7 +160,7 @@ class _BodySummaryState extends State<BodySummary> {
   //  double getCategorySum(Future<List<OperationModel>> getOperations ) {
 
   //   for (var i = 0; i < ; i++) {
-      
+
   //   }
   //   return getOperations.map();
   // }
