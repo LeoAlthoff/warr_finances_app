@@ -13,7 +13,7 @@ class FutureMainContainers extends StatelessWidget {
     return FutureBuilder(
           //TODO: Implement dio (API)
       //future: DatabaseHelper.instance.selectSum(),
-      future: DioHelper.selectSum(tipyOperation, date, id),
+      // future: DioHelper.selectSum(tipyOperation, date, id),
       builder: ((context, AsyncSnapshot snapshot) {
         if (!snapshot.hasData) {
           return const Center(child: CircularProgressIndicator());

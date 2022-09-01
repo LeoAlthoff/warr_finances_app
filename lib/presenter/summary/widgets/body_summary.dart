@@ -81,6 +81,7 @@ class _BodySummaryState extends State<BodySummary> {
         ),
         FutureBuilder(
           future: DioHelper.getOperations(2, dateRaw, 1),
+
           // DatabaseHelper.instance.queryOperation(dateFormated),
           // DatabaseHelper.instance.getColorsCategory(dateFormated)
           builder: ((context, AsyncSnapshot<List<dynamic>> snapshot) {

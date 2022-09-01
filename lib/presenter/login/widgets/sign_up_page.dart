@@ -1,9 +1,9 @@
 import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_teste_app/dio/dio_helper.dart';
+import 'package:flutter_teste_app/dio/model/user_model.dart';
 
 import 'input_widget_login_page.dart';
-import 'login_page_body.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -201,10 +201,12 @@ class _SignUpPageState extends State<SignUpPage> {
 
   _register(String email, String password, String displayName) async {
     try {
-      UserCredential result = await auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      User user = result.user!;
-      await user.updateDisplayName(displayName);
+
+      UserModel user = UserModel(id: null, name: displayName, email: email, password: password);
+      DioHelper.createUser(user);
+      //     email: email, password: password);
+      // User user = result.user!;
+      // await user.updateDisplayName(displayName);
       if (!mounted) return;
       Navigator.of(context).pop();
       showDialog(
@@ -229,12 +231,13 @@ class _SignUpPageState extends State<SignUpPage> {
           ],
         ),
       );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
+    } catch (e) {
+      if (passwordController.text.length < 6) {
+
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text('A senha é muito fraca!'),
+            title: const Text('A senha é fraca!'),
             actions: [
               TextButton(
                 style: ButtonStyle(
@@ -253,30 +256,11 @@ class _SignUpPageState extends State<SignUpPage> {
             ],
           ),
         );
-      } else if (e.code == 'email-already-in-use') {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('Já existe uma conta com este e-mail!'),
-            actions: [
-              TextButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                    const Color.fromRGBO(238, 46, 93, 1),
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text(
-                  'Ok',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ],
-          ),
-        );
-      }
+
+        //TODO adicionar verificação de e-mail já está em uso... (add aq e banco)
+        //TODO adicionar verificação senha fraca (add no banco de dados)
+
+      } 
     }
   }
 }

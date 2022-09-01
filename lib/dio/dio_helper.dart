@@ -61,7 +61,7 @@ class DioHelper {
         data: user.toMap());
   }
 
-  static Future<UserModel> Login(UserDto userDto) async {
+  static Future<UserModel> login(UserDto userDto) async {
     Dio dio = Dio();
     Response result = await dio.post(
         "http://zuplae.vps-kinghost.net:8085/api/Access/Login",
@@ -74,4 +74,10 @@ class DioHelper {
     dio.delete("http://zuplae.vps-kinghost.net:8085/api/Operation/",
         data: operation.toMap());
   }
+    //TODO selectSum()
+    //TODO createtOperation()
+    //TODO updateOperation()
+    //TODO GetCategoryByID()
+    
+
 }
