@@ -37,6 +37,8 @@ class _BodyRegisterState extends State<BodyRegister> {
 
   final FocusNode focusPrice = FocusNode();
 
+  DateTime dateRaw = DateTime.now();
+
   TextEditingController data =
       TextEditingController(text: 'Selecione uma data');
 
@@ -237,7 +239,14 @@ class _BodyRegisterState extends State<BodyRegister> {
     // operationNameController.text = list[0]['name'];
     // priceController.text = list[0]['value'].toString();
     // data.text = formatDateTimeForString(list[0]['date']);
+    //categorySelected = true;
+    List list = await DioHelper.getOperations(dateRaw, 1);
+    operationNameController.text = list[0]['name'];
+    priceController.text = list[0]['name'];
+    data.text = formatDateTimeForString(list[0]['date']);
     categorySelected = true;
+    
+    
     //TODO: Implement dio (API)
     // category =
     //     await DatabaseHelper.instance.getCategoryName(list[0]['categoryId']);
@@ -266,7 +275,8 @@ class _BodyRegisterState extends State<BodyRegister> {
     int operation = getOperation();
     String date = formatStringForDateTimeParse(data.text);
     //TODO: Implement dio (API)
-    //int categoryId = await DatabaseHelper.instance.selectCategory(category);
+    List<CategoryModel> category= await DioHelper.getAllCategories(0);
+    
    
 
     if (isEditing) {
