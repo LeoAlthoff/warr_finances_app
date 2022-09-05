@@ -1,18 +1,18 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_teste_app/dio/dio_helper.dart';
 
 import 'config.dart';
 import 'presenter/login/splash_screen_login/splash_screen_login_page.dart';
-
 import 'shared/utils/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPreferencesHelper.initializeSharedPreferencesHelper();
   await Firebase.initializeApp();
-      //TODO: Implement dio (API)
-  // DatabaseHelper();
+  DioHelper();
+
   runApp(const App());
 }
 

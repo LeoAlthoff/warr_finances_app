@@ -2,7 +2,7 @@ import 'dart:convert';
 
 class OperationModel {
   final String name;
-  final int value;
+  final double value;
   final bool entry;
   final String date;
   final int categoryId;
@@ -22,7 +22,7 @@ class OperationModel {
 
   OperationModel copyWith({
     String? name,
-    int? value,
+    double? value,
     bool? entry,
     String? date,
     int? categoryId,

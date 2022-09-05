@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_teste_app/dio/model/category_model.dart';
 
-
 import '../../../dio/dio_helper.dart';
 import '../../../shared/utils/date_formater.dart';
 import '../../../shared/utils/is_dark.dart';
@@ -282,13 +281,7 @@ class _BodyRegisterState extends State<BodyRegister> {
       isEditing = false;
     } else {
       //TODO: Implement dio (API)
-      // DatabaseHelper.instance.insertOperation(
-      //   value,
-      //   name,
-      //   operation,
-      //   date,
-      //   categoryId,
-      // );
+     //OperationModel operation  = OperationModel(name: name , value: value, entry: , date: date, categoryId: categoryId, category: category, userId:, id: null!);
     }
   }
 
