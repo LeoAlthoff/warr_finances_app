@@ -10,7 +10,7 @@ class OperationModel {
   final int categoryId;
   final CategoryModel? category;
   final int userId;
-  final int? id;
+  final int id;
   OperationModel({
     required this.name,
     required this.value,
@@ -19,7 +19,7 @@ class OperationModel {
     required this.categoryId,
     this.category,
     required this.userId,
-    this.id,
+    required this.id,
   });
 
   OperationModel copyWith({
@@ -50,7 +50,7 @@ class OperationModel {
     result.addAll({'name': name});
     result.addAll({'value': value});
     result.addAll({'entry': entry});
-    result.addAll({'date': date});
+    result.addAll({'date': date.toIso8601String()});
     result.addAll({'categoryId': categoryId});
     result.addAll({'category': category?.toMap()});
     result.addAll({'userId': userId});
@@ -61,6 +61,7 @@ class OperationModel {
 
   factory OperationModel.fromMap(Map<String, dynamic> map) {
     return OperationModel(
+      id: map['id']?.toInt() ?? 0,
       name: map['name'] ?? '',
       value: map['value']?.toDouble() ?? 0.0,
       entry: map['entry'] ?? false,
@@ -68,7 +69,6 @@ class OperationModel {
       categoryId: map['categoryId']?.toInt() ?? 0,
       category: CategoryModel.fromMap(map['category']),
       userId: map['userId']?.toInt() ?? 0,
-      id: map['id']?.toInt() ?? 0,
     );
   }
 

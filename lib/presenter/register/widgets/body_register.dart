@@ -111,7 +111,6 @@ class _BodyRegisterState extends State<BodyRegister> {
                   onChanged: (var newValue) {
                     categorySelected = true;
                     categoryId = newValue;
-                    print(newValue);
                     setState(() {});
                   },
                 ),
@@ -271,19 +270,17 @@ class _BodyRegisterState extends State<BodyRegister> {
     double value = double.parse(priceController.text);
     int operation = getOperation();
     DateTime date = DateFormat("yyyy-MM-dd HH:mm:ss").parse(data.text);
-    print(data.text);
-    //TODO: Implement dio (API)
-    //int categoryId = await DatabaseHelper.instance.selectCategory(category);
 
     if (isEditing) {
       DioHelper.updateOperation(
         OperationModel(
+          id: 0,
           name: name,
           value: value,
           date: date,
-          categoryId: 1,
+          categoryId: categoryId!,
           entry: getOperation() == 1 ? true : false,
-          userId: 15,
+          userId: 1,
         ),
       );
 
@@ -291,6 +288,7 @@ class _BodyRegisterState extends State<BodyRegister> {
     } else {
       DioHelper.createOperation(
         OperationModel(
+          id: 0,
           name: name,
           value: value,
           date: date,

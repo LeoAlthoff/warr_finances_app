@@ -77,8 +77,9 @@ class DioHelper {
 
   static Future<void> createOperation(OperationModel operation) async {
     Dio dio = Dio();
+    print(operation.toMap());
     dio.post("http://zuplae.vps-kinghost.net:8085/api/Operation",
-        data: operation.toMap());
+        data: operation.toJson());
   }
 
   static Future<void> updateOperation(OperationModel operation) async {
