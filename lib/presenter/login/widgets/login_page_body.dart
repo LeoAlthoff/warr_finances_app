@@ -104,7 +104,7 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
                     email: emailController.text,
                     password: passwordController.text,
                   );
-                  UserModel finalUser = await DioHelper.Login(user);
+                  UserModel finalUser = await DioHelper.login(user);
 
                   if (finalUser == null) {
                     //TODO fazer alert dialog
@@ -116,6 +116,10 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
                     SharedPreferencesHelper.prefs!.setString(
                       "UserEmail",
                       finalUser.email,
+                    );
+                    SharedPreferencesHelper.prefs!.setInt(
+                      "UserId",
+                      finalUser.id!,
                     );
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(

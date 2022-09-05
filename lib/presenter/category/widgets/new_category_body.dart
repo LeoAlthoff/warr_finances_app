@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
+import '../../../dio/dio_helper.dart';
+import '../../../dio/model/category_model.dart';
 import '../../../shared/utils/constants.dart';
-
 import '../../../shared/utils/get_color_bytheme.dart';
 import '../../../shared/widgets/input_text_container.dart';
 import '../../home/home_page.dart';
@@ -85,15 +86,24 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
         },
       );
     } else {
-          //TODO: Implement dio (API)
       // DatabaseHelper.instance.insertCategory(categoryController.text.toString(),
       //     currentColor.value, iconList[indexIcon].codePoint);
+
+      //TODO: Alterar Id do usuário
+
+      CategoryModel category = CategoryModel(
+        name: categoryController.text.toString(),
+        color: currentColor.value,
+        icon: iconList[indexIcon].codePoint,
+        id: 0,
+      );
+      DioHelper.createCategory(category);
 
       isSelected[indexIcon] = false;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => HomePage(
-            currentPage: 1,
+            currentPage: -1,
           ),
         ),
       );

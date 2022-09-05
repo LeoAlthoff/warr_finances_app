@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_teste_app/dio/dio_helper.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pie_chart/pie_chart.dart';
@@ -79,13 +80,10 @@ class _BodySummaryState extends State<BodySummary> {
           ),
         ),
         FutureBuilder(
-          future: Future.wait(
-            [
-              //TODO: Implement dio (API)
-              // DatabaseHelper.instance.queryOperation(dateFormated),
-              // DatabaseHelper.instance.getColorsCategory(dateFormated)
-            ],
-          ),
+          future: DioHelper.getOperations(2, dateRaw, 1),
+
+          // DatabaseHelper.instance.queryOperation(dateFormated),
+          // DatabaseHelper.instance.getColorsCategory(dateFormated)
           builder: ((context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (!snapshot.hasData) {
               return const CircularProgressIndicator();
@@ -124,6 +122,7 @@ class _BodySummaryState extends State<BodySummary> {
         ),
         FutureBuilder(
           //TODO: Implement dio (API)
+          future: DioHelper.getOperations(2, dateRaw, 1),
           // future: DatabaseHelper.instance.queryForSummaryChart(dateFormated),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (!snapshot.hasData) {
@@ -158,4 +157,12 @@ class _BodySummaryState extends State<BodySummary> {
       ],
     );
   }
+
+  //  double getCategorySum(Future<List<OperationModel>> getOperations ) {
+
+  //   for (var i = 0; i < ; i++) {
+
+  //   }
+  //   return getOperations.map();
+  // }
 }

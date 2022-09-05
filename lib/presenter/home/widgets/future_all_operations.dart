@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_teste_app/dio/dio_helper.dart';
 
+import '../../../dio/model/operation_model.dart';
 import '../../../shared/utils/date_formater.dart';
 import '../home_page.dart';
 import 'balance_container.dart';
@@ -17,11 +19,9 @@ class FutureAllOperations extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Map<String, List<Map<String, dynamic>>>>(
-      //TODO: Implement dio (API)
-      // future: DatabaseHelper.instance.selectContainer(),
-      builder: ((context,
-          AsyncSnapshot<Map<String, List<Map<String, dynamic>>>> snapshot) {
+    return FutureBuilder<List<OperationModel>>(
+      future: DioHelper.getOperations(2, DateTime.now(), 1),
+      builder: ((context, AsyncSnapshot<List<OperationModel>> snapshot) {
         if (!snapshot.hasData) {
           return const Center(child: CircularProgressIndicator());
         }
@@ -29,9 +29,9 @@ class FutureAllOperations extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           shrinkWrap: true,
           padding: const EdgeInsets.all(8),
-          itemCount: snapshot.data!['operation']!.length,
+          itemCount: snapshot.data!.length,
           itemBuilder: (BuildContext context, int index) {
-            if (snapshot.data!['operation'] == null) {
+            if (snapshot.data == null) {
               return const Center(
                 child: Text('Nenhuma operação cadastrada'),
               );
@@ -70,7 +70,7 @@ class FutureAllOperations extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (context) => HomePage(
                                   currentPage: 1,
-                                  id: snapshot.data!['operation']![index]['id'],
+                                  id: snapshot.data![index].id,
                                   callback: widget.callback,
                                 ),
                               ),
@@ -120,11 +120,8 @@ class FutureAllOperations extends StatelessWidget {
                                         ),
                                       ),
                                       onPressed: () async {
-                                        //TODO: Implement dio (API)
-                                        // await DatabaseHelper.instance
-                                        //     .deleteOperation(snapshot
-                                        //             .data!['operation']![index]
-                                        //         ['id']);
+                                        DioHelper.deleteOperation(
+                                            snapshot.data![index]);
                                         if (!mounted) return;
                                         Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
@@ -156,20 +153,13 @@ class FutureAllOperations extends StatelessWidget {
                 );
               },
               child: BalanceContainer(
-                expense: snapshot.data!['operation']![index]['entry'] == 1
-                    ? false
-                    : true,
-                origin: snapshot.data!['operation']![index]['name'],
-                value: snapshot.data!['operation']![index]['value'],
-                icon: IconData(
-                    snapshot.data!['category']![
-                        snapshot.data!['operation']![index]['categoryId'] -
-                            1]['icon'],
+                expense: snapshot.data![index].entry == true ? false : true,
+                origin: snapshot.data![index].name,
+                value: snapshot.data![index].value,
+                icon: IconData(snapshot.data![index].category.icon,
                     fontFamily: 'MaterialIcons'),
-                source: snapshot.data!['category']![
-                        snapshot.data!['operation']![index]['categoryId'] - 1]
-                    ['name'],
-                time: formatDate(snapshot.data!['operation']![index]['date']),
+                source: snapshot.data![index].category.name,
+                time: formatDate(snapshot.data![index].date.toString()),
               ),
             );
           },

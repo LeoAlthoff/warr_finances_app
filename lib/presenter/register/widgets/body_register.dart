@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_teste_app/dio/model/category_model.dart';
 
-
+import '../../../dio/dio_helper.dart';
 import '../../../shared/utils/date_formater.dart';
 import '../../../shared/utils/is_dark.dart';
+import '../../../shared/utils/shared_preferences.dart';
 import '../../../shared/widgets/input_text_container.dart';
 import '../../category/new_category_page.dart';
 import '../utils/show_dialog_cancel_edit.dart';
@@ -77,12 +79,13 @@ class _BodyRegisterState extends State<BodyRegister> {
               color: isDark(context) ? Colors.white38 : Colors.black38,
             ),
           ),
-          child: FutureBuilder<List<Map<String, dynamic>>>(
-                //TODO: Implement dio (API)            
-            // future: DatabaseHelper.instance.queryCategory(),
+          child: FutureBuilder<List<CategoryModel>>(
+            future: DioHelper.getAllCategories(
+              SharedPreferencesHelper.prefs!.getInt("UserId")!,
+            ),
             builder: (
               context,
-              AsyncSnapshot<List<Map<String, dynamic>>> snapshot,
+              AsyncSnapshot<List<CategoryModel>> snapshot,
             ) {
               if (!snapshot.hasData || (category.isEmpty && categorySelected)) {
                 return const CircularProgressIndicator();
@@ -95,11 +98,10 @@ class _BodyRegisterState extends State<BodyRegister> {
                   value: categorySelected ? category : null,
                   items: snapshot.data!
                       .map<DropdownMenuItem<String>>(
-                        (Map<String, dynamic> value) =>
-                            DropdownMenuItem<String>(
-                          value: value['name'],
+                        (CategoryModel value) => DropdownMenuItem<String>(
+                          value: value.name,
                           child: Text(
-                            value['name'],
+                            value.name,
                           ),
                         ),
                       )
@@ -229,6 +231,7 @@ class _BodyRegisterState extends State<BodyRegister> {
   }
 
   Future<void> setEdit() async {
+    //TODO: implement selectOperationById
     //TODO: Implement dio (API)
     // List list = await DatabaseHelper.instance.selectOperationById(widget.id!);
     // operationNameController.text = list[0]['name'];
