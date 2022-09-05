@@ -8,18 +8,18 @@ class OperationModel {
   final bool entry;
   final DateTime date;
   final int categoryId;
-  final CategoryModel category;
+  final CategoryModel? category;
   final int userId;
-  final int id;
+  final int? id;
   OperationModel({
     required this.name,
     required this.value,
     required this.entry,
     required this.date,
     required this.categoryId,
-    required this.category,
+    this.category,
     required this.userId,
-    required this.id,
+    this.id,
   });
 
   OperationModel copyWith({
@@ -52,7 +52,7 @@ class OperationModel {
     result.addAll({'entry': entry});
     result.addAll({'date': date});
     result.addAll({'categoryId': categoryId});
-    result.addAll({'category': category.toMap()});
+    result.addAll({'category': category?.toMap()});
     result.addAll({'userId': userId});
     result.addAll({'id': id});
 
