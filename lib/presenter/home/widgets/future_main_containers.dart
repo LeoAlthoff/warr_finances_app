@@ -11,12 +11,10 @@ class FutureMainContainers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime now = DateTime.now();
+    DateTime selectDate = DateTime.now();
 
     return FutureBuilder(
-      //TODO: Implement dio (API)
-      //future: DatabaseHelper.instance.selectSum(),
-      future: DioHelper.selectSum(now, 1),
+      future: DioHelper.selectSum(selectDate, 1),
       builder: ((context, AsyncSnapshot snapshot) {
         if (!snapshot.hasData) {
           return const Center(child: CircularProgressIndicator());
@@ -29,17 +27,22 @@ class FutureMainContainers extends StatelessWidget {
             children: [
               MainContainerHome(
                 index: 1,
-                subText: 'Última entrada dia 1º de julho',
+                subText: snapshot.data['lastEntryPositivo'] == null
+                    ? 'Nenhuma entrada cadastrada'
+                    : 'Última entrada dia ${DateFormat('dd', 'pt_BR').format(snapshot.data['lastEntryPositivo'])} de ${DateFormat('MMMM', 'pt_BR').format(snapshot.data['lastEntryPositivo'])}',
                 value: snapshot.data['entry'],
               ),
               MainContainerHome(
                 index: 2,
-                subText: 'Última entrada dia 22 de junho',
+                subText: snapshot.data['lastEntryNegativo'] == null
+                    ? 'Nenhuma saída cadastrada'
+                    : 'Última saída dia ${DateFormat('dd', 'pt_BR').format(snapshot.data['lastEntryNegativo'])} de ${DateFormat('MMMM', 'pt_BR').format(snapshot.data['lastEntryNegativo'])}',
                 value: snapshot.data['output'],
               ),
               MainContainerHome(
                 index: 3,
-                subText: 'Mês de ${DateFormat('MMMM', 'pt_BR').format(now)}',
+                subText:
+                    'Mês de ${DateFormat('MMMM', 'pt_BR').format(selectDate)}',
                 value: snapshot.data['sum'],
               ),
             ],

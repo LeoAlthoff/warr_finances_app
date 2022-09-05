@@ -44,6 +44,7 @@ class _AppState extends State<App> {
       supportedLocales: const [Locale('pt', 'BR')],
       title: 'Warr Finances',
       home: const SplashScreenLoginPage(),
+      // home: const LoginPage(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
