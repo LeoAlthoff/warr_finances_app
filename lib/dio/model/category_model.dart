@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class CategoryModel {
-  String id;
+  int id;
   String name;
   int color;
   int icon;
@@ -25,7 +25,7 @@ class CategoryModel {
 
   factory CategoryModel.fromMap(Map<String, dynamic> map) {
     return CategoryModel(
-      id: map['id'] ?? '',
+      id: map['id']?.toInt() ?? 0,
       name: map['name'] ?? '',
       color: map['color']?.toInt() ?? 0,
       icon: map['icon']?.toInt() ?? 0,

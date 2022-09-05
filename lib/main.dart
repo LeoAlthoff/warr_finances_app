@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_teste_app/dio/dio_helper.dart';
@@ -10,7 +9,7 @@ import 'shared/utils/shared_preferences.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPreferencesHelper.initializeSharedPreferencesHelper();
-  await Firebase.initializeApp();
+
   DioHelper();
 
   runApp(const App());

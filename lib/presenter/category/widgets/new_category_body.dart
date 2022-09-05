@@ -70,7 +70,8 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
             actions: [
               TextButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(const Color.fromRGBO(238, 46, 93, 1)),
+                  backgroundColor: MaterialStateProperty.all(
+                      const Color.fromRGBO(238, 46, 93, 1)),
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -85,7 +86,6 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
         },
       );
     } else {
-
       // DatabaseHelper.instance.insertCategory(categoryController.text.toString(),
       //     currentColor.value, iconList[indexIcon].codePoint);
 
@@ -95,7 +95,7 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
         name: categoryController.text.toString(),
         color: currentColor.value,
         icon: iconList[indexIcon].codePoint,
-        id: '0',
+        id: 0,
       );
       DioHelper.createCategory(category);
 
@@ -103,7 +103,7 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => HomePage(
-            currentPage:- 1,
+            currentPage: -1,
           ),
         ),
       );
@@ -152,7 +152,9 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
                         splashColor: const Color.fromRGBO(238, 46, 93, 1),
                         onTap: () {
                           setState(() {
-                            for (int indexBtn = 0; indexBtn < isSelected.length; indexBtn++) {
+                            for (int indexBtn = 0;
+                                indexBtn < isSelected.length;
+                                indexBtn++) {
                               if (indexBtn == index) {
                                 isSelected[indexBtn] = true;
                               } else {
@@ -177,7 +179,8 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
                           ),
                           child: Icon(
                             iconList[index],
-                            color: isSelected[index] ? currentColor : Colors.grey,
+                            color:
+                                isSelected[index] ? currentColor : Colors.grey,
                             size: isSelected[index] ? 32 : 28,
                           ),
                         ));
@@ -208,7 +211,8 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
                   children: [
                     const Text(
                       'Escolha uma cor:',
-                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(width: 35),
                     Container(
