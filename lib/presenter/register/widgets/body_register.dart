@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_teste_app/dio/model/category_model.dart';
+import 'package:flutter_teste_app/dio/model/operation_model.dart';
+import 'package:intl/intl.dart';
 
 import '../../../dio/dio_helper.dart';
-import '../../../shared/utils/date_formater.dart';
 import '../../../shared/utils/is_dark.dart';
 import '../../../shared/utils/shared_preferences.dart';
 import '../../../shared/widgets/input_text_container.dart';
@@ -30,6 +31,7 @@ class _BodyRegisterState extends State<BodyRegister> {
 
   final TextEditingController priceController = TextEditingController();
 
+  int? categoryId;
   String category = '';
   bool categorySelected = false;
   bool isEditing = false;
@@ -87,30 +89,30 @@ class _BodyRegisterState extends State<BodyRegister> {
               context,
               AsyncSnapshot<List<CategoryModel>> snapshot,
             ) {
-              if (!snapshot.hasData || (category.isEmpty && categorySelected)) {
+              if (!snapshot.hasData) {
                 return const CircularProgressIndicator();
               }
               return DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
+                child: DropdownButton<int>(
                   hint: categorySelected
                       ? null
                       : const Text('Selecione uma categoria'),
-                  value: categorySelected ? category : null,
+                  value: categoryId,
                   items: snapshot.data!
-                      .map<DropdownMenuItem<String>>(
-                        (CategoryModel value) => DropdownMenuItem<String>(
-                          value: value.name,
+                      .map<DropdownMenuItem<int>>(
+                        (CategoryModel category) => DropdownMenuItem<int>(
+                          value: category.id,
                           child: Text(
-                            value.name,
+                            category.name,
                           ),
                         ),
                       )
                       .toList(),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      categorySelected = true;
-                      category = newValue!;
-                    });
+                  onChanged: (var newValue) {
+                    categorySelected = true;
+                    categoryId = newValue;
+                    print(newValue);
+                    setState(() {});
                   },
                 ),
               );
@@ -146,7 +148,10 @@ class _BodyRegisterState extends State<BodyRegister> {
                 onPressed: () {
                   if (isEditing) {
                     showAlertDialogCancelEdit(
-                        context, isEditing, widget.callback);
+                      context,
+                      isEditing,
+                      widget.callback,
+                    );
                   } else {
                     cleanEntries();
                     setState(() {});
@@ -206,6 +211,7 @@ class _BodyRegisterState extends State<BodyRegister> {
     isSelected[1] = false;
     category = '';
     categorySelected = false;
+    categoryId = null;
     operationNameController.clear();
     priceController.clear();
     data.clear();
@@ -264,30 +270,35 @@ class _BodyRegisterState extends State<BodyRegister> {
     String name = operationNameController.text;
     double value = double.parse(priceController.text);
     int operation = getOperation();
-    String date = formatStringForDateTimeParse(data.text);
+    DateTime date = DateFormat("yyyy-MM-dd HH:mm:ss").parse(data.text);
+    print(data.text);
     //TODO: Implement dio (API)
     //int categoryId = await DatabaseHelper.instance.selectCategory(category);
 
     if (isEditing) {
-      //TODO: Implement dio (API)
-      // DatabaseHelper.instance.updateOperation(
-      //   name,
-      //   value,
-      //   operation,
-      //   date,
-      //   categoryId,
-      //   widget.id!,
-      // );
+      DioHelper.updateOperation(
+        OperationModel(
+          name: name,
+          value: value,
+          date: date,
+          categoryId: 1,
+          entry: getOperation() == 1 ? true : false,
+          userId: 15,
+        ),
+      );
+
       isEditing = false;
     } else {
-      //TODO: Implement dio (API)
-      // DatabaseHelper.instance.insertOperation(
-      //   value,
-      //   name,
-      //   operation,
-      //   date,
-      //   categoryId,
-      // );
+      DioHelper.createOperation(
+        OperationModel(
+          name: name,
+          value: value,
+          date: date,
+          categoryId: categoryId!,
+          entry: getOperation() == 1 ? true : false,
+          userId: 1,
+        ),
+      );
     }
   }
 
