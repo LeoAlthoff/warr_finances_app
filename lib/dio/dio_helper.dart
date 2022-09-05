@@ -7,33 +7,53 @@ import 'model/user_dto.dart';
 import 'model/user_model.dart';
 
 class DioHelper {
-  static Future<List<OperationModel>> getOperations(
-      int tipyOperation, DateTime date, int id) async {
+  static Future<List<List<OperationModel>>> getOperations(
+      DateTime date, int id) async {
     Dio dio = Dio();
     Response result = await dio.get(
         "http://zuplae.vps-kinghost.net:8085/api/Operation/Month?date=${DateFormat.yMd().format(date)}&userId=$id");
-    List<OperationModel> list = [];
-
-    for (var model in result.data[tipyOperation]) {
-      list.add(OperationModel.fromMap(model));
+    List<List<OperationModel>> list = [];
+    for (var i = 0; i < 3; i++) {
+      for (var model in result.data[i]) {
+        list[i].add(OperationModel.fromMap(model));
+      }
     }
     return list;
   }
 
   static Future<Map> selectSum(DateTime date, int id) async {
+    List list = await getOperations(date, id);
+
+    list[0].sort((a, b) => a.date.compareTo(b.date));
+    list[1].sort((a, b) => a.date.compareTo(b.date));
+
     double positivos = 0;
-    double negativos = 0;
-    double sum = 0;
-    List<OperationModel> list = await getOperations(2, date, id);
-    for (var model in list) {
-      if (model.entry == 1) {
-        positivos += (model.value);
-      } else {
-        negativos += (model.value);
-      }
+
+    for (var model in list[0]) {
+      positivos += model.value;
     }
-    sum = positivos - negativos;
-    return {"entry": positivos, "output": negativos, "sum": sum};
+
+    double negativos = 0;
+
+    for (var model in list[1]) {
+      negativos += model.value;
+    }
+
+    DateTime lastEntryPositivo =
+        DateTime.parse(list[0][list[0].length - 1].date);
+
+    DateTime lastEntryNegativo =
+        DateTime.parse(list[1][list[1].length - 1].date);
+
+    double sum = positivos - negativos;
+
+    return {
+      "entry": positivos,
+      "lastEntryPositivo": lastEntryPositivo,
+      "output": negativos,
+      "lastEntryNegativo": lastEntryNegativo,
+      "sum": sum,
+    };
   }
 
   static Future<void> createCategory(CategoryModel category) async {

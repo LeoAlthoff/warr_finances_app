@@ -80,7 +80,7 @@ class _BodySummaryState extends State<BodySummary> {
           ),
         ),
         FutureBuilder(
-          future: DioHelper.getOperations(2, dateRaw, 1),
+          future: DioHelper.getOperations(dateRaw, 1),
 
           // DatabaseHelper.instance.queryOperation(dateFormated),
           // DatabaseHelper.instance.getColorsCategory(dateFormated)
@@ -88,7 +88,7 @@ class _BodySummaryState extends State<BodySummary> {
             if (!snapshot.hasData) {
               return const CircularProgressIndicator();
             }
-            if (snapshot.data![0].isEmpty) {
+            if (snapshot.data![2][0].isEmpty) {
               return const Center(
                 child: Center(
                   child: Text(
@@ -99,8 +99,8 @@ class _BodySummaryState extends State<BodySummary> {
               );
             }
             return PieChart(
-              dataMap: snapshot.data![0],
-              colorList: snapshot.data![1],
+              dataMap: snapshot.data![2][0],
+              colorList: snapshot.data![2][1],
               chartRadius: MediaQuery.of(context).size.width / 2,
               chartValuesOptions: const ChartValuesOptions(
                 showChartValuesInPercentage: true,
@@ -122,7 +122,7 @@ class _BodySummaryState extends State<BodySummary> {
         ),
         FutureBuilder(
           //TODO: Implement dio (API)
-          future: DioHelper.getOperations(2, dateRaw, 1),
+          future: DioHelper.getOperations(dateRaw, 1),
           // future: DatabaseHelper.instance.queryForSummaryChart(dateFormated),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (!snapshot.hasData) {
@@ -144,11 +144,17 @@ class _BodySummaryState extends State<BodySummary> {
                   );
                 }
                 return InfoChartSummary(
-                  icon: IconData(snapshot.data[index]['icon'],
-                      fontFamily: 'MaterialIcons'),
-                  category: snapshot.data[index]['name'],
-                  value: getCurrency(snapshot.data[index]['SUM(o.value)']),
-                  colorIcon: Color(snapshot.data[index]['color']),
+                  icon: IconData(
+                    snapshot.data[2][index]['icon'],
+                    fontFamily: 'MaterialIcons',
+                  ),
+                  category: snapshot.data[2][index]['name'],
+                  value: getCurrency(
+                    snapshot.data[2][index]['SUM(o.value)'],
+                  ),
+                  colorIcon: Color(
+                    snapshot.data[2][index]['color'],
+                  ),
                 );
               },
             );

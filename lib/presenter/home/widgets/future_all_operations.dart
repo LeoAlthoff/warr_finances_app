@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_teste_app/dio/dio_helper.dart';
 
-import '../../../dio/model/operation_model.dart';
 import '../../../shared/utils/date_formater.dart';
 import '../home_page.dart';
 import 'balance_container.dart';
@@ -19,9 +18,9 @@ class FutureAllOperations extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<OperationModel>>(
-      future: DioHelper.getOperations(2, DateTime.now(), 1),
-      builder: ((context, AsyncSnapshot<List<OperationModel>> snapshot) {
+    return FutureBuilder(
+      future: DioHelper.getOperations(DateTime.now(), 1),
+      builder: ((context, AsyncSnapshot snapshot) {
         if (!snapshot.hasData) {
           return const Center(child: CircularProgressIndicator());
         }
@@ -29,7 +28,7 @@ class FutureAllOperations extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           shrinkWrap: true,
           padding: const EdgeInsets.all(8),
-          itemCount: snapshot.data!.length,
+          itemCount: snapshot.data![2].length,
           itemBuilder: (BuildContext context, int index) {
             if (snapshot.data == null) {
               return const Center(
@@ -70,7 +69,7 @@ class FutureAllOperations extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (context) => HomePage(
                                   currentPage: 1,
-                                  id: snapshot.data![index].id,
+                                  id: snapshot.data![2][index].id,
                                   callback: widget.callback,
                                 ),
                               ),
@@ -121,7 +120,7 @@ class FutureAllOperations extends StatelessWidget {
                                       ),
                                       onPressed: () async {
                                         DioHelper.deleteOperation(
-                                            snapshot.data![index]);
+                                            snapshot.data![2][index]);
                                         if (!mounted) return;
                                         Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
@@ -153,13 +152,13 @@ class FutureAllOperations extends StatelessWidget {
                 );
               },
               child: BalanceContainer(
-                expense: snapshot.data![index].entry == true ? false : true,
-                origin: snapshot.data![index].name,
-                value: snapshot.data![index].value,
-                icon: IconData(snapshot.data![index].category.icon,
+                expense: snapshot.data![2][index].entry == true ? false : true,
+                origin: snapshot.data![2][index].name,
+                value: snapshot.data![2][index].value,
+                icon: IconData(snapshot.data![2][index].category.icon,
                     fontFamily: 'MaterialIcons'),
-                source: snapshot.data![index].category.name,
-                time: formatDate(snapshot.data![index].date.toString()),
+                source: snapshot.data![2][index].category.name,
+                time: formatDate(snapshot.data![2][index].date.toString()),
               ),
             );
           },
