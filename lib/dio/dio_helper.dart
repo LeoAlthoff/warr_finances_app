@@ -44,12 +44,12 @@ class DioHelper {
 
     DateTime? lastEntryPositivo;
     if (list[0].length > 0) {
-      lastEntryPositivo = DateTime.parse(list[0][list[0].length - 1].date);
+      lastEntryPositivo = list[0][list[0].length - 1].date;
     }
 
     DateTime? lastEntryNegativo;
     if (list[1].length > 0) {
-      lastEntryNegativo = DateTime.parse(list[1][list[1].length - 1].date);
+      lastEntryNegativo = list[1][list[1].length - 1].date;
     }
 
     double sum = positivos - negativos;

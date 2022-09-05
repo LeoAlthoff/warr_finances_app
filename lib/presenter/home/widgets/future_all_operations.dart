@@ -152,14 +152,14 @@ class FutureAllOperations extends StatelessWidget {
                 );
               },
               child: BalanceContainer(
-                expense: snapshot.data![2][index].entry == true ? false : true,
+                expense: snapshot.data![2][index].entry == true ? true : false,
                 origin: snapshot.data![2][index].name,
                 value: snapshot.data![2][index].value,
                 icon: IconData(snapshot.data![2][index].category.icon,
                     fontFamily: 'MaterialIcons'),
                 source: snapshot.data![2][index].category.name,
                 time: DateFormat('dd/MM/yyyy', 'pt_BR')
-                    .format(DateTime.parse(snapshot.data![2][index].date)),
+                    .format(snapshot.data![2][index].date),
               ),
             );
           },
