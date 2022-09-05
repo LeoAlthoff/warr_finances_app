@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_teste_app/dio/dio_helper.dart';
+import 'package:intl/intl.dart';
 
 import 'main_container_home.dart';
 
@@ -10,10 +11,12 @@ class FutureMainContainers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DateTime now = DateTime.now();
+
     return FutureBuilder(
-          //TODO: Implement dio (API)
+      //TODO: Implement dio (API)
       //future: DatabaseHelper.instance.selectSum(),
-      // future: DioHelper.selectSum(tipyOperation, date, id),
+      future: DioHelper.selectSum(now, 1),
       builder: ((context, AsyncSnapshot snapshot) {
         if (!snapshot.hasData) {
           return const Center(child: CircularProgressIndicator());
@@ -27,17 +30,17 @@ class FutureMainContainers extends StatelessWidget {
               MainContainerHome(
                 index: 1,
                 subText: 'Última entrada dia 1º de julho',
-                value: snapshot.data['entries'][0]['SUM(value)'],
+                value: snapshot.data['entry'],
               ),
               MainContainerHome(
                 index: 2,
                 subText: 'Última entrada dia 22 de junho',
-                value: snapshot.data['output'][0]['SUM(value)'],
+                value: snapshot.data['output'],
               ),
               MainContainerHome(
                 index: 3,
-                subText: '1º à 31 de julho',
-                value: snapshot.data['total'],
+                subText: 'Mês de ${DateFormat('MMMM', 'pt_BR').format(now)}',
+                value: snapshot.data['sum'],
               ),
             ],
           ),
