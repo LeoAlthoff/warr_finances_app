@@ -267,6 +267,7 @@ class _BodyRegisterState extends State<BodyRegister> {
     String date = formatStringForDateTimeParse(data.text);
     //TODO: Implement dio (API)
     //int categoryId = await DatabaseHelper.instance.selectCategory(category);
+   
 
     if (isEditing) {
       //TODO: Implement dio (API)
@@ -281,7 +282,9 @@ class _BodyRegisterState extends State<BodyRegister> {
       isEditing = false;
     } else {
       //TODO: Implement dio (API)
-     //OperationModel operation  = OperationModel(name: name , value: value, entry: , date: date, categoryId: categoryId, category: category, userId:, id: null!);
+    
+    
+    
     }
   }
 
