@@ -1,7 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../../shared/utils/shared_preferences.dart';
 import '../../home/home_page.dart';
 import '../widgets/login_page.dart';
 
@@ -20,7 +20,7 @@ class _SplashScreenLoginPageState extends State<SplashScreenLoginPage> {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) {
-              if (FirebaseAuth.instance.currentUser != null) {
+              if (SharedPreferencesHelper.prefs!.getString("UserName")! != "") {
                 return HomePage();
               } else {
                 return const LoginPage();

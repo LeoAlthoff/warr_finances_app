@@ -1,6 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_teste_app/shared/utils/shared_preferences.dart';
 
 import '../../../config.dart';
 import '../../../shared/utils/is_dark.dart';
@@ -18,7 +17,6 @@ class DrawerHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    User user = FirebaseAuth.instance.currentUser!;
     return Drawer(
       child: ListView(
         children: [
@@ -47,7 +45,7 @@ class DrawerHome extends StatelessWidget {
                       ),
                       const SizedBox(width: 10),
                       Text(
-                        user.displayName.toString(),
+                        SharedPreferencesHelper.prefs!.getString("UserName")!,
                         textAlign: TextAlign.left,
                         style: const TextStyle(
                           fontSize: 20,
@@ -58,7 +56,7 @@ class DrawerHome extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    user.email.toString(),
+                    SharedPreferencesHelper.prefs!.getString("UserEmail")!,
                     textAlign: TextAlign.left,
                     style: const TextStyle(
                       fontSize: 20,
@@ -177,6 +175,6 @@ class DrawerHome extends StatelessWidget {
 }
 
 logOutFromAccount() {
-  FirebaseAuth.instance.signOut();
-  GoogleSignIn().signOut();
+  SharedPreferencesHelper.prefs!.setString("UserName", "");
+  SharedPreferencesHelper.prefs!.setString("UserName", "");
 }

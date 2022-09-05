@@ -70,9 +70,14 @@ class DioHelper {
 
   static Future<List<CategoryModel>> getAllCategories(int id) async {
     Dio dio = Dio();
+    List<CategoryModel> list = [];
     Response result = await dio.get(
         "http://zuplae.vps-kinghost.net:8085/api/Category/UserCategories?id=$id");
-    return result.data;
+
+    for (var model in result.data) {
+      list.add(CategoryModel.fromMap(model));
+    }
+    return list;
   }
 
   static Future<void> createUser(UserModel user) async {
@@ -86,7 +91,8 @@ class DioHelper {
     Response result = await dio.post(
         "http://zuplae.vps-kinghost.net:8085/api/Access/Login",
         data: userDto.toMap());
-    return result.data;
+    UserModel user = UserModel.fromMap(result.data);
+    return user;
   }
 
   static void deleteOperation(OperationModel operation) {

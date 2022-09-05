@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_teste_app/dio/model/category_model.dart';
 
-
 import '../../../dio/dio_helper.dart';
 import '../../../shared/utils/date_formater.dart';
 import '../../../shared/utils/is_dark.dart';
+import '../../../shared/utils/shared_preferences.dart';
 import '../../../shared/widgets/input_text_container.dart';
 import '../../category/new_category_page.dart';
 import '../utils/show_dialog_cancel_edit.dart';
@@ -80,9 +80,9 @@ class _BodyRegisterState extends State<BodyRegister> {
             ),
           ),
           child: FutureBuilder<List<CategoryModel>>(
-                //TODO: Implement dio (API)            
-            // future: DatabaseHelper.instance.queryCategory(),
-            future: DioHelper.getAllCategories(1),
+            future: DioHelper.getAllCategories(
+              SharedPreferencesHelper.prefs!.getInt("UserId")!,
+            ),
             builder: (
               context,
               AsyncSnapshot<List<CategoryModel>> snapshot,
@@ -98,8 +98,7 @@ class _BodyRegisterState extends State<BodyRegister> {
                   value: categorySelected ? category : null,
                   items: snapshot.data!
                       .map<DropdownMenuItem<String>>(
-                        (CategoryModel value) =>
-                            DropdownMenuItem<String>(
+                        (CategoryModel value) => DropdownMenuItem<String>(
                           value: value.name,
                           child: Text(
                             value.name,
