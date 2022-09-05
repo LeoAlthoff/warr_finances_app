@@ -239,7 +239,7 @@ class _BodyRegisterState extends State<BodyRegister> {
     // operationNameController.text = list[0]['name'];
     // priceController.text = list[0]['value'].toString();
     // data.text = formatDateTimeForString(list[0]['date']);
-    //categorySelected = true;
+    //categorySelected = true; 
     List list = await DioHelper.getOperations(dateRaw, 1);
     operationNameController.text = list[0]['name'];
     priceController.text = list[0]['name'];
@@ -257,6 +257,17 @@ class _BodyRegisterState extends State<BodyRegister> {
     //   isSelected[0] = false;
     //   isSelected[1] = true;
     // }
+      // List category = await DioHelper.getAllCategories(list[0]['categoryId']);
+      // if(list[0] ['entry'] == 1){
+      //   isSelected[0] = true;
+      //   isSelected[1] = false;
+      // } else{
+      //   isSelected[0] = false;
+      //   isSelected[1] = true;
+      // }
+        
+          
+      
     setState(() {});
   }
 
