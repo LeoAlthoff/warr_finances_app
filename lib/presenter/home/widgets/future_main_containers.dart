@@ -27,14 +27,16 @@ class FutureMainContainers extends StatelessWidget {
             children: [
               MainContainerHome(
                 index: 1,
-                subText:
-                    'Última entrada dia ${DateFormat('dd', 'pt_BR').format(snapshot.data['lastEntryPositivo'])} de ${DateFormat('MMMM', 'pt_BR').format(snapshot.data['lastEntryPositivo'])}',
+                subText: snapshot.data['lastEntryPositivo'] == null
+                    ? 'Nenhuma entrada cadastrada'
+                    : 'Última entrada dia ${DateFormat('dd', 'pt_BR').format(snapshot.data['lastEntryPositivo'])} de ${DateFormat('MMMM', 'pt_BR').format(snapshot.data['lastEntryPositivo'])}',
                 value: snapshot.data['entry'],
               ),
               MainContainerHome(
                 index: 2,
-                subText:
-                    'Última saída dia ${DateFormat('dd', 'pt_BR').format(snapshot.data['lastEntryNegativo'])} de ${DateFormat('MMMM', 'pt_BR').format(snapshot.data['lastEntryNegativo'])}',
+                subText: snapshot.data['lastEntryNegativo'] == null
+                    ? 'Nenhuma saída cadastrada'
+                    : 'Última saída dia ${DateFormat('dd', 'pt_BR').format(snapshot.data['lastEntryNegativo'])} de ${DateFormat('MMMM', 'pt_BR').format(snapshot.data['lastEntryNegativo'])}',
                 value: snapshot.data['output'],
               ),
               MainContainerHome(

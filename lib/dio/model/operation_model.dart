@@ -60,7 +60,7 @@ class OperationModel {
   factory OperationModel.fromMap(Map<String, dynamic> map) {
     return OperationModel(
       name: map['name'] ?? '',
-      value: map['value']?.toInt() ?? 0,
+      value: map['value']?.toDouble() ?? 0.0,
       entry: map['entry'] ?? false,
       date: map['date'] ?? '',
       categoryId: map['categoryId']?.toInt() ?? 0,
