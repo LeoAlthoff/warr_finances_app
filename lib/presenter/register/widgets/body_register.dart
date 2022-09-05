@@ -39,8 +39,7 @@ class _BodyRegisterState extends State<BodyRegister> {
 
   DateTime dateRaw = DateTime.now();
 
-  TextEditingController data =
-      TextEditingController(text: 'Selecione uma data');
+  TextEditingController data = TextEditingController(text: 'Selecione uma data');
 
   @override
   Widget build(BuildContext context) {
@@ -94,9 +93,7 @@ class _BodyRegisterState extends State<BodyRegister> {
               }
               return DropdownButtonHideUnderline(
                 child: DropdownButton<String>(
-                  hint: categorySelected
-                      ? null
-                      : const Text('Selecione uma categoria'),
+                  hint: categorySelected ? null : const Text('Selecione uma categoria'),
                   value: categorySelected ? category : null,
                   items: snapshot.data!
                       .map<DropdownMenuItem<String>>(
@@ -147,8 +144,7 @@ class _BodyRegisterState extends State<BodyRegister> {
               TextButton(
                 onPressed: () {
                   if (isEditing) {
-                    showAlertDialogCancelEdit(
-                        context, isEditing, widget.callback);
+                    showAlertDialogCancelEdit(context, isEditing, widget.callback);
                   } else {
                     cleanEntries();
                     setState(() {});
@@ -239,16 +235,15 @@ class _BodyRegisterState extends State<BodyRegister> {
     // operationNameController.text = list[0]['name'];
     // priceController.text = list[0]['value'].toString();
     // data.text = formatDateTimeForString(list[0]['date']);
-    //categorySelected = true; 
+    //categorySelected = true;
     List list = await DioHelper.getOperations(dateRaw, 1);
     operationNameController.text = list[0]['name'];
     priceController.text = list[0]['name'];
     data.text = formatDateTimeForString(list[0]['date']);
     categorySelected = true;
-    
-    
+
     //TODO: Implement dio (API)
-    // category =
+    //category =
     //     await DatabaseHelper.instance.getCategoryName(list[0]['categoryId']);
     // if (list[0]['entry'] == 1) {
     //   isSelected[0] = true;
@@ -257,17 +252,15 @@ class _BodyRegisterState extends State<BodyRegister> {
     //   isSelected[0] = false;
     //   isSelected[1] = true;
     // }
-      // List category = await DioHelper.getAllCategories(list[0]['categoryId']);
-      // if(list[0] ['entry'] == 1){
-      //   isSelected[0] = true;
-      //   isSelected[1] = false;
-      // } else{
-      //   isSelected[0] = false;
-      //   isSelected[1] = true;
-      // }
-        
-          
-      
+    // List category = await DioHelper.getAllCategories(list[0]['categoryId']);
+    // if(list[0] ['entry'] == 1){
+    //   isSelected[0] = true;
+    //   isSelected[1] = false;
+    // } else{
+    //   isSelected[0] = false;
+    //   isSelected[1] = true;
+    // }
+
     setState(() {});
   }
 
@@ -286,9 +279,8 @@ class _BodyRegisterState extends State<BodyRegister> {
     int operation = getOperation();
     String date = formatStringForDateTimeParse(data.text);
     //TODO: Implement dio (API)
-    List<CategoryModel> category= await DioHelper.getAllCategories(0);
-    
-   
+    List category = await DioHelper.getAllCategories(0);
+     
 
     if (isEditing) {
       //TODO: Implement dio (API)
@@ -302,10 +294,7 @@ class _BodyRegisterState extends State<BodyRegister> {
       // );
       isEditing = false;
     } else {
-      //TODO: Implement dio (API)
-    
-    
-    
+      
     }
   }
 
