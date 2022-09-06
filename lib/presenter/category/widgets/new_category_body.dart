@@ -95,7 +95,8 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
         name: categoryController.text.toString(),
         color: currentColor.value,
         icon: iconList[indexIcon].codePoint,
-        id: null,
+        id: 0,
+        userId: 1,
       );
       DioHelper.createCategory(category);
 
@@ -103,7 +104,7 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => HomePage(
-            currentPage: -1,
+            currentPage: 1,
           ),
         ),
       );
