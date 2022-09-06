@@ -8,8 +8,6 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
-import '../../shared/utils/date_formater.dart';
-
 class ShowPdf extends StatelessWidget {
   const ShowPdf(this.title, {Key? key}) : super(key: key);
 
@@ -144,7 +142,7 @@ class ShowPdf extends StatelessWidget {
                                   ? PdfColors.pink100
                                   : PdfColors.white,
                               child: pw.Text(
-                                '   ${operations[2][getIndex(index, i)].entry == 1 ? ' ' : '-'}'
+                                '   ${operations[2][getIndex(index, i)].entry == true ? '-' : ' '}'
                                 'R\$ ${operations[2][getIndex(index, i)].value}   ',
                                 style: pw.TextStyle(
                                   font: font,

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
+import '../../../dio/dio_helper.dart';
 import '../../../dio/model/category_model.dart';
 import '../../../shared/utils/constants.dart';
 import '../../../shared/utils/get_color_bytheme.dart';
+import '../../../shared/utils/shared_preferences.dart';
 import '../../../shared/widgets/input_text_container.dart';
 import '../../home/home_page.dart';
 
@@ -95,14 +97,15 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
         color: currentColor.value,
         icon: iconList[indexIcon].codePoint,
         id: 0,
+        userId:  SharedPreferencesHelper.prefs!.getInt("UserId")!,,
       );
-      // DioHelper.createCategory(category);
+      DioHelper.createCategory(category);
 
       isSelected[indexIcon] = false;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => HomePage(
-            currentPage: -1,
+            currentPage: 1,
           ),
         ),
       );

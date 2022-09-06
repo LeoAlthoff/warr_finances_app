@@ -4,6 +4,7 @@ import 'package:flutter_teste_app/dio/model/operation_model.dart';
 import 'package:intl/intl.dart';
 
 import '../../../dio/dio_helper.dart';
+import '../../../shared/utils/date_formater.dart';
 import '../../../shared/utils/is_dark.dart';
 import '../../../shared/utils/shared_preferences.dart';
 import '../../../shared/widgets/input_text_container.dart';
@@ -39,8 +40,9 @@ class _BodyRegisterState extends State<BodyRegister> {
 
   final FocusNode focusPrice = FocusNode();
 
-  TextEditingController data =
-      TextEditingController(text: 'Selecione uma data');
+  DateTime dateRaw = DateTime.now();
+
+  TextEditingController data = TextEditingController(text: 'Selecione uma data');
 
   @override
   Widget build(BuildContext context) {
@@ -242,9 +244,15 @@ class _BodyRegisterState extends State<BodyRegister> {
     // operationNameController.text = list[0]['name'];
     // priceController.text = list[0]['value'].toString();
     // data.text = formatDateTimeForString(list[0]['date']);
+    //categorySelected = true;
+    List list = await DioHelper.getOperations(dateRaw, 1);
+    operationNameController.text = list[0]['name'];
+    priceController.text = list[0]['name'];
+    data.text = formatDateTimeForString(list[0]['date']);
     categorySelected = true;
+
     //TODO: Implement dio (API)
-    // category =
+    //category =
     //     await DatabaseHelper.instance.getCategoryName(list[0]['categoryId']);
     // if (list[0]['entry'] == 1) {
     //   isSelected[0] = true;
@@ -253,6 +261,15 @@ class _BodyRegisterState extends State<BodyRegister> {
     //   isSelected[0] = false;
     //   isSelected[1] = true;
     // }
+    // List category = await DioHelper.getAllCategories(list[0]['categoryId']);
+    // if(list[0] ['entry'] == 1){
+    //   isSelected[0] = true;
+    //   isSelected[1] = false;
+    // } else{
+    //   isSelected[0] = false;
+    //   isSelected[1] = true;
+    // }
+
     setState(() {});
   }
 
@@ -270,6 +287,10 @@ class _BodyRegisterState extends State<BodyRegister> {
     double value = double.parse(priceController.text);
     int operation = getOperation();
     DateTime date = DateFormat("yyyy-MM-dd HH:mm:ss").parse(data.text);
+    print(data.text);
+    //TODO: Implement dio (API)
+    List category = await DioHelper.getAllCategories(0);
+     
 
     if (isEditing) {
       DioHelper.updateOperation(
@@ -280,7 +301,7 @@ class _BodyRegisterState extends State<BodyRegister> {
           date: date,
           categoryId: categoryId!,
           entry: getOperation() == 1 ? true : false,
-          userId: 1,
+          userId: SharedPreferencesHelper.prefs!.getInt("UserId")!,
         ),
       );
 
@@ -294,7 +315,7 @@ class _BodyRegisterState extends State<BodyRegister> {
           date: date,
           categoryId: categoryId!,
           entry: getOperation() == 1 ? true : false,
-          userId: 1,
+          userId: SharedPreferencesHelper.prefs!.getInt("UserId")!,
         ),
       );
     }
