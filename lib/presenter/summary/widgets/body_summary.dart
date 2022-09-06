@@ -6,6 +6,7 @@ import 'package:pie_chart/pie_chart.dart';
 
 import '../../../shared/utils/format_money.dart';
 import '../../../shared/utils/is_dark.dart';
+import '../../../shared/utils/shared_preferences.dart';
 import 'info_chart_summary.dart';
 
 class BodySummary extends StatefulWidget {
@@ -21,9 +22,7 @@ class _BodySummaryState extends State<BodySummary> {
   DateTime dateRaw = DateTime.now();
   @override
   Widget build(BuildContext context) {
-    String dateFormated = DateFormat("yyyy/MM").format(dateRaw);
-    String dateShow = DateFormat("MM/yyyy").format(dateRaw);
-
+    String dateFormated = DateFormat("MM/yyyy").format(dateRaw);
     return Column(
       children: [
         Padding(
@@ -53,7 +52,7 @@ class _BodySummaryState extends State<BodySummary> {
                 ),
               ),
               Text(
-                'Saídas: $dateShow',
+                'Saídas: $dateFormated',
                 style: const TextStyle(
                   fontSize: 18,
                 ),
@@ -80,7 +79,10 @@ class _BodySummaryState extends State<BodySummary> {
           ),
         ),
         FutureBuilder(
-          future: DioHelper.getOperations(dateRaw, 1),
+          future: DioHelper.operationForSummary(
+            dateRaw,
+            SharedPreferencesHelper.prefs!.getInt("UserId")!,
+          ),
 
           // DatabaseHelper.instance.queryOperation(dateFormated),
           // DatabaseHelper.instance.getColorsCategory(dateFormated)
@@ -88,7 +90,7 @@ class _BodySummaryState extends State<BodySummary> {
             if (!snapshot.hasData) {
               return const CircularProgressIndicator();
             }
-            if (snapshot.data![2][0].isEmpty) {
+            if (snapshot.data!.isEmpty) {
               return const Center(
                 child: Center(
                   child: Text(
@@ -99,8 +101,8 @@ class _BodySummaryState extends State<BodySummary> {
               );
             }
             return PieChart(
-              dataMap: snapshot.data![2][0],
-              colorList: snapshot.data![2][1],
+              dataMap: snapshot.data![0],
+              colorList: snapshot.data![1],
               chartRadius: MediaQuery.of(context).size.width / 2,
               chartValuesOptions: const ChartValuesOptions(
                 showChartValuesInPercentage: true,
@@ -121,9 +123,10 @@ class _BodySummaryState extends State<BodySummary> {
           height: 15,
         ),
         FutureBuilder(
-          //TODO: Implement dio (API)
-          future: DioHelper.getOperations(dateRaw, 1),
-          // future: DatabaseHelper.instance.queryForSummaryChart(dateFormated),
+          future: DioHelper.operationForSummary(
+            dateRaw,
+            SharedPreferencesHelper.prefs!.getInt("UserId")!,
+          ),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (!snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
@@ -136,7 +139,7 @@ class _BodySummaryState extends State<BodySummary> {
               physics: const BouncingScrollPhysics(),
               shrinkWrap: true,
               padding: const EdgeInsets.all(8),
-              itemCount: snapshot.data.length,
+              itemCount: snapshot.data[0].length,
               itemBuilder: (BuildContext context, int index) {
                 if (!snapshot.hasData) {
                   return const Center(
@@ -150,11 +153,9 @@ class _BodySummaryState extends State<BodySummary> {
                   ),
                   category: snapshot.data[2][index]['name'],
                   value: getCurrency(
-                    snapshot.data[2][index]['SUM(o.value)'],
+                    snapshot.data[0][snapshot.data[2][index]['name']],
                   ),
-                  colorIcon: Color(
-                    snapshot.data[2][index]['color'],
-                  ),
+                  colorIcon: snapshot.data[1][index],
                 );
               },
             );
@@ -163,12 +164,4 @@ class _BodySummaryState extends State<BodySummary> {
       ],
     );
   }
-
-  //  double getCategorySum(Future<List<OperationModel>> getOperations ) {
-
-  //   for (var i = 0; i < ; i++) {
-
-  //   }
-  //   return getOperations.map();
-  // }
 }

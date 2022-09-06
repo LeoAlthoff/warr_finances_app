@@ -95,7 +95,7 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
         name: categoryController.text.toString(),
         color: currentColor.value,
         icon: iconList[indexIcon].codePoint,
-        id: 0,
+        id: null,
       );
       DioHelper.createCategory(category);
 

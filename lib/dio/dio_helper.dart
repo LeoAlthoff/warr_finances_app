@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_teste_app/dio/model/category_chart.dart';
 import 'package:intl/intl.dart';
 
 import 'model/category_model.dart';
@@ -20,6 +22,33 @@ class DioHelper {
       }
     }
     return list;
+  }
+
+  static Future<List<dynamic>> operationForSummary(
+      DateTime date, int id) async {
+    Dio dio = Dio();
+    Response result = await dio.get(
+        "http://zuplae.vps-kinghost.net:8085/api/Operation/Chart?date=${DateFormat.yMd().format(date)}&userId=$id");
+    List<CategoryChartModel> list = [];
+
+    for (var model in result.data) {
+      list.add(CategoryChartModel.fromMap(model));
+    }
+    List<dynamic> fullList = [];
+    Map<String, double> map = {};
+    List<Color> colors = [];
+    List<Map<String, dynamic>> icons = [];
+    for (var item in list) {
+      map.addAll({item.name: item.sum});
+      colors.add(Color(item.color));
+      icons.add({"name": item.name, "icon": item.icon});
+    }
+    fullList.add(map);
+    fullList.add(colors);
+    fullList.add(icons);
+    print(fullList);
+
+    return fullList;
   }
 
   static Future<Map> selectSum(DateTime date, int id) async {
@@ -77,8 +106,9 @@ class DioHelper {
 
   static Future<void> createOperation(OperationModel operation) async {
     Dio dio = Dio();
+    print(operation.toMap());
     dio.post("http://zuplae.vps-kinghost.net:8085/api/Operation",
-        data: operation.toMap());
+        data: operation.toJson());
   }
 
   static Future<void> updateOperation(OperationModel operation) async {
