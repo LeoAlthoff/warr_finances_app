@@ -133,7 +133,8 @@ class DioHelper {
 
   static Future<void> createUser(UserModel user) async {
     Dio dio = Dio();
-    dio.post("http://zuplae.vps-kinghost.net:8085/api/User", data: user);
+    dio.post("http://zuplae.vps-kinghost.net:8085/api/User",
+        data: user.toJson());
   }
 
   static Future<UserModel> login(UserDto userDto) async {

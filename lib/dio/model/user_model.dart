@@ -29,10 +29,10 @@ class UserModel {
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    result.addAll({'id': id});
-    result.addAll({'name': name});
-    result.addAll({'email': email});
-    result.addAll({'password': password});
+    result.addAll({"id": id});
+    result.addAll({"name": name});
+    result.addAll({"email": email});
+    result.addAll({"password": password});
 
     return result;
   }

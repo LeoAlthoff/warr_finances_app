@@ -6,6 +6,7 @@ import '../../../dio/dio_helper.dart';
 import '../../../dio/model/category_model.dart';
 import '../../../shared/utils/constants.dart';
 import '../../../shared/utils/get_color_bytheme.dart';
+import '../../../shared/utils/shared_preferences.dart';
 import '../../../shared/widgets/input_text_container.dart';
 import '../../home/home_page.dart';
 
@@ -96,6 +97,7 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
         name: categoryController.text.toString(),
         color: currentColor.value,
         icon: iconList[indexIcon].codePoint,
+        id: 0,
         userId: SharedPreferencesHelper.prefs!.getInt("UserId")!,
       );
       DioHelper.createCategory(category);

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_teste_app/dio/model/category_model.dart';
 import 'package:flutter_teste_app/dio/model/operation_model.dart';
+import 'package:intl/intl.dart';
 
 import '../../../dio/dio_helper.dart';
+import '../../../shared/utils/date_formater.dart';
 import '../../../shared/utils/is_dark.dart';
 import '../../../shared/utils/shared_preferences.dart';
 import '../../../shared/widgets/input_text_container.dart';
@@ -43,8 +45,9 @@ class _BodyRegisterState extends State<BodyRegister> {
 
   final FocusNode focusPrice = FocusNode();
 
-  TextEditingController data =
-      TextEditingController(text: 'Selecione uma data');
+  DateTime dateRaw = DateTime.now();
+
+  TextEditingController data = TextEditingController(text: 'Selecione uma data');
 
   @override
   Widget build(BuildContext context) {
@@ -293,7 +296,7 @@ class _BodyRegisterState extends State<BodyRegister> {
           date: date,
           categoryId: categoryId!,
           entry: getOperation() == 1 ? true : false,
-          userId: 1,
+          userId: SharedPreferencesHelper.prefs!.getInt("UserId")!,
         ),
       );
     }

@@ -8,6 +8,8 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
+import '../../shared/utils/shared_preferences.dart';
+
 class ShowPdf extends StatelessWidget {
   const ShowPdf(this.title, {Key? key}) : super(key: key);
 
@@ -49,7 +51,7 @@ class ShowPdf extends StatelessWidget {
     final font = await PdfGoogleFonts.nunitoExtraLight();
     //TODO: Implement dio (API)
     //  final operations = await DatabaseHelper.instance.selectContainer();
-    final operations = await DioHelper.getOperations(DateTime.now(), 1);
+    final operations = await DioHelper.getOperations(DateTime.now(), SharedPreferencesHelper.prefs!.getInt("UserId")!);
     final iconPng =
         (await rootBundle.load('assets/images/icon.png')).buffer.asUint8List();
 
