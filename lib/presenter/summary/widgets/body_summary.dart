@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/dio/dio_helper.dart';
+import '../../../dio/dio_helper.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pie_chart/pie_chart.dart';

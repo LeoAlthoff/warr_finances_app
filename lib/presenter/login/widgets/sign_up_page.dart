@@ -1,7 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/dio/dio_helper.dart';
-import 'package:flutter_teste_app/dio/model/user_model.dart';
+import '../../../dio/dio_helper.dart';
+import '../../../dio/model/user_model.dart';
 
 import 'input_widget_login_page.dart';
 

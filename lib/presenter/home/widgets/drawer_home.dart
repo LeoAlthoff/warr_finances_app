@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/shared/utils/shared_preferences.dart';
+import '../../../shared/utils/shared_preferences.dart';
 
 import '../../../config.dart';
 import '../../../shared/utils/is_dark.dart';
 import '../../login/widgets/login_page.dart';
 import '../../pdf/pdf_page.dart';
-import '../home_page.dart';
 
 class DrawerHome extends StatelessWidget {
   final Function? callback;
@@ -77,60 +76,6 @@ class DrawerHome extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-          ),
-          ListTile(
-            title: const Text('Apagar todas as operações'),
-            leading: const Icon(Icons.delete_forever),
-            onTap: () => showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  title: const Text(
-                      'Essa ação deletará todas as operações registradas.'),
-                  content: const Text('Você tem certeza que quer excluí-las?'),
-                  actions: [
-                    TextButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                            const Color.fromRGBO(238, 46, 93, 1)),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text(
-                        'Não',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    TextButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                            const Color.fromRGBO(238, 46, 93, 1)),
-                      ),
-                      onPressed: () async {
-                        //TODO: Implement dio (API)
-                        // DatabaseHelper.instance.deleteAllOperations();
-                        callback;
-                        Navigator.of(context).pop();
-                        await Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return HomePage(
-                                currentPage: 0,
-                              );
-                            },
-                          ),
-                        );
-                      },
-                      child: const Text(
-                        'Sim',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ],
-                );
-              },
             ),
           ),
           const SizedBox(height: 7),

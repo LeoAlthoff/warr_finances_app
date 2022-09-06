@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter_teste_app/dio/model/category_model.dart';
+import 'category_model.dart';
 
 class OperationModel {
   final String name;
@@ -59,12 +59,9 @@ class OperationModel {
   }
 
   String getDate(DateTime date) {
-    print(date.toString());
     if (date.toString().lastIndexOf('Z') == 23) {
-      print(date.toIso8601String());
       return date.toIso8601String();
     } else {
-      print('${date.toIso8601String()}Z');
       return '${date.toIso8601String()}Z';
     }
   }

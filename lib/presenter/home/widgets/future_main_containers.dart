@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'package:flutter_teste_app/dio/dio_helper.dart';
+import '../../../dio/dio_helper.dart';
 
 import '../../../shared/utils/shared_preferences.dart';
 import 'main_container_home.dart';
@@ -15,8 +15,6 @@ class FutureMainContainers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime selectDate = DateTime.now();
-
     return FutureBuilder(
       future: DioHelper.selectSum(
           dateRaw, SharedPreferencesHelper.prefs!.getInt("UserId")!),

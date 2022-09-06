@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_teste_app/dio/model/operation_model.dart';
+import '../../dio/model/operation_model.dart';
 
 import 'widgets/body_register.dart';
 

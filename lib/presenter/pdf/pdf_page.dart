@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_teste_app/dio/dio_helper.dart';
+import '../../dio/dio_helper.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -49,8 +49,6 @@ class ShowPdf extends StatelessWidget {
   Future<Uint8List> _generatePdf(PdfPageFormat format) async {
     final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
     final font = await PdfGoogleFonts.nunitoExtraLight();
-    //TODO: Implement dio (API)
-    //  final operations = await DatabaseHelper.instance.selectContainer();
     final operations = await DioHelper.getOperations(DateTime.now(), SharedPreferencesHelper.prefs!.getInt("UserId")!);
     final iconPng =
         (await rootBundle.load('assets/images/icon.png')).buffer.asUint8List();

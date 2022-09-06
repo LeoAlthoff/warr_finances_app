@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'package:flutter_teste_app/dio/dio_helper.dart';
+import '../../../dio/dio_helper.dart';
 
 import '../../../shared/utils/shared_preferences.dart';
 import '../home_page.dart';

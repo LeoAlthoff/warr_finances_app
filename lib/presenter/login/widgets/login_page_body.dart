@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
-import 'package:flutter_teste_app/dio/dio_helper.dart';
-import 'package:flutter_teste_app/dio/model/user_dto.dart';
-import 'package:flutter_teste_app/dio/model/user_model.dart';
+import '../../../dio/dio_helper.dart';
+import '../../../dio/model/user_dto.dart';
+import '../../../dio/model/user_model.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../shared/utils/shared_preferences.dart';
@@ -49,8 +49,10 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
                 children: const [
                   Text(
                     'Warr Finances',
-                    style:
-                        TextStyle(fontSize: 30, color: Colors.white, fontStyle: FontStyle.italic),
+                    style: TextStyle(
+                        fontSize: 30,
+                        color: Colors.white,
+                        fontStyle: FontStyle.italic),
                   ),
                   SizedBox(height: 50),
                   Text(
@@ -114,8 +116,8 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
                           actions: [
                             TextButton(
                               style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all(const Color.fromRGBO(238, 46, 93, 1)),
+                                backgroundColor: MaterialStateProperty.all(
+                                    const Color.fromRGBO(238, 46, 93, 1)),
                               ),
                               onPressed: () {
                                 Navigator.of(context).pop();
@@ -131,49 +133,23 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
                     );
                   }
 
-                  if (finalUser == null) {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: const Text('Login Inválido'),
-                          actions: [
-                            TextButton(
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all(const Color.fromRGBO(238, 46, 93, 1)),
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text(
-                                'Ok',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            )
-                          ],
-                        );
-                      },
-                    );
-                  } else {
-                    SharedPreferencesHelper.prefs!.setString(
-                      "UserName",
-                      finalUser.name,
-                    );
-                    SharedPreferencesHelper.prefs!.setString(
-                      "UserEmail",
-                      finalUser.email,
-                    );
-                    SharedPreferencesHelper.prefs!.setInt(
-                      "UserId",
-                      finalUser.id!,
-                    );
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => HomePage(),
-                      ),
-                    );
-                  }
+                  SharedPreferencesHelper.prefs!.setString(
+                    "UserName",
+                    finalUser.name,
+                  );
+                  SharedPreferencesHelper.prefs!.setString(
+                    "UserEmail",
+                    finalUser.email,
+                  );
+                  SharedPreferencesHelper.prefs!.setInt(
+                    "UserId",
+                    finalUser.id!,
+                  );
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => HomePage(),
+                    ),
+                  );
                 },
                 text: 'Entrar com E-mail',
               ),

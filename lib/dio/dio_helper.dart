@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/dio/model/category_chart.dart';
+import 'model/category_chart.dart';
 import 'package:intl/intl.dart';
 
 import 'model/category_model.dart';
@@ -46,7 +46,6 @@ class DioHelper {
     fullList.add(map);
     fullList.add(colors);
     fullList.add(icons);
-    print(fullList);
 
     return fullList;
   }
@@ -94,7 +93,6 @@ class DioHelper {
 
   static Future<void> createCategory(CategoryModel category) async {
     Dio dio = Dio();
-    print(category.toJson());
     dio.post("http://zuplae.vps-kinghost.net:8085/api/Category",
         data: category.toJson());
   }
@@ -106,15 +104,13 @@ class DioHelper {
   }
 
   static Future<void> createOperation(OperationModel operation) async {
-    Dio dio = Dio();
-    print(operation.toJson());
+    Dio dio = Dio(); 
     dio.post("http://zuplae.vps-kinghost.net:8085/api/Operation",
         data: operation.toJson());
   }
 
   static Future<void> updateOperation(OperationModel operation) async {
     Dio dio = Dio();
-    print(operation.toJson());
     dio.put("http://zuplae.vps-kinghost.net:8085/api/Operation",
         data: operation.toJson());
   }
@@ -148,13 +144,7 @@ class DioHelper {
 
   static void deleteOperation(OperationModel operation) {
     Dio dio = Dio();
-    print(operation.toJson());
     dio.delete("http://zuplae.vps-kinghost.net:8085/api/Operation/",
         data: operation.toJson());
   }
-  //TODO selectSum()
-  //TODO createtOperation()
-  //TODO updateOperation()
-  //TODO GetCategoryByID()
-
 }
