@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/dio/dio_helper.dart';
 import 'package:intl/intl.dart';
+
+import 'package:flutter_teste_app/dio/dio_helper.dart';
 
 import '../../../shared/utils/shared_preferences.dart';
 import 'main_container_home.dart';
 
 class FutureMainContainers extends StatelessWidget {
+  final DateTime dateRaw;
   const FutureMainContainers({
     Key? key,
+    required this.dateRaw,
   }) : super(key: key);
 
   @override
@@ -15,7 +18,8 @@ class FutureMainContainers extends StatelessWidget {
     DateTime selectDate = DateTime.now();
 
     return FutureBuilder(
-      future: DioHelper.selectSum(selectDate, SharedPreferencesHelper.prefs!.getInt("UserId")!),
+      future: DioHelper.selectSum(
+          dateRaw, SharedPreferencesHelper.prefs!.getInt("UserId")!),
       builder: ((context, AsyncSnapshot snapshot) {
         if (!snapshot.hasData) {
           return const Center(child: CircularProgressIndicator());
@@ -43,7 +47,7 @@ class FutureMainContainers extends StatelessWidget {
               MainContainerHome(
                 index: 3,
                 subText:
-                    'Mês de ${DateFormat('MMMM', 'pt_BR').format(selectDate)}',
+                    'Mês de ${DateFormat('MMMM', 'pt_BR').format(dateRaw)}',
                 value: snapshot.data['sum'],
               ),
             ],

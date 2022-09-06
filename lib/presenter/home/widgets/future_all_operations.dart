@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_teste_app/dio/dio_helper.dart';
 import 'package:intl/intl.dart';
+
+import 'package:flutter_teste_app/dio/dio_helper.dart';
 
 import '../../../shared/utils/shared_preferences.dart';
 import '../home_page.dart';
@@ -10,17 +11,20 @@ import 'body_home.dart';
 class FutureAllOperations extends StatelessWidget {
   const FutureAllOperations({
     Key? key,
+    required this.dateRaw,
     required this.widget,
     required this.mounted,
   }) : super(key: key);
 
+  final DateTime dateRaw;
   final BodyHome widget;
   final bool mounted;
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: DioHelper.getOperations(DateTime.now(), SharedPreferencesHelper.prefs!.getInt("UserId")!),
+      future: DioHelper.getOperations(
+          dateRaw, SharedPreferencesHelper.prefs!.getInt("UserId")!),
       builder: ((context, AsyncSnapshot snapshot) {
         if (!snapshot.hasData) {
           return const Center(child: CircularProgressIndicator());
