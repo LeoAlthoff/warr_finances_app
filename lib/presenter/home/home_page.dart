@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../dio/model/operation_model.dart';
 import '../register/register_page.dart';
 import '../summary/summary_page.dart';
 import 'widgets/appbar_home.dart';
@@ -9,14 +10,14 @@ import 'widgets/drawer_home.dart';
 
 // ignore: must_be_immutable
 class HomePage extends StatefulWidget {
-  int? id;
+  OperationModel? operation;
   int currentPage;
   final Function? callback;
 
   HomePage({
     Key? key,
+    this.operation,
     this.currentPage = 0,
-    this.id,
     this.callback,
   }) : super(key: key);
 
@@ -37,7 +38,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final screens = [
       BodyHome(callback: callback),
-      RegistrationPage(id: widget.id),
+      RegistrationPage(operation: widget.operation),
       const Summary(),
     ];
     return Scaffold(
@@ -59,7 +60,7 @@ class _HomePageState extends State<HomePage> {
 
   void callback() {
     setState(() {
-      widget.id = null;
+      widget.operation = null;
     });
   }
 

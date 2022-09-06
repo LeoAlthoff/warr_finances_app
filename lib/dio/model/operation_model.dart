@@ -49,13 +49,24 @@ class OperationModel {
     result.addAll({"name": name});
     result.addAll({"value": value});
     result.addAll({"entry": entry});
-    result.addAll({"date": "${date.toIso8601String()}Z"});
+    result.addAll({"date": getDate(date)});
     result.addAll({"categoryId": categoryId});
     result.addAll({"category": category?.toMap()});
     result.addAll({"userId": userId});
     result.addAll({"id": id});
 
     return result;
+  }
+
+  String getDate(DateTime date) {
+    print(date.toString());
+    if (date.toString().lastIndexOf('Z') == 23) {
+      print(date.toIso8601String());
+      return date.toIso8601String();
+    } else {
+      print('${date.toIso8601String()}Z');
+      return '${date.toIso8601String()}Z';
+    }
   }
 
   factory OperationModel.fromMap(Map<String, dynamic> map) {
