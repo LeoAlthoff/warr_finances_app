@@ -128,8 +128,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            title: const Text(
-                                'Nenhum dos campos pode estar vazio!'),
+                            title: const Text('Nenhum dos campos pode estar vazio!'),
                             actions: [
                               TextButton(
                                 style: ButtonStyle(
@@ -148,8 +147,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           );
                         },
                       );
-                    } else if (!EmailValidator.validate(
-                        emailController.text.trim())) {
+                    } else if (!EmailValidator.validate(emailController.text.trim())) {
                       showDialog(
                         context: context,
                         builder: (context) {
@@ -180,6 +178,30 @@ class _SignUpPageState extends State<SignUpPage> {
                           email: emailController.text.trim(),
                           password: passwordController.text);
                       DioHelper.createUser(user);
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text('Cadastro realizado com sucesso!'),
+                            actions: [
+                              TextButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      const Color.fromRGBO(238, 46, 93, 1)),
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text(
+                                  'Ok',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              )
+                            ],
+                          );
+                        },
+                      );
                     }
                   },
                   style: ButtonStyle(
