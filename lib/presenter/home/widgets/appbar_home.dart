@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../shared/utils/shared_preferences.dart';
 
 import '../../../shared/utils/is_dark.dart';
+import '../../../shared/utils/shared_preferences.dart';
 import '../home_page.dart';
 
 class AppBarHome extends StatelessWidget implements PreferredSizeWidget {

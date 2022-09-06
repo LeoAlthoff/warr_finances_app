@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../dio/model/operation_model.dart';
-
 import 'widgets/body_register.dart';
 
 class RegistrationPage extends StatelessWidget {

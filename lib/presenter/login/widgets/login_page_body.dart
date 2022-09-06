@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
+import 'package:lottie/lottie.dart';
+
 import '../../../dio/dio_helper.dart';
 import '../../../dio/model/user_dto.dart';
 import '../../../dio/model/user_model.dart';
-import 'package:lottie/lottie.dart';
-
 import '../../../shared/utils/shared_preferences.dart';
 import '../../home/home_page.dart';
 import 'input_widget_login_page.dart';

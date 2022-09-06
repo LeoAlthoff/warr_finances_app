@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import '../../../shared/utils/shared_preferences.dart';
 
 import '../../../dio/dio_helper.dart';
 import '../../../dio/model/category_model.dart';

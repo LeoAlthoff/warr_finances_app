@@ -2,13 +2,15 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../dio/dio_helper.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
+import '../../dio/dio_helper.dart';
+import '../../shared/utils/is_dark.dart';
 import '../../shared/utils/shared_preferences.dart';
+import '../home/home_page.dart';
 
 class ShowPdf extends StatelessWidget {
   const ShowPdf(this.title, {Key? key}) : super(key: key);
@@ -40,16 +42,60 @@ class ShowPdf extends StatelessWidget {
             PdfPageFormat.a4.height,
             marginAll: 0,
           ),
-          build: (format) => _generatePdf(format),
+          build: (format) => _generatePdf(format, context),
         ),
       ),
     );
   }
 
-  Future<Uint8List> _generatePdf(PdfPageFormat format) async {
+  Future<Uint8List> _generatePdf(
+      PdfPageFormat format, BuildContext context) async {
     final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
     final font = await PdfGoogleFonts.nunitoExtraLight();
-    final operations = await DioHelper.getOperations(DateTime.now(), SharedPreferencesHelper.prefs!.getInt("UserId")!);
+
+    final selectedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2025),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: isDark(context)
+                  ? const Color.fromARGB(214, 238, 46, 94)
+                  : const Color.fromRGBO(
+                      238, 46, 93, 1), // header background color
+              onPrimary: Colors.white, // header text color
+              onSurface: isDark(context)
+                  ? Colors.white
+                  : Colors.black, // body text color
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                primary: isDark(context)
+                    ? const Color.fromARGB(214, 238, 46, 94)
+                    : const Color.fromRGBO(238, 46, 93, 1), // button text color
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (selectedDate == null) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => HomePage(
+            currentPage: 0,
+          ),
+        ),
+      );
+    }
+    final operations = await DioHelper.getOperations(
+      selectedDate!,
+      SharedPreferencesHelper.prefs!.getInt("UserId")!,
+    );
     final iconPng =
         (await rootBundle.load('assets/images/icon.png')).buffer.asUint8List();
 

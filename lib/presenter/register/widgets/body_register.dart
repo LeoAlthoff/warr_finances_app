@@ -94,7 +94,7 @@ class _BodyRegisterState extends State<BodyRegister> {
               AsyncSnapshot<List<CategoryModel>> snapshot,
             ) {
               if (!snapshot.hasData) {
-                return const CircularProgressIndicator();
+                return const Text("");
               }
               return DropdownButtonHideUnderline(
                 child: DropdownButton<int>(

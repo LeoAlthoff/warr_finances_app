@@ -18,7 +18,7 @@ class BodyHome extends StatefulWidget {
 
 class _BodyHomeState extends State<BodyHome> {
   DateTime dateRaw = DateTime.now();
-  String dateFormated = DateFormat("yyyy/MM").format(DateTime.now());
+  String dateFormated = DateFormat("MM/yyyy").format(DateTime.now());
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -36,7 +36,7 @@ class _BodyHomeState extends State<BodyHome> {
                     dateRaw.month - 1,
                     dateRaw.day,
                   );
-                  dateFormated = DateFormat("yyyy/MM").format(dateRaw);
+                  dateFormated = DateFormat("MM/yyyy").format(dateRaw);
                   setState(() {});
                 },
                 child: Icon(
@@ -61,7 +61,7 @@ class _BodyHomeState extends State<BodyHome> {
                     dateRaw.month + 1,
                     dateRaw.day,
                   );
-                  dateFormated = DateFormat("yyyy/MM").format(dateRaw);
+                  dateFormated = DateFormat("MM/yyyy").format(dateRaw);
                   setState(() {});
                 },
                 child: Icon(

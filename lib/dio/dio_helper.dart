@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'model/category_chart.dart';
 import 'package:intl/intl.dart';
 
+import 'model/category_chart.dart';
 import 'model/category_model.dart';
 import 'model/operation_model.dart';
 import 'model/user_dto.dart';
