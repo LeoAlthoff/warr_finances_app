@@ -301,7 +301,7 @@ class _BodyRegisterState extends State<BodyRegister> {
           date: date,
           categoryId: categoryId!,
           entry: getOperation() == 1 ? true : false,
-          userId: 1,
+          userId: SharedPreferencesHelper.prefs!.getInt("UserId")!,
         ),
       );
 
@@ -315,7 +315,7 @@ class _BodyRegisterState extends State<BodyRegister> {
           date: date,
           categoryId: categoryId!,
           entry: getOperation() == 1 ? true : false,
-          userId: 1,
+          userId: SharedPreferencesHelper.prefs!.getInt("UserId")!,
         ),
       );
     }
