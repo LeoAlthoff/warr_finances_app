@@ -245,7 +245,7 @@ class _BodyRegisterState extends State<BodyRegister> {
     // priceController.text = list[0]['value'].toString();
     // data.text = formatDateTimeForString(list[0]['date']);
     //categorySelected = true;
-    List list = await DioHelper.getOperations(dateRaw, 1);
+    List list = await DioHelper.getOperations(dateRaw, SharedPreferencesHelper.prefs!.getInt("UserId")!);
     operationNameController.text = list[0]['name'];
     priceController.text = list[0]['name'];
     data.text = formatDateTimeForString(list[0]['date']);
