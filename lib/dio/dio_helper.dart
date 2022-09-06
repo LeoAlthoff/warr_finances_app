@@ -63,10 +63,10 @@ class DioHelper {
     };
   }
 
-  static Future<void> createCategory(OperationModel operation) async {
+  static Future<void> createCategory(CategoryModel category) async {
     Dio dio = Dio();
     dio.post("http://zuplae.vps-kinghost.net:8085/api/Category",
-        data: operation.toMap());
+        data: category.toMap());
   }
 
   static Future<void> deleteCategory(CategoryModel category) async {

@@ -3,7 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_teste_app/dio/dio_helper.dart';
 
 import 'config.dart';
-import 'presenter/login/splash_screen_login/splash_screen_login_page.dart';
+import 'presenter/login/widgets/login_page.dart';
 import 'shared/utils/shared_preferences.dart';
 
 void main() async {
@@ -43,8 +43,8 @@ class _AppState extends State<App> {
       ],
       supportedLocales: const [Locale('pt', 'BR')],
       title: 'Warr Finances',
-      home: const SplashScreenLoginPage(),
-      // home: const LoginPage(),
+      //home: const SplashScreenLoginPage(),
+      home: const LoginPage(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
