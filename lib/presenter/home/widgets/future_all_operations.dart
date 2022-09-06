@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_teste_app/dio/dio_helper.dart';
 import 'package:intl/intl.dart';
 
+import '../../../shared/utils/shared_preferences.dart';
 import '../home_page.dart';
 import 'balance_container.dart';
 import 'body_home.dart';
@@ -19,7 +20,7 @@ class FutureAllOperations extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: DioHelper.getOperations(DateTime.now(), 1),
+      future: DioHelper.getOperations(DateTime.now(), SharedPreferencesHelper.prefs!.getInt("UserId")!),
       builder: ((context, AsyncSnapshot snapshot) {
         if (!snapshot.hasData) {
           return const Center(child: CircularProgressIndicator());
