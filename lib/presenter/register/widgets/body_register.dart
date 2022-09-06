@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_teste_app/dio/model/category_model.dart';
 import 'package:flutter_teste_app/dio/model/operation_model.dart';
 
@@ -15,9 +16,13 @@ import 'toggle_buttons_register.dart';
 
 class BodyRegister extends StatefulWidget {
   final Function? callback;
-  final int? id;
+  final OperationModel? operation;
 
-  const BodyRegister({Key? key, this.id, this.callback}) : super(key: key);
+  const BodyRegister({
+    Key? key,
+    this.callback,
+    this.operation,
+  }) : super(key: key);
 
   @override
   State<BodyRegister> createState() => _BodyRegisterState();
@@ -227,7 +232,7 @@ class _BodyRegisterState extends State<BodyRegister> {
   }
 
   void checkEditing() {
-    if (widget.id != null && !getEditValues) {
+    if (widget.operation != null && !getEditValues) {
       getEditValues = true;
       isEditing = true;
       setEdit();
@@ -235,23 +240,19 @@ class _BodyRegisterState extends State<BodyRegister> {
   }
 
   Future<void> setEdit() async {
-    //TODO: implement selectOperationById
-    //TODO: Implement dio (API)
-    // List list = await DatabaseHelper.instance.selectOperationById(widget.id!);
-    // operationNameController.text = list[0]['name'];
-    // priceController.text = list[0]['value'].toString();
-    // data.text = formatDateTimeForString(list[0]['date']);
+    operationNameController.text = widget.operation!.name;
+    priceController.text = widget.operation!.value.toString();
+    data.text = widget.operation!.date.toString();
     categorySelected = true;
-    //TODO: Implement dio (API)
-    // category =
-    //     await DatabaseHelper.instance.getCategoryName(list[0]['categoryId']);
-    // if (list[0]['entry'] == 1) {
-    //   isSelected[0] = true;
-    //   isSelected[1] = false;
-    // } else {
-    //   isSelected[0] = false;
-    //   isSelected[1] = true;
-    // }
+    categoryId = widget.operation!.category!.id;
+
+    if (widget.operation!.entry == true) {
+      isSelected[0] = true;
+      isSelected[1] = false;
+    } else {
+      isSelected[0] = false;
+      isSelected[1] = true;
+    }
     setState(() {});
   }
 
@@ -272,13 +273,13 @@ class _BodyRegisterState extends State<BodyRegister> {
     if (isEditing) {
       DioHelper.updateOperation(
         OperationModel(
-          id: 0,
+          id: widget.operation!.id,
           name: name,
           value: value,
           date: date,
           categoryId: categoryId!,
           entry: getOperation() == 1 ? true : false,
-          userId: 1,
+          userId: SharedPreferencesHelper.prefs!.getInt("UserId")!,
         ),
       );
 

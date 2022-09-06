@@ -90,7 +90,7 @@ class _BodySummaryState extends State<BodySummary> {
             if (!snapshot.hasData) {
               return const CircularProgressIndicator();
             }
-            if (snapshot.data!.isEmpty) {
+            if (snapshot.data![0].isEmpty) {
               return const Center(
                 child: Center(
                   child: Text(
@@ -131,7 +131,7 @@ class _BodySummaryState extends State<BodySummary> {
             if (!snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
             }
-            if (snapshot.data.isEmpty) {
+            if (snapshot.data[0].isEmpty) {
               return Center(
                   child: Lottie.asset('assets/lottie/not_found.json'));
             }

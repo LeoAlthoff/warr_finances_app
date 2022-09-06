@@ -61,24 +61,24 @@ class DioHelper {
 
     double positivos = 0;
 
-    for (var model in list[1]) {
+    for (var model in list[0]) {
       positivos += model.value;
     }
 
     double negativos = 0;
 
-    for (var model in list[0]) {
+    for (var model in list[1]) {
       negativos += model.value;
     }
 
     DateTime? lastEntryPositivo;
-    if (list[1].length > 0) {
-      lastEntryPositivo = list[1][list[1].length - 1].date;
+    if (list[0].length > 0) {
+      lastEntryPositivo = list[0][list[0].length - 1].date;
     }
 
     DateTime? lastEntryNegativo;
-    if (list[0].length > 0) {
-      lastEntryNegativo = list[0][list[0].length - 1].date;
+    if (list[1].length > 0) {
+      lastEntryNegativo = list[1][list[1].length - 1].date;
     }
 
     double sum = positivos - negativos;
@@ -94,6 +94,7 @@ class DioHelper {
 
   static Future<void> createCategory(CategoryModel category) async {
     Dio dio = Dio();
+    print(category.toJson());
     dio.post("http://zuplae.vps-kinghost.net:8085/api/Category",
         data: category.toJson());
   }
@@ -113,6 +114,7 @@ class DioHelper {
 
   static Future<void> updateOperation(OperationModel operation) async {
     Dio dio = Dio();
+    print(operation.toJson());
     dio.put("http://zuplae.vps-kinghost.net:8085/api/Operation",
         data: operation.toJson());
   }

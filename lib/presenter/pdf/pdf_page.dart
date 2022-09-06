@@ -142,7 +142,7 @@ class ShowPdf extends StatelessWidget {
                                   ? PdfColors.pink100
                                   : PdfColors.white,
                               child: pw.Text(
-                                '   ${operations[2][getIndex(index, i)].entry == true ? '-' : ' '}'
+                                '   ${operations[2][getIndex(index, i)].entry == true ? ' ' : '-'}'
                                 'R\$ ${operations[2][getIndex(index, i)].value}   ',
                                 style: pw.TextStyle(
                                   font: font,

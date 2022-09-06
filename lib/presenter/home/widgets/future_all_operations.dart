@@ -69,7 +69,7 @@ class FutureAllOperations extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (context) => HomePage(
                                   currentPage: 1,
-                                  id: snapshot.data![2][index].id,
+                                  operation: snapshot.data![2][index],
                                   callback: widget.callback,
                                 ),
                               ),
@@ -152,7 +152,7 @@ class FutureAllOperations extends StatelessWidget {
                 );
               },
               child: BalanceContainer(
-                expense: snapshot.data![2][index].entry == true ? true : false,
+                expense: snapshot.data![2][index].entry == true ? false : true,
                 origin: snapshot.data![2][index].name,
                 value: snapshot.data![2][index].value,
                 icon: IconData(snapshot.data![2][index].category.icon,

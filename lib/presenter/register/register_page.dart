@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_teste_app/dio/model/operation_model.dart';
+
 import 'widgets/body_register.dart';
 
 class RegistrationPage extends StatelessWidget {
-  final int? id;
-  const RegistrationPage({Key? key, this.id}) : super(key: key);
+  final OperationModel? operation;
+  const RegistrationPage({
+    Key? key,
+    this.operation,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +17,7 @@ class RegistrationPage extends StatelessWidget {
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: BodyRegister(
-          id: id,
+          operation: operation,
         ),
       ),
     );
