@@ -19,7 +19,7 @@ class OperationModel {
     required this.categoryId,
     this.category,
     required this.userId,
-    required this.id,
+    this.id = 0,
   });
 
   OperationModel copyWith({
@@ -46,15 +46,14 @@ class OperationModel {
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
-
-    result.addAll({'name': name});
-    result.addAll({'value': value});
-    result.addAll({'entry': entry});
-    result.addAll({'date': date.toIso8601String()});
-    result.addAll({'categoryId': categoryId});
-    result.addAll({'category': category?.toMap()});
-    result.addAll({'userId': userId});
-    result.addAll({'id': id});
+    result.addAll({"name": name});
+    result.addAll({"value": value});
+    result.addAll({"entry": entry});
+    result.addAll({"date": "${date.toIso8601String()}Z"});
+    result.addAll({"categoryId": categoryId});
+    result.addAll({"category": category?.toMap()});
+    result.addAll({"userId": userId});
+    result.addAll({"id": id});
 
     return result;
   }

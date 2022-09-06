@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_teste_app/dio/model/category_model.dart';
 import 'package:flutter_teste_app/dio/model/operation_model.dart';
-import 'package:intl/intl.dart';
 
 import '../../../dio/dio_helper.dart';
 import '../../../shared/utils/is_dark.dart';
@@ -268,8 +267,7 @@ class _BodyRegisterState extends State<BodyRegister> {
   void saveInputOperation() async {
     String name = operationNameController.text;
     double value = double.parse(priceController.text);
-    int operation = getOperation();
-    DateTime date = DateFormat("yyyy-MM-dd HH:mm:ss").parse(data.text);
+    DateTime date = DateTime.parse(data.text);
 
     if (isEditing) {
       DioHelper.updateOperation(
