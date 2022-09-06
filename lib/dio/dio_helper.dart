@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_teste_app/dio/model/category_chart.dart';
 import 'package:intl/intl.dart';
 
 import 'model/category_model.dart';
@@ -12,7 +14,8 @@ class DioHelper {
     Dio dio = Dio();
     Response result = await dio.get(
         "http://zuplae.vps-kinghost.net:8085/api/Operation/Month?date=${DateFormat.yMd().format(date)}&userId=$id");
-    List<List<OperationModel>> list = [];
+    List<List<OperationModel>> list = [[], [], []];
+
     for (var i = 0; i < 3; i++) {
       for (var model in result.data[i]) {
         list[i].add(OperationModel.fromMap(model));
@@ -21,11 +24,40 @@ class DioHelper {
     return list;
   }
 
+  static Future<List<dynamic>> operationForSummary(
+      DateTime date, int id) async {
+    Dio dio = Dio();
+    Response result = await dio.get(
+        "http://zuplae.vps-kinghost.net:8085/api/Operation/Chart?date=${DateFormat.yMd().format(date)}&userId=$id");
+    List<CategoryChartModel> list = [];
+
+    for (var model in result.data) {
+      list.add(CategoryChartModel.fromMap(model));
+    }
+    List<dynamic> fullList = [];
+    Map<String, double> map = {};
+    List<Color> colors = [];
+    List<Map<String, dynamic>> icons = [];
+    for (var item in list) {
+      map.addAll({item.name: item.sum});
+      colors.add(Color(item.color));
+      icons.add({"name": item.name, "icon": item.icon});
+    }
+    fullList.add(map);
+    fullList.add(colors);
+    fullList.add(icons);
+    print(fullList);
+
+    return fullList;
+  }
+
   static Future<Map> selectSum(DateTime date, int id) async {
     List list = await getOperations(date, id);
 
-    list[0].sort((a, b) => a.date.compareTo(b.date));
-    list[1].sort((a, b) => a.date.compareTo(b.date));
+    list[0]
+        .sort((OperationModel a, OperationModel b) => a.date.compareTo(b.date));
+    list[1]
+        .sort((OperationModel a, OperationModel b) => a.date.compareTo(b.date));
 
     double positivos = 0;
 
@@ -42,8 +74,7 @@ class DioHelper {
     DateTime lastEntryPositivo =
         DateTime.parse(list[0][list[0].length - 1].date);
 
-    DateTime lastEntryNegativo =
-        DateTime.parse(list[1][list[1].length - 1].date);
+    DateTime lastEntryNegativo = list[1][list[1].length - 1].date;
 
     double sum = positivos - negativos;
 
