@@ -44,7 +44,8 @@ class _BodyRegisterState extends State<BodyRegister> {
 
   DateTime dateRaw = DateTime.now();
 
-  TextEditingController data = TextEditingController(text: 'Selecione uma data');
+  TextEditingController data =
+      TextEditingController(text: 'Selecione uma data');
 
   @override
   Widget build(BuildContext context) {
@@ -183,6 +184,7 @@ class _BodyRegisterState extends State<BodyRegister> {
                 onPressed: () async {
                   save();
                   widget.callback;
+                  setState(() {});
                 },
                 child: Container(
                   decoration: BoxDecoration(
