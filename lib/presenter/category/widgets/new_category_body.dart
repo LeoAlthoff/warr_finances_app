@@ -71,8 +71,7 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
             actions: [
               TextButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                      const Color.fromRGBO(238, 46, 93, 1)),
+                  backgroundColor: MaterialStateProperty.all(const Color.fromRGBO(238, 46, 93, 1)),
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -102,6 +101,7 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
       DioHelper.createCategory(category);
 
       isSelected[indexIcon] = false;
+
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => HomePage(
@@ -154,9 +154,7 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
                         splashColor: const Color.fromRGBO(238, 46, 93, 1),
                         onTap: () {
                           setState(() {
-                            for (int indexBtn = 0;
-                                indexBtn < isSelected.length;
-                                indexBtn++) {
+                            for (int indexBtn = 0; indexBtn < isSelected.length; indexBtn++) {
                               if (indexBtn == index) {
                                 isSelected[indexBtn] = true;
                               } else {
@@ -181,8 +179,7 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
                           ),
                           child: Icon(
                             iconList[index],
-                            color:
-                                isSelected[index] ? currentColor : Colors.grey,
+                            color: isSelected[index] ? currentColor : Colors.grey,
                             size: isSelected[index] ? 32 : 28,
                           ),
                         ));
@@ -213,8 +210,7 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
                   children: [
                     const Text(
                       'Escolha uma cor:',
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(width: 35),
                     Container(
@@ -241,6 +237,7 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
                 child: MaterialButton(
                   onPressed: () {
                     saveCategory();
+                    setState(() {});
                   },
                   child: const Text(
                     'Salvar categoria',
