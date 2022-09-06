@@ -102,7 +102,34 @@ class _BodyLoginPageState extends State<BodyLoginPage> {
                     email: emailController.text,
                     password: passwordController.text,
                   );
-                  UserModel finalUser = await DioHelper.login(user);
+                  late UserModel finalUser;
+                  try {
+                    finalUser = await DioHelper.login(user);
+                  } catch (e) {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text('Senha ou e-mail incorretos!'),
+                          actions: [
+                            TextButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all(const Color.fromRGBO(238, 46, 93, 1)),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text(
+                                'Ok',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            )
+                          ],
+                        );
+                      },
+                    );
+                  }
 
                   if (finalUser == null) {
                     showDialog(
