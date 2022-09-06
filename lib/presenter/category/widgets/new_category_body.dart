@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
-import '../../../dio/dio_helper.dart';
 import '../../../dio/model/category_model.dart';
 import '../../../shared/utils/constants.dart';
 import '../../../shared/utils/get_color_bytheme.dart';
@@ -97,7 +96,7 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
         icon: iconList[indexIcon].codePoint,
         id: 0,
       );
-      DioHelper.createCategory(category);
+      // DioHelper.createCategory(category);
 
       isSelected[indexIcon] = false;
       Navigator.of(context).pushReplacement(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_teste_app/dio/dio_helper.dart';
+import 'package:intl/intl.dart';
 
-import '../../../shared/utils/date_formater.dart';
 import '../home_page.dart';
 import 'balance_container.dart';
 import 'body_home.dart';
@@ -152,13 +152,14 @@ class FutureAllOperations extends StatelessWidget {
                 );
               },
               child: BalanceContainer(
-                expense: snapshot.data![2][index].entry == true ? false : true,
+                expense: snapshot.data![2][index].entry == true ? true : false,
                 origin: snapshot.data![2][index].name,
                 value: snapshot.data![2][index].value,
                 icon: IconData(snapshot.data![2][index].category.icon,
                     fontFamily: 'MaterialIcons'),
                 source: snapshot.data![2][index].category.name,
-                time: formatDate(snapshot.data![2][index].date.toString()),
+                time: DateFormat('dd/MM/yyyy', 'pt_BR')
+                    .format(snapshot.data![2][index].date),
               ),
             );
           },
