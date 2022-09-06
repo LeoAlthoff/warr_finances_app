@@ -63,21 +63,21 @@ class DioHelper {
     };
   }
 
-  static Future<void> createCategory(OperationModel operation) async {
+  static Future<void> createCategory(CategoryModel category) async {
     Dio dio = Dio();
     dio.post("http://zuplae.vps-kinghost.net:8085/api/Category",
-        data: operation.toMap());
+        data: category.toJson());
   }
 
   static Future<void> deleteCategory(CategoryModel category) async {
     Dio dio = Dio();
     dio.delete("http://zuplae.vps-kinghost.net:8085/api/Category",
-        data: category.toMap());
+        data: category.toJson());
   }
 
   static Future<void> createOperation(OperationModel operation) async {
     Dio dio = Dio();
-    print(operation.toMap());
+    print(operation.toJson());
     dio.post("http://zuplae.vps-kinghost.net:8085/api/Operation",
         data: operation.toJson());
   }
@@ -85,7 +85,7 @@ class DioHelper {
   static Future<void> updateOperation(OperationModel operation) async {
     Dio dio = Dio();
     dio.put("http://zuplae.vps-kinghost.net:8085/api/Operation",
-        data: operation.toMap());
+        data: operation.toJson());
   }
 
   static Future<List<CategoryModel>> getAllCategories(int id) async {
@@ -109,15 +109,16 @@ class DioHelper {
     Dio dio = Dio();
     Response result = await dio.post(
         "http://zuplae.vps-kinghost.net:8085/api/Access/Login",
-        data: userDto.toMap());
+        data: userDto.toJson());
     UserModel user = UserModel.fromMap(result.data);
     return user;
   }
 
   static void deleteOperation(OperationModel operation) {
     Dio dio = Dio();
+    print(operation.toJson());
     dio.delete("http://zuplae.vps-kinghost.net:8085/api/Operation/",
-        data: operation.toMap());
+        data: operation.toJson());
   }
   //TODO selectSum()
   //TODO createtOperation()
