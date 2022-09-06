@@ -7,7 +7,7 @@ class CategoryModel {
   final int icon;
   final int userId;
   CategoryModel({
-    required this.id,
+    this.id = 0,
     required this.name,
     required this.color,
     required this.icon,
