@@ -97,7 +97,7 @@ class _NewCategoryBodyState extends State<NewCategoryBody> {
         color: currentColor.value,
         icon: iconList[indexIcon].codePoint,
         id: 0,
-        userId:  SharedPreferencesHelper.prefs!.getInt("UserId")!,,
+        userId: SharedPreferencesHelper.prefs!.getInt("UserId")!,
       );
       DioHelper.createCategory(category);
 
