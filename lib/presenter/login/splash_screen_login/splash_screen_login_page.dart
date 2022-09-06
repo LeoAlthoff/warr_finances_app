@@ -20,7 +20,9 @@ class _SplashScreenLoginPageState extends State<SplashScreenLoginPage> {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) {
-              if (SharedPreferencesHelper.prefs!.getString("UserName")! != "") {
+              if (SharedPreferencesHelper.prefs?.getString("UserName") !=
+                      null &&
+                  SharedPreferencesHelper.prefs?.getString("UserName") != "") {
                 return HomePage();
               } else {
                 return const LoginPage();
